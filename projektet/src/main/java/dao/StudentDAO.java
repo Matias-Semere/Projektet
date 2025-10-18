@@ -1,74 +1,58 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import model.Student;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StudentDAO {
-     // Path to your database file. Adjust this path as needed.
-    // If the file is in the project root, just use the filename.
-    private static final String DB_PATH = "student_database.db";
-    // Alternatively, use an absolute path like:
-    // private static final String DB_PATH = "C:/Users/Matias/Downloads/sqlite-tools-win-x64-3500400/student_database.db";
+    private static final String DB_PATH = "projektet/src/main/resources/student_database.db";
 
-    public static void main(String[] args) {
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
+    // public static void main(String[] args) throws SQLException {
+    //     StudentDAO sd = new StudentDAO();
+    //     sd.connect(); 
+    // }
 
-        try {
-            // 1. Load the SQLite JDBC driver (optional in newer Java versions)
-            Class.forName("org.sqlite.JDBC");
 
-            // 2. Establish a connection to the database
-            // The URL format is "jdbc:sqlite:path_to_your_db_file"
-            connection = DriverManager.getConnection("jdbc:sqlite:" + DB_PATH);
-            System.out.println("Connected to the database successfully!");
+    public Connection connect() throws SQLException {
+        String url = "jdbc:sqlite:" + DB_PATH;
+        return DriverManager.getConnection(url);
+    }
 
-            // 3. Create a Statement object to execute SQL queries
-            statement = connection.createStatement();
+    public void insertStudent(Student student) {
+        String sql = "INSERT INTO Student VALUES (?, ?, ?, ?)";
 
-            // Example: Execute a SELECT query
-            String query = "SELECT * FROM Student LIMIT 5;"; // Adjust table name as needed
-            resultSet = statement.executeQuery(query);
-
-            // 4. Process the results
-            System.out.println("Query Results:");
-            while (resultSet.next()) {
-                // Replace these column names with the actual column names from your "Student" table
-                int studentId = resultSet.getInt("StudentID");
-                String name = resultSet.getString("Namn");
-                int personalNumber = resultSet.getInt("Personnummer");
-                int yearGroup = resultSet.getInt("Arskull");
-
-                System.out.println("StudentID: " + studentId + ", Name: " + name + ", SSN: " + personalNumber + ", Year Group: " + yearGroup);
-            }
-
+        try (Connection conn = connect();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, student.getStudentId());
+            ps.setString(2, student.getName());
+            ps.setInt(3, student.getPersonalNumber());
+            ps.setInt(4, student.getYearGroup());
+            ps.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("SQL Error: " + e.getMessage());
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            System.err.println("JDBC Driver not found: " + e.getMessage());
-        } finally {
-            // 5. Close resources in the reverse order of opening (ResultSet -> Statement -> Connection)
-            try {
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException e) {
-                System.err.println("Error closing ResultSet: " + e.getMessage());
-            }
-            try {
-                if (statement != null) statement.close();
-            } catch (SQLException e) {
-                System.err.println("Error closing Statement: " + e.getMessage());
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                System.err.println("Error closing Connection: " + e.getMessage());
-            }
-            System.out.println("Database connection closed.");
         }
+    }
+
+    public List<Student> getAllStudents() {
+        List<Student> students = new ArrayList<>();
+        String sql = "SELECT * FROM Student";
+
+        try (Connection conn = connect();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Student s = new Student(
+                        rs.getInt("StudentID"),
+                        rs.getString("Namn"),
+                        rs.getInt("Personnummer"),
+                        rs.getInt("Arskull"));
+                students.add(s);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return students;
     }
 }
