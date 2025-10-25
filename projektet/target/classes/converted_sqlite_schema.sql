@@ -87,6 +87,8 @@ CREATE TABLE "Rapportering" (
     )
 );
 
+
+
 CREATE TABLE "Admin" (
     "AdminID" INTEGER  NOT NULL,
     "Namn" TEXT  NOT NULL,
