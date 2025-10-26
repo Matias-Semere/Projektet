@@ -1,17 +1,29 @@
 package controller;
 
+import java.util.List;
+
 import dao.StudentDAO;
 import model.Student;
 
 public class StudentCon {
-    static StudentDAO dao = new StudentDAO();
-    // public static void main(String[] args) {
-    //     StudentCon sc = new StudentCon();
-    //     Student s = new Student(4, "Matias", 12345678, 1);
-        // sc.insertStudent(s);
-        // sc.getStudentNamebyID(2);
+    StudentDAO dao;
+    
 
-    // }
+    public StudentCon(StudentDAO dao) {
+        this.dao = dao;
+    }
+
+    public List<Student> getListOfStudents() {
+        return dao.getAllStudents();
+    }
+
+    public void deleteStudent(Student student) {
+        dao.deleteStudent(student);
+    }
+
+    public void deleteStudentByID(int studentID) {
+        dao.deleteStudentByID(studentID);
+    }
 
     public int getStudentCount() {
         return dao.getAllStudents().size();

@@ -13,15 +13,26 @@ public class Student {
         this.yearGroup = yearGroup;
     }
 
-    // Getters and setters
     public int getStudentId() { return studentId; }
     public String getName() { return name; }
     public int getPersonalNumber() { return personalNumber; }
     public int getYearGroup() { return yearGroup; }
 
-    public void setName(String name) { this.name = name; }
-    public void setPersonalNumber(int personalNumber) { this.personalNumber = personalNumber; }
-    public void setYearGroup(int yearGroup) { this.yearGroup = yearGroup; }
+    public void setName(String name) { 
+        if(name != null && name.length() > 1) {
+            this.name = name; 
+        }
+    }
+
+    public void setPersonalNumber(int personalNumber) {
+        
+         this.personalNumber = personalNumber; 
+        }
+    public void setYearGroup(int yearGroup) {
+        if(yearGroup > 0 && yearGroup < 5) {
+            this.yearGroup = yearGroup; 
+        }
+    }
 
     @Override
     public String toString() {

@@ -2,53 +2,79 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.util.Scanner;
 
+import controller.MainController;
 import controller.StudentCon;
 import model.Student;
 
-public class StudentView extends JFrame {
+public class StudentView extends JPanel {
+    
+    private MainController mc = new MainController();
+    private StudentCon sc;
+    private JButton addButton, removeButton, UpdateListButton, showLoginButton;
+    private DefaultListModel<String> listan = new DefaultListModel<String>();
+    private JList<String> StudentJList = new JList<String>(listan);
+    private JScrollPane StudentScroll = new JScrollPane(StudentJList);
+    private int nextStudentID = 0;
 
-    StudentCon sc = new StudentCon();
-    String allStudents = "";
-    int nextStudentID = 0;
+    private ActionListener update = e -> {
+        listan.clear();
+        sc.getListOfStudents().forEach(s -> listan.addElement(s.toString()));
+        StudentJList.setModel(listan);
+    };
 
-    public StudentView() {
-        setTitle("Student Database");
-        setSize(1000, 1000);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public StudentView(StudentCon sc) {
+        this.sc = sc;
+        setBackground(Color.BLACK);
+        initComponents();
+        add(addButton);
+        add(removeButton);
+        add(UpdateListButton);
+        add(StudentScroll);
+        add(showLoginButton);
+        mc.addJobb(() -> {
+            listan.clear();
+            sc.getListOfStudents().forEach(s -> listan.addElement(s.toString()));
+            StudentJList.setModel(listan);
+        });
+    }
 
-        JPanel panel = new JPanel();
-        panel.setSize(500, 500);
-        panel.setBackground(Color.orange);
-        JButton button = new JButton("Se Studenter i Listan");
-        JButton addButton = new JButton("Lägg till Student");
+    public void initComponents() {
+        addButton = new JButton("Lägg till Student");
+        removeButton = new JButton("Tabort Student");
+        UpdateListButton = new JButton("Uppdatera Listan");
+        showLoginButton = new JButton("Visa Login");
+
+        showLoginButton.addActionListener(e -> {
+            new Loggin();
+        });
+
+        StudentScroll.setSize(800, 800);
+        StudentScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         addButton.addActionListener(e -> {
             nextStudentID = sc.getStudentCount() + 1;
-            sc.insertStudent(new Student(nextStudentID, "InsertTest", 1999, 3));
+            sc.insertStudent(new Student(nextStudentID, "Matias", 2003, 2));
+            mc.work();
         });
-        
-        DefaultListModel<String> listan = new DefaultListModel<String>();
-        JList<String> listan2 = new JList<String>(listan);
-        JScrollPane listanscroll = new JScrollPane(listan2);
-        listanscroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        
-        button.addActionListener(e -> {
-            for (int i = 0; i < sc.getStudentCount(); i++) {
-                listan.addElement(sc.getStudentbyID(i));
+        removeButton.addActionListener(e -> {
+            int ID;
+            if(StudentJList.getSelectedIndex() != -1) {
+                Scanner s = new Scanner(StudentJList.getSelectedValue());
+                s.next();
+                String temp2 = s.next();
+
+                String temp = temp2.substring(0, temp2.indexOf(','));
+
+                ID = Integer.parseInt(temp);
+                System.out.println(temp);
+                sc.deleteStudentByID(ID);
+                s.close();
             }
-            listanscroll.setSize(getPreferredSize());
+            mc.work();
         });
-
-        panel.add(addButton);
-        panel.add(button);
-        panel.add(listanscroll);
-        add(panel);
-
-        setVisible(true);
+        UpdateListButton.addActionListener(update);
     }
 
-    public static void main(String[] args) {
-        StudentView sv = new StudentView();
-    }
 }
