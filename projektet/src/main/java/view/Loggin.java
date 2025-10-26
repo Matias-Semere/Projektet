@@ -18,10 +18,18 @@ public class Loggin extends JDialog {
         JPasswordField password = new JPasswordField("Skriv ditt lösenord");
         JButton login = new JButton("Logga in");
 
+        username.setColumns(10);
+        password.setColumns(10);
+
+        password.getAccessibleContext().setAccessibleDescription("Lösenord");
+
         login.addActionListener(e -> {
+            String test = password.getAccessibleContext().toString();
+            System.out.println(test);
             System.out.println("Loggade in");
             dispose();
         });
+
 
         add(label);
         add(username);

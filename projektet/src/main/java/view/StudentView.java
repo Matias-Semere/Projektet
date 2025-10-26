@@ -51,7 +51,7 @@ public class StudentView extends JPanel {
             new Loggin();
         });
 
-        StudentScroll.setSize(800, 800);
+        StudentScroll.setPreferredSize(new Dimension(300, 300));
         StudentScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         addButton.addActionListener(e -> {
             nextStudentID = sc.getStudentCount() + 1;
