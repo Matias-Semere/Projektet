@@ -18,17 +18,19 @@ public class StudentView extends JPanel {
     private JList<String> StudentJList = new JList<String>(listan);
     private JScrollPane StudentScroll = new JScrollPane(StudentJList);
     private int nextStudentID = 0;
-
+    private String htmlstyle = "<html><style> h3 {color: White; border: 10px solid black; padding: 10px;}</style> <h3>";
+    
     private ActionListener update = e -> {
         listan.clear();
-        sc.getListOfStudents().forEach(s -> listan.addElement(s.toString()));
+        sc.getListOfStudents().forEach(s -> listan.addElement(htmlstyle + s.toString()));
         StudentJList.setModel(listan);
     };
-
+    
     public StudentView(StudentCon sc) {
         this.sc = sc;
-        setBackground(Color.BLACK);
+        setBackground(Color.DARK_GRAY);
         initComponents();
+        StudentJList.setBackground(Color.DARK_GRAY);
         add(addButton);
         add(removeButton);
         add(UpdateListButton);
@@ -36,7 +38,7 @@ public class StudentView extends JPanel {
         add(showLoginButton);
         mc.addJobb(() -> {
             listan.clear();
-            sc.getListOfStudents().forEach(s -> listan.addElement(s.toString()));
+            sc.getListOfStudents().forEach(s -> listan.addElement(htmlstyle + s.toString()));
             StudentJList.setModel(listan);
         });
     }
@@ -51,7 +53,7 @@ public class StudentView extends JPanel {
             new Loggin();
         });
 
-        StudentScroll.setPreferredSize(new Dimension(300, 300));
+        StudentScroll.setPreferredSize(new Dimension(500, 800));
         StudentScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         addButton.addActionListener(e -> {
             nextStudentID = sc.getStudentCount() + 1;

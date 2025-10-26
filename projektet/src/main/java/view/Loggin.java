@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Set;
 
 // import controller.StudentCon;
 // import model.Student;
@@ -11,30 +12,37 @@ public class Loggin extends JDialog {
         setSize(500, 500);
         setBackground(Color.GREEN);
         setModal(false);
-        setLayout(new FlowLayout());
+        setLayout(new BorderLayout());
 
         JLabel label = new JLabel("Logga in");
-        JTextField username = new JTextField("Skrev ditt användarnamn");
-        JPasswordField password = new JPasswordField("Skriv ditt lösenord");
+        JLabel usernameLabel = new JLabel("Användarnamn");
+        JLabel passwordLabel = new JLabel("Lösenord");
+        JTextField username = new JTextField();
+        JPasswordField password = new JPasswordField();
         JButton login = new JButton("Logga in");
 
         username.setColumns(10);
         password.setColumns(10);
 
-        password.getAccessibleContext().setAccessibleDescription("Lösenord");
-
         login.addActionListener(e -> {
-            String test = password.getAccessibleContext().toString();
-            System.out.println(test);
             System.out.println("Loggade in");
             dispose();
         });
 
+        JPanel panel = new JPanel();
+        JPanel panel2 = new JPanel();
+        JPanel panel3 = new JPanel();
 
-        add(label);
-        add(username);
-        add(password);        
-        add(login);
+        panel.add(usernameLabel);
+        panel.add(username);
+        panel2.add(passwordLabel);
+        panel2.add(password);
+        panel2.add(login);
+        
+        panel3.add(panel);
+        panel3.add(panel2);
+
+        add(panel3);
 
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);

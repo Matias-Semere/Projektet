@@ -5,14 +5,14 @@ import java.sql.*;
 
 public class DataBase {
 
-    private static final String DB_PATH = System.getProperty("user.dir") + "/student_database.db";
+    private static final String DB_PATH = System.getProperty("user.dir") + "/database.db";
     private static Connection connection;
 
     static {
         try {
             File dbFile = new File(DB_PATH);
             if (!dbFile.exists()) {
-                InputStream in = StudentDAO.class.getResourceAsStream("/student_database.db");
+                InputStream in = StudentDAO.class.getResourceAsStream("/database.db");
                 Files.copy(in, dbFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 System.out.println("Databasen skapades!");
             }
