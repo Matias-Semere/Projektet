@@ -19,9 +19,7 @@ public class Student {
     public int getYearGroup() { return yearGroup; }
 
     public void setName(String name) { 
-        if(name != null && name.length() > 1) {
-            this.name = name; 
-        }
+        if(name != null && name.length() > 1) this.name = name; 
     }
 
     public void setPersonalNumber(int personalNumber) {
