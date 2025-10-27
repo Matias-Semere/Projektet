@@ -1,32 +1,37 @@
 package dao;
 
 import model.Student;
-
 import java.sql.*;
 import java.util.*;
 
 public class StudentDAO {
 
-    public void getConnection() {
-        DataBase.getConnection();
-    }
-
+    // Insert a student and set its generated ID
     public void insertStudent(Student student) {
-        String sql = "INSERT INTO Student VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Student (Namn, Personnummer, Årskull) VALUES (?, ?, ?)";
 
-        try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
-            ps.setInt(1, student.getStudentId());
-            ps.setString(2, student.getName());
-            ps.setInt(3, student.getPersonalNumber());
-            ps.setInt(4, student.getYearGroup());
+        try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, student.getName());
+            ps.setInt(2, student.getPersonalNumber());
+            ps.setInt(3, student.getYearGroup());
+
             ps.executeUpdate();
+
+            // Get the auto-generated StudentID
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    student.setStudentId(rs.getInt(1)); // set the generated ID in your object
+                }
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    // Update an existing student
     public void alterStudent(Student student) {
-        String sql = "UPDATE Student SET Namn = ?, Personnummer = ?, Arskull = ? WHERE StudentID = ?";
+        String sql = "UPDATE Student SET Namn = ?, Personnummer = ?, Årskull = ? WHERE StudentID = ?";
 
         try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
             ps.setString(1, student.getName());
@@ -39,9 +44,9 @@ public class StudentDAO {
         }
     }
 
+    // Delete by ID
     public void deleteStudentByID(int studentID) {
         String sql = "DELETE FROM Student WHERE StudentID = ?";
-        
         try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
             ps.setInt(1, studentID);
             ps.executeUpdate();
@@ -50,27 +55,33 @@ public class StudentDAO {
         }
     }
 
+    // Delete by student object
     public void deleteStudent(Student student) {
         deleteStudentByID(student.getStudentId());
     }
 
+    // Get all students
     public List<Student> getAllStudents() {
         String sql = "SELECT * FROM Student";
         List<Student> students = new ArrayList<>();
+
         try (Statement stmt = DataBase.getConnection().createStatement();
-                ResultSet rs = stmt.executeQuery(sql)) {
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 Student s = new Student(
-                        rs.getInt("StudentID"),
                         rs.getString("Namn"),
                         rs.getInt("Personnummer"),
-                        rs.getInt("Arskull"));
+                        rs.getInt("Årskull")
+                );
+                s.setStudentId(rs.getInt("StudentID")); // include ID
                 students.add(s);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return students;
     }
 }

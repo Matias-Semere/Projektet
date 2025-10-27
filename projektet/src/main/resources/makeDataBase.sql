@@ -1,123 +1,107 @@
 PRAGMA foreign_keys = ON;
 
+-- STUDENT
 CREATE TABLE Student (
-    StudentID INTEGER NOT NULL,
+    StudentID INTEGER PRIMARY KEY AUTOINCREMENT,
     Namn TEXT NOT NULL,
     Personnummer INTEGER NOT NULL,
-    Arskull INTEGER NOT NULL,
-    CONSTRAINT pk_Student PRIMARY KEY (StudentID)
+    Årskull INTEGER NOT NULL
 );
 
-CREATE TABLE StudentInloggning (
-    StudentID INTEGER NOT NULL,
-    Losenord TEXT NOT NULL,
-    CONSTRAINT pk_StudentInloggning PRIMARY KEY (StudentID),
-    CONSTRAINT fk_StudentInloggning_Student
-        FOREIGN KEY (StudentID) REFERENCES Student (StudentID)
-        ON DELETE CASCADE
+-- STUDENTINLOGGNING
+CREATE TABLE Studentinloggning (
+    StudentID INTEGER PRIMARY KEY,
+    Lösenord TEXT NOT NULL,
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+-- KURS
 CREATE TABLE Kurs (
-    KursID INTEGER NOT NULL,
+    KursID INTEGER PRIMARY KEY AUTOINCREMENT,
     Namn TEXT NOT NULL,
     Studietakt REAL NOT NULL,
     Ort TEXT NOT NULL,
     Studieplatser INTEGER NOT NULL,
     Kurskod TEXT NOT NULL,
-    Hogskolepoang REAL NOT NULL,
-    CONSTRAINT pk_Kurs PRIMARY KEY (KursID)
+    Högskolepoäng REAL NOT NULL
 );
 
-CREATE TABLE Kurstillfalle (
-    Kurstillfalle TEXT NOT NULL,
+-- KURSTILLFÄLLE
+CREATE TABLE Kurstillfälle (
+    KurstillfälleID TEXT PRIMARY KEY,
     KursID INTEGER NOT NULL,
     Datum TEXT NOT NULL,
-    CONSTRAINT pk_Kurstillfalle PRIMARY KEY (Kurstillfalle),
-    CONSTRAINT fk_Kurstillfalle_Kurs
-        FOREIGN KEY (KursID) REFERENCES Kurs (KursID)
-        ON DELETE CASCADE
+    FOREIGN KEY (KursID) REFERENCES Kurs(KursID)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Registering (
-    StudentID INTEGER NOT NULL,
-    KurstillfalleID TEXT NOT NULL,
-    CONSTRAINT pk_Registering PRIMARY KEY (StudentID, Kurstillfalle),
-    CONSTRAINT fk_Registering_Student
-        FOREIGN KEY (StudentID) REFERENCES Student (StudentID)
-        ON DELETE CASCADE,
-    CONSTRAINT fk_Registering_Kurstillfalle
-        FOREIGN KEY (KurstillfalleID) REFERENCES Kurstillfalle (KurstillfalleID)
-        ON DELETE CASCADE
-);
-
-CREATE TABLE Moment (
-    MomentID INTEGER NOT NULL,
-    KurstillfalleID TEXT NOT NULL,
-    BetygID INTEGER NOT NULL,
-    CONSTRAINT pk_Moment PRIMARY KEY (MomentID),
-    CONSTRAINT fk_Moment_Kurstillfalle
-        FOREIGN KEY (KurstillfalleID) REFERENCES Kurstillfalle (KurstillfalleID)
-        ON DELETE CASCADE,
-    CONSTRAINT fk_Moment_Kurstillfalle
-        FOREIGN KEY (BetygID) REFERENCES Betyg (BetygID)
-        ON DELETE CASCADE
-);
-
+-- BETYG
 CREATE TABLE Betyg (
-    BetygID INTEGER NOT NULL,
+    BetygID INTEGER PRIMARY KEY AUTOINCREMENT,
     StudentID INTEGER NOT NULL,
-    MomentID INTEGER NOT NULL,
-    Varde TEXT NOT NULL,
-    
-    CONSTRAINT pk_Betyg PRIMARY KEY (BetygID),
-    CONSTRAINT fk_Betyg_Student
-        FOREIGN KEY (StudentID) REFERENCES Student (StudentID)
-        ON DELETE CASCADE,
-    CONSTRAINT fk_Betyg_Moment
-        FOREIGN KEY (MomentID) REFERENCES Moment (MomentID)
-        ON DELETE CASCADE
+    MomentID INTEGER,
+    Värde TEXT NOT NULL,
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Larare (
-    LarareID INTEGER NOT NULL,
+-- MOMENT
+CREATE TABLE Moment (
+    MomentID INTEGER PRIMARY KEY AUTOINCREMENT,
+    KurstillfälleID TEXT NOT NULL,
+    BetygID INTEGER,
+    FOREIGN KEY (KurstillfälleID) REFERENCES Kurstillfälle(KurstillfälleID)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (BetygID) REFERENCES Betyg(BetygID)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- REGISTRERING
+CREATE TABLE Registrering (
+    StudentID INTEGER NOT NULL,
+    KurstillfälleID TEXT NOT NULL,
+    PRIMARY KEY (StudentID, KurstillfälleID),
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (KurstillfälleID) REFERENCES Kurstillfälle(KurstillfälleID)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- LÄRARE
+CREATE TABLE Lärare (
+    LärareID INTEGER PRIMARY KEY AUTOINCREMENT,
     Namn TEXT NOT NULL,
     Personnummer INTEGER NOT NULL,
-    KurstillfalleID TEXT NOT NULL,
-    CONSTRAINT pk_Larare PRIMARY KEY (LarareID),
-    CONSTRAINT fk_Larare_Kurstillfalle
-        FOREIGN KEY (KurstillfalleID) REFERENCES Kurstillfalle (KurstillfalleID)
-        ON DELETE CASCADE
+    KurstillfälleID TEXT NOT NULL,
+    FOREIGN KEY (KurstillfälleID) REFERENCES Kurstillfälle(KurstillfälleID)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+-- ADMIN
 CREATE TABLE Admin (
-    AdminID INTEGER NOT NULL,
+    AdminID INTEGER PRIMARY KEY AUTOINCREMENT,
     Namn TEXT NOT NULL,
     Epost TEXT NOT NULL,
-    Roll TEXT NOT NULL,
-    CONSTRAINT pk_Admin PRIMARY KEY (AdminID)
+    Roll TEXT NOT NULL
 );
 
+-- RAPPORTERING
 CREATE TABLE Rapportering (
-    RapporteringID INTEGER NOT NULL,
+    RapporteringID INTEGER PRIMARY KEY AUTOINCREMENT,
     StudentID INTEGER NOT NULL,
     MomentID INTEGER NOT NULL,
-    Kurstillfalle TEXT NOT NULL,
-    LarareID INTEGER NOT NULL,
+    KurstillfälleID TEXT NOT NULL,
+    LärareID INTEGER NOT NULL,
     AdminID INTEGER NOT NULL,
-    CONSTRAINT pk_Rapportering PRIMARY KEY (RapporteringID),
-    CONSTRAINT fk_Rapportering_Student
-        FOREIGN KEY (StudentID) REFERENCES Student (StudentID)
-        ON DELETE CASCADE,
-    CONSTRAINT fk_Rapportering_Moment
-        FOREIGN KEY (MomentID) REFERENCES Moment (MomentID)
-        ON DELETE CASCADE,
-    CONSTRAINT fk_Rapportering_Kurstillfalle
-        FOREIGN KEY (Kurstillfalle) REFERENCES Kurstillfalle (Kurstillfalle)
-        ON DELETE CASCADE,
-    CONSTRAINT fk_Rapportering_Larare
-        FOREIGN KEY (LarareID) REFERENCES Larare (LarareID)
-        ON DELETE CASCADE,
-    CONSTRAINT fk_Rapportering_Admin
-        FOREIGN KEY (AdminID) REFERENCES Admin (AdminID)
-        ON DELETE CASCADE
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (MomentID) REFERENCES Moment(MomentID)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (KurstillfälleID) REFERENCES Kurstillfälle(KurstillfälleID)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (LärareID) REFERENCES Lärare(LärareID)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (AdminID) REFERENCES Admin(AdminID)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );

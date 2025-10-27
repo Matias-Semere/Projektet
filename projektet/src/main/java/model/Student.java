@@ -6,8 +6,7 @@ public class Student {
     private int personalNumber;
     private int yearGroup;
 
-    public Student(int studentId, String name, int personalNumber, int yearGroup) {
-        this.studentId = studentId;
+    public Student(String name, int personalNumber, int yearGroup) {
         this.name = name;
         this.personalNumber = personalNumber;
         this.yearGroup = yearGroup;
@@ -18,10 +17,14 @@ public class Student {
     public int getPersonalNumber() { return personalNumber; }
     public int getYearGroup() { return yearGroup; }
 
+    public void setStudentId(int studentId) {
+        if (studentId < 0) {
+            this.studentId = studentId;
+        }
+    }
     public void setName(String name) { 
         if(name != null && name.length() > 1) this.name = name; 
     }
-
     public void setPersonalNumber(int personalNumber) {
         
          this.personalNumber = personalNumber; 

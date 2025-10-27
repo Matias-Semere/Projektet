@@ -23,12 +23,12 @@ public class App {
         // kDAO.insertKurstillfälle(k);
         // kDAO.getAllKurstillfälle();
 
-        Lärare lärare = new Lärare(1, "Test", 12345678, "1");
-        LärareDAO l = new LärareDAO();
+        // Lärare lärare = new Lärare(1, "Test", 12345678, "1");
+        // LärareDAO l = new LärareDAO();
 
-        l.insertLärare(lärare);
+        // l.insertLärare(lärare);
 
-        l.getAllLärare();
+        // l.getAllLärare();
 
         // StudentDAO dao = new StudentDAO();
         
