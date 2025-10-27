@@ -40,23 +40,26 @@ CREATE TABLE Kurstillfalle (
 
 CREATE TABLE Registering (
     StudentID INTEGER NOT NULL,
-    Kurstillfalle TEXT NOT NULL,
+    KurstillfalleID TEXT NOT NULL,
     CONSTRAINT pk_Registering PRIMARY KEY (StudentID, Kurstillfalle),
     CONSTRAINT fk_Registering_Student
         FOREIGN KEY (StudentID) REFERENCES Student (StudentID)
         ON DELETE CASCADE,
     CONSTRAINT fk_Registering_Kurstillfalle
-        FOREIGN KEY (Kurstillfalle) REFERENCES Kurstillfalle (Kurstillfalle)
+        FOREIGN KEY (KurstillfalleID) REFERENCES Kurstillfalle (KurstillfalleID)
         ON DELETE CASCADE
 );
 
 CREATE TABLE Moment (
     MomentID TEXT NOT NULL,
-    Kurstillfalle TEXT NOT NULL,
-    Beskrivning TEXT NOT NULL,
+    KurstillfalleID TEXT NOT NULL,
+    BetygID INTEGER NOT NULL,
     CONSTRAINT pk_Moment PRIMARY KEY (MomentID),
     CONSTRAINT fk_Moment_Kurstillfalle
-        FOREIGN KEY (Kurstillfalle) REFERENCES Kurstillfalle (Kurstillfalle)
+        FOREIGN KEY (KurstillfalleID) REFERENCES Kurstillfalle (KurstillfalleID)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_Moment_Kurstillfalle
+        FOREIGN KEY (BetygID) REFERENCES Betyg (BetygID)
         ON DELETE CASCADE
 );
 
@@ -79,10 +82,10 @@ CREATE TABLE Larare (
     LarareID INTEGER NOT NULL,
     Namn TEXT NOT NULL,
     Personnummer INTEGER NOT NULL,
-    Kurstillfalle TEXT NOT NULL,
+    KurstillfalleID TEXT NOT NULL,
     CONSTRAINT pk_Larare PRIMARY KEY (LarareID),
     CONSTRAINT fk_Larare_Kurstillfalle
-        FOREIGN KEY (Kurstillfalle) REFERENCES Kurstillfalle (Kurstillfalle)
+        FOREIGN KEY (KurstillfalleID) REFERENCES Kurstillfalle (KurstillfalleID)
         ON DELETE CASCADE
 );
 
