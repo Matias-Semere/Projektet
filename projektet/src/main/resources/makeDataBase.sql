@@ -51,7 +51,7 @@ CREATE TABLE Registering (
 );
 
 CREATE TABLE Moment (
-    MomentID TEXT NOT NULL,
+    MomentID INTEGER NOT NULL,
     KurstillfalleID TEXT NOT NULL,
     BetygID INTEGER NOT NULL,
     CONSTRAINT pk_Moment PRIMARY KEY (MomentID),
@@ -66,9 +66,9 @@ CREATE TABLE Moment (
 CREATE TABLE Betyg (
     BetygID INTEGER NOT NULL,
     StudentID INTEGER NOT NULL,
-    MomentID TEXT NOT NULL,
-    Typ TEXT NOT NULL,
+    MomentID INTEGER NOT NULL,
     Varde TEXT NOT NULL,
+    
     CONSTRAINT pk_Betyg PRIMARY KEY (BetygID),
     CONSTRAINT fk_Betyg_Student
         FOREIGN KEY (StudentID) REFERENCES Student (StudentID)
@@ -100,7 +100,7 @@ CREATE TABLE Admin (
 CREATE TABLE Rapportering (
     RapporteringID INTEGER NOT NULL,
     StudentID INTEGER NOT NULL,
-    MomentID TEXT NOT NULL,
+    MomentID INTEGER NOT NULL,
     Kurstillfalle TEXT NOT NULL,
     LarareID INTEGER NOT NULL,
     AdminID INTEGER NOT NULL,
