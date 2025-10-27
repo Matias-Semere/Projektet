@@ -1,31 +1,22 @@
 package model;
 
 public class Betyg {
-    private int BetygID;
-    private int StudentID;
-    private int MomentID;
-    private MomentBetyg värde2;
+    protected int BetygID;
+    protected int StudentID;
+    protected int MomentID;
+    protected int KurstillfälleID;
 
-    public Betyg(int StudentID) {
-        this.StudentID = StudentID;
+    private String betyg;
+
+    public Betyg() {
     }
 
-
-
-    public enum MomentBetyg {
-        VG, G, U;
+    public void setGrade(String s) {
+        this.betyg = s;
     }
 
-
-
-    public void sättBetygPåMoment(MomentBetyg betyg, int MomentID) {
-        this.MomentID = MomentID;
-
-        värde2 = betyg;
-    }
-
-    public String toString() {
-        return värde1 + " " + värde2;
+    public String getGrade() {
+        return betyg;
     }
 
 }

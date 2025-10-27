@@ -2,20 +2,21 @@ package model;
 
 public class KursBetyg extends Betyg {
 
-    private KursBetyg värde1;
-
-    public enum Betyg {
+    public enum kBetyg {
         A, B, C, D, E, F;
     }
 
-    public KursBetyg() {
-        
+    public KursBetyg(int StudentID, int BetygID, int KurstillfälleID, kBetyg betyg) {
+        this.StudentID = StudentID;
+        this.BetygID = BetygID;
+        this.KurstillfälleID = KurstillfälleID;
+
+        super.setGrade(betyg.toString());
+
     }
 
-    public void sättBetygPåKurs(KursBetyg betyg, int BetygID) {
-        this.BetygID = BetygID;
-
-        värde1 = betyg;
+    public String getGrade() {
+        return super.getGrade();
     }
 
 }
