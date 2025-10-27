@@ -29,7 +29,7 @@ CREATE TABLE Kurs (
 );
 
 CREATE TABLE Kurstillfalle (
-    Kurstillfalle TEXT NOT NULL,
+    KurstillfalleID TEXT NOT NULL,
     KursID INTEGER NOT NULL,
     Datum TEXT NOT NULL,
     CONSTRAINT pk_Kurstillfalle PRIMARY KEY (Kurstillfalle),

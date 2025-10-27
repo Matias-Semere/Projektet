@@ -6,5 +6,53 @@ public class Rapportering {
     private String MomentID;
     private int LärarID;
     private int AdminID;
-    
+
+    public Rapportering(int RapporteringsID, int StudentID, String MomentID, int LärarID, int AdminID) {
+        this.RapporteringsID = RapporteringsID;
+        this.StudentID = StudentID;
+        this.MomentID = MomentID;
+        this.LärarID = LärarID;
+        this.AdminID = AdminID;
+    }
+
+    public void setRapporteringID(int RapporteringsID) {
+        this.RapporteringsID = RapporteringsID;
+    }
+
+    public int getRapporteringsID() {
+        return RapporteringsID;
+    }
+
+    public void setStudentID(int StudentID) {
+        this.StudentID = StudentID;
+    }
+
+    public int getStudentID() {
+        return StudentID;
+    }
+
+    public void setMomentID(String MomentID) {
+        this.MomentID = MomentID;
+    }
+
+    public String getMomentID() {
+        return MomentID;
+    }
+
+    public void setLärarID(int LärarID) {
+        this.LärarID = LärarID;
+    }
+
+    public int getLärarID() {
+        return LärarID;
+    }
+
+    public void setAdminID(int AdminID) {
+        this.AdminID = AdminID;
+    }
+
+    public int getAdminID() {
+        return AdminID;
+    }
+
 }
