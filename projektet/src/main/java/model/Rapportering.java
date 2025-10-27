@@ -15,24 +15,29 @@ public class Rapportering {
         this.AdminID = AdminID;
     }
 
-    public int getRapporteringsID() {
-        return RapporteringsID;
-    }
-
     public void setRapporteringsID(int RapporteringsID) {
         this.RapporteringsID = RapporteringsID;
     }
 
-    public int getStudentID() {
-        return StudentID;
+    public int getRapporteringsID() {
+        return RapporteringsID;
     }
 
     public void setStudentID(int StudentID) {
         this.StudentID = StudentID;
     }
 
+    public int getStudentID() {
+        return StudentID;
+    }
+
     public String getMomentID() {
         return MomentID;
+    }
+
+    public void setLärarID(int LärarID) {
+        this.LärarID = LärarID;
+
     }
 
     public void setMomentID(String MomentID) {
@@ -43,16 +48,12 @@ public class Rapportering {
         return LärarID;
     }
 
-    public void setLärarID(int LärarID) {
-        this.LärarID = LärarID;
+    public void setAdminID(int AdminID) {
+        this.AdminID = AdminID;
     }
 
     public int getAdminID() {
         return AdminID;
-    }
-
-    public void setAdminID(int AdminID) {
-        this.AdminID = AdminID;
     }
 
     @Override
@@ -60,5 +61,4 @@ public class Rapportering {
         return String.format("RapporteringsID: %d, StudentID: %d, MomentID: %s, LärarID: %d, AdminID: %d",
                 RapporteringsID, StudentID, MomentID, LärarID, AdminID);
     }
-    
 }
