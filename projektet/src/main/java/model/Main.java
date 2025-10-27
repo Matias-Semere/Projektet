@@ -6,7 +6,7 @@ public class Main {
         Betyg a = new KursBetyg(13, 12, 12, KursBetyg.kBetyg.A);
         Betyg b = new MomentBetyg(13, 12, 123, MomentBetyg.mBetyg.VG);
 
-        System.out.println(a.getGrade());
+        // System.out.println(a.getGrade());
         System.out.println(b.getGrade());
 
     }
