@@ -22,7 +22,7 @@ CREATE TABLE Kurs (
     Namn TEXT NOT NULL,
     Studietakt REAL NOT NULL,
     Ort TEXT NOT NULL,
-    Studieplatser INTEGER NOT NULL,
+    Antal_platser INTEGER NOT NULL,
     Kurskod TEXT NOT NULL,
     Högskolepoäng REAL NOT NULL
 );
@@ -62,12 +62,13 @@ CREATE TABLE Moment (
 CREATE TABLE Betyg (
     BetygID INTEGER PRIMARY KEY AUTOINCREMENT,
     StudentID INTEGER NOT NULL,
-    MomentID INTEGER NOT NULL,
+    -- MomentID INTEGER NOT NULL,
+    KurstillfälleID INTEGER NOT NULL,
     Värde TEXT NOT NULL,
     FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
         ON DELETE CASCADE,
-    FOREIGN KEY (MomentID) REFERENCES Moment(MomentID)
-        ON DELETE CASCADE
+    -- FOREIGN KEY (MomentID) REFERENCES Moment(MomentID)
+    --     ON DELETE CASCADE
 );
 
 -- LÄRARE

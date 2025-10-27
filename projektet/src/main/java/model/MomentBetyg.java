@@ -3,7 +3,7 @@ package model;
 public class MomentBetyg extends Betyg {
 
     public enum mBetyg {
-        VG, G, U;
+        A, B, C, D, E, F, VG, G, U;
     }
 
     public MomentBetyg(int StudentID, int MomentID, int BetygID, mBetyg betyg) {
