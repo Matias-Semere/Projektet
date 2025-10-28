@@ -30,10 +30,10 @@ public class App {
 
         // l.getAllLärare();
 
-        // StudentDAO dao = new StudentDAO();
+        StudentDAO dao = new StudentDAO();
         
-        // StudentCon sc = new StudentCon(dao);
+        StudentCon sc = new StudentCon(dao);
         
-        // SwingUtilities.invokeLater(() -> new MainFrame(sc).setVisible(true));
+        SwingUtilities.invokeLater(() -> new MainFrame(sc).setVisible(true));
     }
 }

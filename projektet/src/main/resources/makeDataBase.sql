@@ -1,6 +1,8 @@
 PRAGMA foreign_keys = ON;
 
+-- =====================================
 -- STUDENT
+-- =====================================
 CREATE TABLE Student (
     StudentID INTEGER PRIMARY KEY AUTOINCREMENT,
     Namn TEXT NOT NULL,
@@ -16,7 +18,9 @@ CREATE TABLE StudentInloggning (
         ON UPDATE CASCADE
 );
 
+-- =====================================
 -- KURS
+-- =====================================
 CREATE TABLE Kurs (
     KursID INTEGER PRIMARY KEY AUTOINCREMENT,
     Namn TEXT NOT NULL,
@@ -27,61 +31,83 @@ CREATE TABLE Kurs (
     Högskolepoäng REAL NOT NULL
 );
 
+-- =====================================
 -- KURSTILLFÄLLE
+-- =====================================
 CREATE TABLE Kurstillfälle (
     KurstillfälleID INTEGER PRIMARY KEY AUTOINCREMENT,
     KursID INTEGER NOT NULL,
     Datum TEXT NOT NULL,
     FOREIGN KEY (KursID) REFERENCES Kurs(KursID)
         ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
--- REGISTERING
+-- =====================================
+-- REGISTERING (Student ↔ Kurstillfälle)
+-- =====================================
 CREATE TABLE Registering (
     StudentID INTEGER NOT NULL,
     KurstillfälleID INTEGER NOT NULL,
     PRIMARY KEY (StudentID, KurstillfälleID),
     FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
-        ON DELETE CASCADE,
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
     FOREIGN KEY (KurstillfälleID) REFERENCES Kurstillfälle(KurstillfälleID)
         ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
--- MOMENT
+-- =====================================
+-- MOMENT (TEMPORARILY DISABLED)
+-- =====================================
+/*
 CREATE TABLE Moment (
     MomentID INTEGER PRIMARY KEY AUTOINCREMENT,
     KurstillfälleID INTEGER NOT NULL,
-    BetygID INTEGER NOT NULL,
+    Beskrivning TEXT NOT NULL,
     FOREIGN KEY (KurstillfälleID) REFERENCES Kurstillfälle(KurstillfälleID)
-        ON DELETE CASCADE,
-    FOREIGN KEY (BetygID) REFERENCES Betyg(BetygID)
         ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
+*/
 
+-- =====================================
 -- BETYG
+-- =====================================
 CREATE TABLE Betyg (
     BetygID INTEGER PRIMARY KEY AUTOINCREMENT,
     StudentID INTEGER NOT NULL,
-    -- MomentID INTEGER NOT NULL,
+    -- MomentID INTEGER,  -- Uncomment if you later re-enable Moment
     KurstillfälleID INTEGER NOT NULL,
     Värde TEXT NOT NULL,
     FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
-        ON DELETE CASCADE,
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
     -- FOREIGN KEY (MomentID) REFERENCES Moment(MomentID)
     --     ON DELETE CASCADE
+    --     ON UPDATE CASCADE,
+    FOREIGN KEY (KurstillfälleID) REFERENCES Kurstillfälle(KurstillfälleID)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
+-- =====================================
 -- LÄRARE
-CREATE TABLE Larare (
+-- =====================================
+CREATE TABLE Lärare (
+    LärareID INTEGER PRIMARY KEY AUTOINCREMENT,
     Namn TEXT NOT NULL,
-    LarareID INTEGER PRIMARY KEY AUTOINCREMENT,
     Personnummer INTEGER NOT NULL,
     KurstillfälleID INTEGER NOT NULL,
     FOREIGN KEY (KurstillfälleID) REFERENCES Kurstillfälle(KurstillfälleID)
         ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
+-- =====================================
 -- ADMIN
+-- =====================================
 CREATE TABLE Admin (
     AdminID INTEGER PRIMARY KEY AUTOINCREMENT,
     Namn TEXT NOT NULL,
@@ -89,22 +115,29 @@ CREATE TABLE Admin (
     Roll TEXT NOT NULL
 );
 
+-- =====================================
 -- RAPPORTERING
+-- =====================================
 CREATE TABLE Rapportering (
     RapporteringID INTEGER PRIMARY KEY AUTOINCREMENT,
     StudentID INTEGER NOT NULL,
-    MomentID INTEGER NOT NULL,
+    -- MomentID INTEGER,  -- Uncomment when Moment is used
     KurstillfälleID INTEGER NOT NULL,
-    LarareID INTEGER NOT NULL,
+    LärareID INTEGER NOT NULL,
     AdminID INTEGER NOT NULL,
     FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
-        ON DELETE CASCADE,
-    FOREIGN KEY (MomentID) REFERENCES Moment(MomentID)
-        ON DELETE CASCADE,
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    -- FOREIGN KEY (MomentID) REFERENCES Moment(MomentID)
+    --     ON DELETE CASCADE
+    --     ON UPDATE CASCADE,
     FOREIGN KEY (KurstillfälleID) REFERENCES Kurstillfälle(KurstillfälleID)
-        ON DELETE CASCADE,
-    FOREIGN KEY (LarareID) REFERENCES Larare(LarareID)
-        ON DELETE CASCADE,
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (LärareID) REFERENCES Lärare(LärareID)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
     FOREIGN KEY (AdminID) REFERENCES Admin(AdminID)
         ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
