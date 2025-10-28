@@ -62,7 +62,7 @@ public class LärareView extends JPanel {
         // lärareJList.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         addButton.addActionListener(e -> {
             // nextStudentID = lc.getStudentCount() + 1;
-            lc.insertLärare(new Lärare(21, "Matias", 2000, 5));
+            lc.insertLärare(new Lärare(2, "Matias", 2000, 2));
             mc.work();
         });
         removeButton.addActionListener(e -> {

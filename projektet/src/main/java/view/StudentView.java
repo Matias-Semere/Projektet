@@ -2,10 +2,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.util.Scanner;
 
-import controller.MainController;
 import controller.StudentCon;
 import model.Student;
 
@@ -35,8 +32,7 @@ public class StudentView extends JPanel {
         showLoginButton = new JButton("Visa Login");
 
         addButton.addActionListener(e -> {
-            // sc.insertStudent(new Student("Matias", 2003, 2));
-            // sc.deleteStudentByID();
+            sc.insertStudent(new Student( 1, "Matias", 2003, 2));
         });
 
         // removeButton.addActionListener(e -> studentlist.deleteStudent(new Student("Matias", 2003, 2)));

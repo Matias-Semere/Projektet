@@ -1,14 +1,12 @@
 package demo;
 
-import javax.swing.SwingUtilities;
+import javax.swing.*;
+import controller.*;
+import dao.*;
+import model.*;
+import view.*;   
 
-import controller.StudentCon;
-import dao.KursDAO;
-import dao.KurstilfälleDAO;
-import dao.StudentDAO;
-import model.Kurs;
-import model.Kurstillfälle;
-import view.MainFrame;   
+
 
 public class App {    
     public static void main(String a[]) {
@@ -21,21 +19,19 @@ public class App {
         // kDAO.insertKurs(kurs);
         // kDAO.getAllKurs();
 
-        Kurstillfälle k = new Kurstillfälle(3, 1, "2021-01-01");
-        KurstilfälleDAO kDAO = new KurstilfälleDAO();
+        // Kurstillfälle k = new Kurstillfälle(1, 1, "2021-01-01");
+        // KurstilfälleDAO kDAO = new KurstilfälleDAO();
 
-        kDAO.insertKurstillfälle(k);
-        kDAO.getAllKurstillfälle();
+        // kDAO.insertKurstillfälle(k);
+        // kDAO.getAllKurstillfälle();
 
-        // Lärare lärare = new Lärare(1, "Test", 12345678, "1");
+        // Lärare lärare = new Lärare(1, "Test", 12345678, 1);
         // LärareDAO l = new LärareDAO();
 
         // l.insertLärare(lärare);
-
         // l.getAllLärare();
 
-        // StudentCon sc = new StudentCon(new StudentDAO());
-        
-        // SwingUtilities.invokeLater(() -> new MainFrame(sc).setVisible(true));
+        StudentCon sc = new StudentCon(new StudentDAO());
+        SwingUtilities.invokeLater(() -> new MainFrame(sc).setVisible(true));
     }
 }
