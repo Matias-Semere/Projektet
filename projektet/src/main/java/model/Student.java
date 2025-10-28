@@ -6,7 +6,8 @@ public class Student {
     private int personalNumber;
     private int yearGroup;
 
-    public Student(String name, int personalNumber, int yearGroup) {
+    public Student(int studentId, String name, int personalNumber, int yearGroup) {
+        this.studentId = studentId;
         this.name = name;
         this.personalNumber = personalNumber;
         this.yearGroup = yearGroup;

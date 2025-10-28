@@ -5,7 +5,6 @@ import java.sql.*;
 import java.util.*;
 
 public class StudentDAO {
-
     // Insert a student and set its generated ID
     public void insertStudent(Student student) {
         String sql = "INSERT INTO Student (Namn, Personnummer, Årskull) VALUES (?, ?, ?)";
@@ -70,6 +69,7 @@ public class StudentDAO {
 
             while (rs.next()) {
                 Student s = new Student(
+                        rs.getInt("StudentID"),
                         rs.getString("Namn"),
                         rs.getInt("Personnummer"),
                         rs.getInt("Årskull")
@@ -83,5 +83,27 @@ public class StudentDAO {
         }
 
         return students;
+    }
+
+    public Student getStudentByID(int studentID) {
+        String sql = "SELECT * FROM Student WHERE StudentID = ?";
+        try (Statement stmt = DataBase.getConnection().createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Student s = new Student(
+                        rs.getInt("StudentID"),
+                        rs.getString("Namn"),
+                        rs.getInt("Personnummer"),
+                        rs.getInt("Årskull")
+                );
+                
+                return s;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
