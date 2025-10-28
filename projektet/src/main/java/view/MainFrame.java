@@ -12,6 +12,7 @@ public class MainFrame extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         add(new StudentView(sc));
+        add(new ewadminView(sc));
     }
 
 }
