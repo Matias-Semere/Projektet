@@ -1,22 +1,33 @@
 package dao;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import model.Kurs;
 
 public class KursDAO {
-    
-    public void getAllKurs() {
+
+    public List<Kurs> getAllKurs() {
+        List<Kurs> kursList = new ArrayList<>();
         try (Statement stmt = DataBase.getConnection().createStatement()) {
             String sql = "SELECT * FROM Kurs";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                Kurs kurs = new Kurs(rs.getInt("KursID"), rs.getString("Namn"), rs.getDouble("Studietakt"), rs.getString("Ort"), rs.getInt("Studieplatser"), rs.getString("Kurskod"), rs.getDouble("Hogskolepoang"));
+                Kurs kurs = new Kurs(rs.getInt("KursID"), rs.getString("Namn"), rs.getDouble("Studietakt"),
+                        rs.getString("Ort"), rs.getInt("Studieplatser"), rs.getString("Kurskod"),
+                        rs.getDouble("Hogskolepoang"));
+                kursList.add(kurs);
                 System.out.println(kurs);
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return kursList;
     }
 
     public void insertKurs(Kurs k) {
@@ -31,8 +42,7 @@ public class KursDAO {
             ps.setString(6, k.getKurskod());
             ps.setDouble(7, k.getHögskolepoäng());
             ps.executeUpdate();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -43,15 +53,13 @@ public class KursDAO {
         try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
             ps.setInt(1, k.getKursID());
             ps.executeUpdate();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
-
     }
 
-    public void alterKurs(Kurs k) { 
+    public void alterKurs(Kurs k) {
         String sql = "UPDATE Kurs SET Namn = ?, Studietakt = ?, Ort = ?, Studieplatser = ?, Kurskod = ?, Högskolepoäng = ? WHERE KursID = ?";
 
         try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
@@ -63,10 +71,9 @@ public class KursDAO {
             ps.setDouble(6, k.getHögskolepoäng());
             ps.setInt(7, k.getKursID());
             ps.executeUpdate();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-    }   
+    }
 
 }
