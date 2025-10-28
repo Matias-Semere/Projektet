@@ -1,18 +1,24 @@
 package view;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.util.Scanner;
 
-import controller.MainController;
-import controller.StudentCon;
-import model.lärare;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
-public class lärareView extends JPanel {
+import controller.LärareCon;
+import controller.MainController;
+import model.Student;
+
+public class LärareView extends JPanel {
 
     private MainController mc = new MainController();
-    private lärareCon sc;
+    private LärareCon sc;
     private JButton addButton, removeButton, UpdateListButton, showLoginButton;
     private DefaultListModel<String> listan = new DefaultListModel<String>();
     private JList<String> lärareJList = new JList<String>(listan);
@@ -25,7 +31,7 @@ public class lärareView extends JPanel {
         lärareJList.setModel(listan);
     };
 
-    public lärareView(lärareCon sc) {
+    public LärareView(LärareCon sc) {
         this.sc = sc;
         setBackground(Color.DARK_GRAY);
         initComponents();
