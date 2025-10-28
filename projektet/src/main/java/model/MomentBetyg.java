@@ -1,6 +1,6 @@
 package model;
 
-public class MomentBetyg extends Betyg {
+public class MomentBetyg {
 
     public enum mBetyg {
         A, B, C, D, E, F, VG, G, U;

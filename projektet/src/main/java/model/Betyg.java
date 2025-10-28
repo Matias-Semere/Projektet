@@ -1,22 +1,51 @@
 package model;
 
 public class Betyg {
-    protected int BetygID;
-    protected int StudentID;
-    protected int MomentID;
-    protected int KurstillfälleID;
+    private int StudentID;
+    private int BetygID;
+    private int KurstillfälleID;
+    private Grades värde;
 
-    private String betyg;
-
-    public Betyg() {
+    public enum Grades {
+        A, B, C, D, E, F, MVG, VG, G, U;
     }
 
-    public void setGrade(String s) {
-        this.betyg = s;
+    public Betyg(int StudentID, int KurstillfälleID, Grades värde) {
+        setStudentID(StudentID);
+        setKurstillfälleID(KurstillfälleID);
+        setGrade(värde);
     }
 
-    public String getGrade() {
-        return betyg;
+    public void setStudentID(int StudentID) {
+        this.StudentID = StudentID;
+    }
+
+    public int getStudentID() {
+        return StudentID;
+    }
+
+    public void setKurstillfälleID(int kurstillfälleID) {
+        this.KurstillfälleID = kurstillfälleID;
+    }
+
+    public int getKurstillfälleID() {
+        return KurstillfälleID;
+    }
+
+    public void setGrade(Grades grade) {
+        this.värde = grade;
+    }
+
+    public Grades getGrade() {
+        return värde;
+    }
+
+    public void setBetygID(int BetygID) {
+        this.BetygID = BetygID;
+    }
+
+    public int getBetygID() {
+        return BetygID;
     }
 
 }

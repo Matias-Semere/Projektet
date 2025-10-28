@@ -1,6 +1,6 @@
 package model;
 
-public class KursBetyg extends Betyg {
+public class KursBetyg {
 
     public enum kBetyg {
         A, B, C, D, E, F;
