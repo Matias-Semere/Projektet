@@ -21,7 +21,7 @@ public class App {
         // kDAO.insertKurs(kurs);
         // kDAO.getAllKurs();
 
-        Kurstillfälle k = new Kurstillfälle(2, 1, "2021-01-01");
+        Kurstillfälle k = new Kurstillfälle(3, 1, "2021-01-01");
         KurstilfälleDAO kDAO = new KurstilfälleDAO();
 
         kDAO.insertKurstillfälle(k);
