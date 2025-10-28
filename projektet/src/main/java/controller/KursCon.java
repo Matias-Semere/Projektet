@@ -10,7 +10,6 @@ public class KursCon {
 
     public KursCon(KursDAO k) {
         this.dao = k;
-
     }
 
     public void insertKurs(Kurs kurs) {
