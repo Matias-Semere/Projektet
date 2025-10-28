@@ -73,8 +73,8 @@ CREATE TABLE Betyg (
 
 -- LÄRARE
 CREATE TABLE Larare (
-    LarareID INTEGER PRIMARY KEY AUTOINCREMENT,
     Namn TEXT NOT NULL,
+    LarareID INTEGER PRIMARY KEY AUTOINCREMENT,
     Personnummer INTEGER NOT NULL,
     KurstillfälleID INTEGER NOT NULL,
     FOREIGN KEY (KurstillfälleID) REFERENCES Kurstillfälle(KurstillfälleID)

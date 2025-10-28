@@ -1,23 +1,32 @@
 package dao;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Kurstillfälle;
 
 public class KurstilfälleDAO {
     
-    public void getAllKurstillfälle() {
+    public List<Kurstillfälle> getAllKurstillfälle() {
+        List<Kurstillfälle> kurstillfälle = new ArrayList<>();
         try (Statement stmt = DataBase.getConnection().createStatement()) {
             String sql = "SELECT * FROM Kurstillfalle";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Kurstillfälle k = new Kurstillfälle(rs.getString("Kurstillfalle"), rs.getInt("KursID"), rs.getString("Datum"));
+                kurstillfälle.add(k);
                 System.out.println(k);
             }
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return kurstillfälle;
     }
 
     public void insertKurstillfälle(Kurstillfälle k) {

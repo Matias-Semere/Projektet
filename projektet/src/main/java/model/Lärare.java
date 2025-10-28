@@ -4,9 +4,9 @@ public class Lärare {
     private int LärarID;
     private String Namn;
     private int Personnummer;
-    private String KurstillfälleID;
+    private int KurstillfälleID;
 
-    public Lärare(int LärarID, String Namn, int Personnummer, String KurstillfälleID) {
+    public Lärare(int LärarID, String Namn, int Personnummer, int KurstillfälleID) {
         this.LärarID = LärarID;
         this.Namn = Namn;
         this.Personnummer = Personnummer;
@@ -37,11 +37,11 @@ public class Lärare {
         this.Personnummer = Personnummer;
     }
 
-    public String getKurstillfälleID() {
+    public int getKurstillfälleID() {
         return KurstillfälleID;
     }
 
-    public void setKurstillfälleID(String KurstillfälleID) {
+    public void setKurstillfälleID(int KurstillfälleID) {
         this.KurstillfälleID = KurstillfälleID;
     }
 

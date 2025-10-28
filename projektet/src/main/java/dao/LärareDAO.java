@@ -1,24 +1,33 @@
 package dao;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import model.Lärare;
-import java.sql.*;
-import java.util.*;
 
 public class LärareDAO {
-    
-    public void getAllLärare() {
+
+    public List<Lärare> getAllLärare() {
+        List<Lärare> L = new ArrayList<>();
         try (Statement stmt = DataBase.getConnection().createStatement()) {
             String sql = "SELECT * FROM Larare";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                Lärare l = new Lärare(rs.getInt("LarareID"), rs.getString("Namn"), rs.getInt("Personnummer"), rs.getString("KurstillfalleID"));
+                Lärare l = new Lärare(rs.getInt("LarareID"), rs.getString("Namn"), rs.getInt("Personnummer"),
+                        rs.getInt("KurstillfalleID"));
+                L.add(l);
                 System.out.println(l);
             }
 
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return L;
     }
 
     public void insertLärare(Lärare lärare) {
@@ -28,7 +37,7 @@ public class LärareDAO {
             ps.setInt(1, lärare.getLärarID());
             ps.setString(2, lärare.getNamn());
             ps.setInt(3, lärare.getPersonnummer());
-            ps.setString(4, lärare.getKurstillfälleID());
+            ps.setInt(4, lärare.getKurstillfälleID());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -44,6 +53,21 @@ public class LärareDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void alterLärare(Lärare lärare) {
+        String sql = "UPDATE Larare SET Namn = ?, LarareID = ?, Personnummer = ?, KurstilfälleID = ?, WHERE LarareID = ?";
+        try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
+            ps.setString(1, lärare.getNamn());
+            ps.setInt(2, lärare.getLärarID());
+            ps.setInt(3, lärare.getPersonnummer());
+            ps.setInt(4, lärare.getKurstillfälleID());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
     }
 
 }

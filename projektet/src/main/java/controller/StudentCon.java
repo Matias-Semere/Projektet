@@ -7,7 +7,6 @@ import model.Student;
 
 public class StudentCon {
     StudentDAO dao;
-    
 
     public StudentCon(StudentDAO dao) {
         this.dao = dao;
@@ -42,5 +41,8 @@ public class StudentCon {
         System.out.println(howl.substring(howl.indexOf("Name: ") + 6, howl.indexOf(", SSN: ")));
     }
 
+    public void alterStudent(Student student) {
+        dao.alterStudent(student);
+    }
 
 }
