@@ -6,9 +6,14 @@ import model.StudentInlogg;
 public class StudentInloggCon {
     
     StudentInloggDAO dao;
+    StudentCon sc;
 
     public StudentInloggCon(StudentInloggDAO dao) {
         this.dao = dao;
+    }
+
+    public void getStudent(int studentID) {
+        // sc.getStudentbyID();
     }
 
     public void insertStudentInlogg(StudentInlogg studentInlogg) {

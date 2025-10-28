@@ -6,8 +6,8 @@ public class Lärare {
     private int Personnummer;
     private int KurstillfälleID;
 
-    public Lärare(int LärarID, String Namn, int Personnummer, int KurstillfälleID) {
-        this.LärarID = LärarID;
+    public Lärare(String Namn, int Personnummer, int KurstillfälleID) {
+        // this.LärarID = LärarID;
         this.Namn = Namn;
         this.Personnummer = Personnummer;
         this.KurstillfälleID = KurstillfälleID;
