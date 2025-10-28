@@ -30,6 +30,21 @@ public class LärareDAO {
         return L;
     }
 
+    public Lärare getLärare(int lärareID) {
+        Lärare l = null;
+        try (Statement stmt = DataBase.getConnection().createStatement()) {
+            String sql = "SELECT * FROM Lärare WHERE LärareID = ?";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                l = new Lärare(rs.getInt("LärareID"), rs.getString("Namn"), rs.getInt("Personnummer"),
+                        rs.getInt("KurstillfälleID"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return l;
+    }
+
     public void insertLärare(Lärare lärare) {
         String sql = "INSERT INTO Lärare VALUES (?, ?, ?, ?)";
 

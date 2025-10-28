@@ -1,21 +1,21 @@
 package model;
 
 public class Kurstillfälle {
-    private String KurstillfälleID;
+    private int KurstillfälleID;
     private int KursID;
     private String Datum;
 
-    public Kurstillfälle(String KurstillfälleID, int KursID, String Datum) {
+    public Kurstillfälle(int KurstillfälleID, int KursID, String Datum) {
         this.KurstillfälleID = KurstillfälleID;
         this.KursID = KursID;
         this.Datum = Datum;
     }
 
-    public String getKurstillfälleID() {
+    public int getKurstillfälleID() {
         return KurstillfälleID;
     }
 
-    public void setKurstillfälleID(String KurstillfälleID) {
+    public void setKurstillfälleID(int KurstillfälleID) {
         this.KurstillfälleID = KurstillfälleID;
     }
 

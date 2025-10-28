@@ -10,6 +10,21 @@ import java.util.List;
 import model.Kurstillfälle;
 
 public class KurstilfälleDAO {
+
+    public Kurstillfälle getKurstillfälle(String kurstillfälleID) {
+        Kurstillfälle k = null;
+        try (Statement stmt = DataBase.getConnection().createStatement()) {
+            String sql = "SELECT * FROM Kurstillfälle WHERE KurstillfälleID = ?";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                k = new Kurstillfälle(rs.getString("Kurstillfälle"), rs.getInt("KursID"), rs.getString("Datum"));
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return k;
+    }
     
     public List<Kurstillfälle> getAllKurstillfälle() {
         List<Kurstillfälle> kurstillfälle = new ArrayList<>();
@@ -30,12 +45,12 @@ public class KurstilfälleDAO {
     }
 
     public void insertKurstillfälle(Kurstillfälle k) {
-        String sql = "INSERT INTO Kurstillfälle VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Kurstillfälle VALUES (?, ?)";
 
         try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
-            ps.setString(1, k.getKurstillfälleID());
-            ps.setInt(2, k.getKursID());
-            ps.setString(3, k.getDatum());
+            // ps.setString(1, k.getKurstillfälleID());
+            ps.setInt(1, k.getKursID());
+            ps.setString(2, k.getDatum());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

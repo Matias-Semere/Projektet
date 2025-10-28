@@ -15,6 +15,7 @@ import controller.AdminCon;
 import controller.MainController;
 import model.Betyg;
 import model.Student;
+import model.Betyg.Grades;
 
 public class AdminView extends JPanel {
     Betyg betyg;
@@ -48,8 +49,10 @@ public class AdminView extends JPanel {
         listModel = new DefaultListModel<>();
 
         studentList.addListSelectionListener(e -> {
-            betyg.setGrade(selectGrade.getSelectedItem());
-            betyg = new Betyg(12, 13, selectGrade.getSelectedItem());
+            // betyg.setGrade(selectGrade.getSelectedItem());
+            Object sel = selectGrade.getSelectedItem();
+            Grades grade = (Grades) sel;
+            betyg = new Betyg(12, 13, grade);
 
         });
 
