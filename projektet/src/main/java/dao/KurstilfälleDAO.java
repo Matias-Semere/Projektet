@@ -17,7 +17,7 @@ public class KurstilfälleDAO {
             String sql = "SELECT * FROM Kurstillfälle WHERE KurstillfälleID = ?";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                k = new Kurstillfälle(rs.getString("Kurstillfälle"), rs.getInt("KursID"), rs.getString("Datum"));
+                k = new Kurstillfälle(rs.getInt("KurstillfälleID"), rs.getInt("KursID"), rs.getString("Datum"));
             }
         }
         catch (SQLException e) {
@@ -32,7 +32,7 @@ public class KurstilfälleDAO {
             String sql = "SELECT * FROM Kurstillfälle";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                Kurstillfälle k = new Kurstillfälle(rs.getString("Kurstillfälle"), rs.getInt("KursID"), rs.getString("Datum"));
+                Kurstillfälle k = new Kurstillfälle(rs.getInt("KurstillfälleID"), rs.getInt("KursID"), rs.getString("Datum"));
                 kurstillfälle.add(k);
                 System.out.println(k);
             }

@@ -16,7 +16,6 @@ public class AdminCon {
 
     public AdminCon(AdminDAO amdmindao) {
         this.dao = amdmindao;
-
     }
 
     public List<Admin> getAllAdmins() {

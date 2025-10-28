@@ -1,9 +1,7 @@
 package view;
 
-import javax.swing.JFrame;
-
-import controller.AdminCon;
-import controller.StudentCon;
+import javax.swing.*;
+import java.awt.*;
 import controller.*;
 
 public class MainFrame extends JFrame {
