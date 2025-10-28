@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 
 import controller.AdminCon;
 import controller.StudentCon;
+import controller.*;
 
 public class MainFrame extends JFrame {
 
@@ -13,6 +14,7 @@ public class MainFrame extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         add(new StudentView(sc));
+        // add(new ewadminView(sc));
     }
 
     public MainFrame(AdminCon ac) {
