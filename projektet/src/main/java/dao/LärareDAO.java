@@ -14,11 +14,11 @@ public class LärareDAO {
     public List<Lärare> getAllLärare() {
         List<Lärare> L = new ArrayList<>();
         try (Statement stmt = DataBase.getConnection().createStatement()) {
-            String sql = "SELECT * FROM Larare";
+            String sql = "SELECT * FROM Lärare";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                Lärare l = new Lärare(rs.getInt("LarareID"), rs.getString("Namn"), rs.getInt("Personnummer"),
-                        rs.getInt("KurstillfalleID"));
+                Lärare l = new Lärare(rs.getInt("LärareID"), rs.getString("Namn"), rs.getInt("Personnummer"),
+                        rs.getInt("KurstillfälleID"));
                 L.add(l);
                 System.out.println(l);
             }
@@ -31,7 +31,7 @@ public class LärareDAO {
     }
 
     public void insertLärare(Lärare lärare) {
-        String sql = "INSERT INTO Larare VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Lärare VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
             ps.setInt(1, lärare.getLärarID());
@@ -56,7 +56,7 @@ public class LärareDAO {
     }
 
     public void alterLärare(Lärare lärare) {
-        String sql = "UPDATE Larare SET Namn = ?, LarareID = ?, Personnummer = ?, KurstilfälleID = ?, WHERE LarareID = ?";
+        String sql = "UPDATE Lärare SET Namn = ?, LärareID = ?, Personnummer = ?, KurstilfälleID = ?, WHERE LärareID = ?";
         try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
             ps.setString(1, lärare.getNamn());
             ps.setInt(2, lärare.getLärarID());

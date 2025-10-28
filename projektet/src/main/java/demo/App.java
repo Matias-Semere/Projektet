@@ -1,4 +1,4 @@
-package model;
+package demo;
 
 import view.MainFrame;
 import controller.StudentCon;
@@ -30,9 +30,7 @@ public class App {
 
         // l.getAllLärare();
 
-        StudentDAO dao = new StudentDAO();
-        
-        StudentCon sc = new StudentCon(dao);
+        StudentCon sc = new StudentCon(new StudentDAO());
         
         SwingUtilities.invokeLater(() -> new MainFrame(sc).setVisible(true));
     }

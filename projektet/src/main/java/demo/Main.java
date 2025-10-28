@@ -1,4 +1,7 @@
-package model;
+package demo;
+
+import model.Betyg;
+import model.Betyg.Grades;
 
 public class Main {
     public static void main(String[] args) {

@@ -19,7 +19,7 @@ public class KursDAO {
             while (rs.next()) {
                 Kurs kurs = new Kurs(rs.getInt("KursID"), rs.getString("Namn"), rs.getDouble("Studietakt"),
                         rs.getString("Ort"), rs.getInt("Studieplatser"), rs.getString("Kurskod"),
-                        rs.getDouble("Hogskolepoang"));
+                        rs.getDouble("Högskolepoäng"));
                 kursList.add(kurs);
                 System.out.println(kurs);
             }

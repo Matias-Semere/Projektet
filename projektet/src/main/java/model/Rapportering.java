@@ -7,8 +7,8 @@ public class Rapportering {
     private int LärarID;
     private int AdminID;
 
-    public Rapportering(int RapporteringsID, int StudentID, String MomentID, int LärarID, int AdminID) {
-        this.RapporteringsID = RapporteringsID;
+    public Rapportering(int StudentID, String MomentID, int LärarID, int AdminID) {
+        // this.RapporteringsID = RapporteringsID;
         this.StudentID = StudentID;
         this.MomentID = MomentID;
         this.LärarID = LärarID;

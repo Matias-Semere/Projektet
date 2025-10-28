@@ -14,10 +14,10 @@ public class KurstilfälleDAO {
     public List<Kurstillfälle> getAllKurstillfälle() {
         List<Kurstillfälle> kurstillfälle = new ArrayList<>();
         try (Statement stmt = DataBase.getConnection().createStatement()) {
-            String sql = "SELECT * FROM Kurstillfalle";
+            String sql = "SELECT * FROM Kurstillfälle";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                Kurstillfälle k = new Kurstillfälle(rs.getString("Kurstillfalle"), rs.getInt("KursID"), rs.getString("Datum"));
+                Kurstillfälle k = new Kurstillfälle(rs.getString("Kurstillfälle"), rs.getInt("KursID"), rs.getString("Datum"));
                 kurstillfälle.add(k);
                 System.out.println(k);
             }
@@ -30,7 +30,7 @@ public class KurstilfälleDAO {
     }
 
     public void insertKurstillfälle(Kurstillfälle k) {
-        String sql = "INSERT INTO Kurstillfalle VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Kurstillfälle VALUES (?, ?, ?)";
 
         try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
             ps.setString(1, k.getKurstillfälleID());
@@ -43,7 +43,7 @@ public class KurstilfälleDAO {
     }
 
     public void deleteKurstillfälle(Kurstillfälle k) {
-        String sql = "DELETE FROM Kurstillfalle WHERE KurstillfalleID = ?";
+        String sql = "DELETE FROM Kurstillfälle WHERE KurstillfälleID = ?";
 
         try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
             ps.setString(1, k.getKurstillfälleID());
@@ -54,7 +54,7 @@ public class KurstilfälleDAO {
     }
 
     public void alterKurstillfälle(Kurstillfälle k) {
-        String sql = "UPDATE Kurstillfalle SET KursID = ?, Datum = ? WHERE KurstillfalleID = ?";
+        String sql = "UPDATE Kurstillfälle SET KursID = ?, Datum = ? WHERE KurstillfälleID = ?";
 
         try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
             ps.setInt(1, k.getKursID());
