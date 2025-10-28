@@ -19,4 +19,8 @@ public class StudentInloggCon {
         dao.deleteStudentInlogg(studentInlogg);
     }
 
+    public void alterStudentInlogg(StudentInlogg studentInlogg) {
+        dao.alterStudentInlogg(studentInlogg);
+    }
+
 }
