@@ -18,7 +18,7 @@ public class KursDAO {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Kurs kurs = new Kurs(rs.getInt("KursID"), rs.getString("Namn"), rs.getDouble("Studietakt"),
-                        rs.getString("Ort"), rs.getInt("Studieplatser"), rs.getString("Kurskod"),
+                        rs.getString("Ort"), rs.getInt("Antal_platser"), rs.getString("Kurskod"),
                         rs.getDouble("Högskolepoäng"));
                 kursList.add(kurs);
                 System.out.println(kurs);
@@ -60,7 +60,7 @@ public class KursDAO {
     }
 
     public void alterKurs(Kurs k) {
-        String sql = "UPDATE Kurs SET Namn = ?, Studietakt = ?, Ort = ?, Studieplatser = ?, Kurskod = ?, Högskolepoäng = ? WHERE KursID = ?";
+        String sql = "UPDATE Kurs SET Namn = ?, Studietakt = ?, Ort = ?, Antal_platser = ?, Kurskod = ?, Högskolepoäng = ? WHERE KursID = ?";
 
         try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
             ps.setString(1, k.getNamn());

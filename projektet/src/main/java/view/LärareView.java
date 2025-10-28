@@ -13,38 +13,38 @@ import javax.swing.JScrollPane;
 
 import controller.LärareCon;
 import controller.MainController;
-import model.Student;
+import model.Lärare;
 
 public class LärareView extends JPanel {
 
     private MainController mc = new MainController();
-    private LärareCon sc;
+    private LärareCon lc;
     private JButton addButton, removeButton, UpdateListButton, showLoginButton;
     private DefaultListModel<String> listan = new DefaultListModel<String>();
     private JList<String> lärareJList = new JList<String>(listan);
-    private JScrollPane läraretScroll = new JScrollPane(StudentJList);
+    private JScrollPane läraretScroll = new JScrollPane(lärareJList);
     private String htmlstyle = "<html><style> h3 {color: White; border: 10px solid black; padding: 10px;}</style> <h3>";
 
     private ActionListener update = e -> {
         listan.clear();
-        sc.getListOfStudents().forEach(s -> listan.addElement(htmlstyle + s.toString()));
+        lc.getListOfLärare().forEach(s -> listan.addElement(htmlstyle + s.toString()));
         lärareJList.setModel(listan);
     };
 
-    public LärareView(LärareCon sc) {
-        this.sc = sc;
+    public LärareView(LärareCon lc) {
+        this.lc = lc;
         setBackground(Color.DARK_GRAY);
         initComponents();
-        StudentJList.setBackground(Color.DARK_GRAY);
+        lärareJList.setBackground(Color.DARK_GRAY);
         add(addButton);
         add(removeButton);
         add(UpdateListButton);
-        add(StudentScroll);
+        add(lärareJList);
         add(showLoginButton);
         mc.addJobb(() -> {
             listan.clear();
-            sc.getListOfStudents().forEach(s -> listan.addElement(htmlstyle + s.toString()));
-            StudentJList.setModel(listan);
+            lc.getListOfLärare().forEach(s -> listan.addElement(htmlstyle + s.toString()));
+            lärareJList.setModel(listan);
         });
     }
 
@@ -58,17 +58,17 @@ public class LärareView extends JPanel {
             new Loggin();
         });
 
-        StudentScroll.setPreferredSize(new Dimension(500, 800));
-        StudentScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        lärareJList.setPreferredSize(new Dimension(500, 800));
+        // lärareJList.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         addButton.addActionListener(e -> {
-            // nextStudentID = sc.getStudentCount() + 1;
-            sc.insertStudent(new Student("Matias", 2003, 2));
+            // nextStudentID = lc.getStudentCount() + 1;
+            lc.insertLärare(new Lärare(21, "Matias", 2000, 5));
             mc.work();
         });
         removeButton.addActionListener(e -> {
             int ID;
-            if (StudentJList.getSelectedIndex() != -1) {
-                Scanner s = new Scanner(StudentJList.getSelectedValue());
+            if (lärareJList.getSelectedIndex() != -1) {
+                Scanner s = new Scanner(lärareJList.getSelectedValue());
                 s.next();
                 String temp2 = s.next();
 
@@ -76,7 +76,7 @@ public class LärareView extends JPanel {
 
                 ID = Integer.parseInt(temp);
                 System.out.println(temp);
-                sc.deleteStudentByID(ID);
+                // lc.deleteLärare();
                 s.close();
             }
             mc.work();
