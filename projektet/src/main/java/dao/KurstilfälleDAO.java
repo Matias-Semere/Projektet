@@ -45,12 +45,12 @@ public class KurstilfälleDAO {
     }
 
     public void insertKurstillfälle(Kurstillfälle k) {
-        String sql = "INSERT INTO Kurstillfälle VALUES (?, ?)";
+        String sql = "INSERT INTO Kurstillfälle VALUES (?, ?, ?)";
 
         try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
-            // ps.setString(1, k.getKurstillfälleID());
-            ps.setInt(1, k.getKursID());
-            ps.setString(2, k.getDatum());
+            ps.setInt(1, k.getKurstillfälleID());
+            ps.setInt(2, k.getKursID());
+            ps.setString(3, k.getDatum());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -61,7 +61,7 @@ public class KurstilfälleDAO {
         String sql = "DELETE FROM Kurstillfälle WHERE KurstillfälleID = ?";
 
         try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
-            ps.setString(1, k.getKurstillfälleID());
+            ps.setInt(1, k.getKurstillfälleID());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -74,7 +74,7 @@ public class KurstilfälleDAO {
         try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
             ps.setInt(1, k.getKursID());
             ps.setString(2, k.getDatum());
-            ps.setString(3, k.getKurstillfälleID());
+            ps.setInt(3, k.getKurstillfälleID());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

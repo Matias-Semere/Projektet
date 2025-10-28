@@ -21,4 +21,12 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         add(new AdminView(ac));
     }
+
+    public MainFrame(LärareCon lc) {
+        setTitle("Student Database");
+        setSize(1000, 1000);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        add(new LärareView(lc));
+    }
 }
