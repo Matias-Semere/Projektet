@@ -14,8 +14,7 @@ public class fillDatabase {
             while (sc.hasNextLine()) {
                 StudentDAO dao = new StudentDAO();
                 String[] line = sc.nextLine().split(";");
-                int year = Integer.parseInt(line[1].substring(0, line[1].indexOf("-")));
-                Student student = new Student(count++,line[0], year , 0);
+                Student student = new Student(count++, count , line[0], 1234);
                 dao.insertStudent(student);
             }
             sc.close();

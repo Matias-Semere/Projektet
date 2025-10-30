@@ -32,6 +32,10 @@ public class StudentCon {
         dao.insertStudent(student);
     }
 
+    public void insertStudent(Student student, int userId) {
+        dao.insertStudentWithUserID(student, userId);
+    }
+
     public String getStudentbyID(int studentID) {
         return dao.getAllStudents().get(studentID).toString();
     }

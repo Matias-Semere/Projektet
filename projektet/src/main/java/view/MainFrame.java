@@ -7,26 +7,27 @@ import controller.*;
 public class MainFrame extends JFrame {
 
     public MainFrame(StudentCon sc) {
+        this();
         setTitle("Student View");
-        setSize(1000, 1000);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         add(new StudentView(sc));
     }
 
     public MainFrame(AdminCon ac) {
+        this();
         setTitle("Admin View");
-        setSize(1000, 1000);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         add(new AdminView(ac));
     }
 
     public MainFrame(LärareCon lc) {
+        this();
         setTitle("Student Database");
+        add(new LärareView(lc));
+    }
+
+    public MainFrame() {
         setSize(1000, 1000);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        add(new LärareView(lc));
     }
+
 }

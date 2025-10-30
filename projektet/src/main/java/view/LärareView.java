@@ -55,14 +55,14 @@ public class LärareView extends JPanel {
         showLoginButton = new JButton("Visa Login");
 
         showLoginButton.addActionListener(e -> {
-            new Loggin();
+            // new Loggin(sc);
         });
 
         lärareJList.setPreferredSize(new Dimension(500, 800));
         // lärareJList.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         addButton.addActionListener(e -> {
             // nextStudentID = lc.getStudentCount() + 1;
-            lc.insertLärare(new Lärare(2, "Matias", 2000, 2));
+            lc.insertLärare(new Lärare(2, "Matias", 2));
             mc.work();
         });
         removeButton.addActionListener(e -> {

@@ -17,8 +17,7 @@ public class LärareDAO {
             String sql = "SELECT * FROM Lärare";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                Lärare l = new Lärare(rs.getInt("LärareID"), rs.getString("Namn"), rs.getInt("Personnummer"),
-                        rs.getInt("KurstillfälleID"));
+                Lärare l = new Lärare(rs.getInt("LärareID"), rs.getString("Namn"), rs.getInt("KurstillfälleID"));
                 L.add(l);
                 System.out.println(l);
             }
@@ -36,7 +35,7 @@ public class LärareDAO {
             String sql = "SELECT * FROM Lärare WHERE LärareID = ?";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                l = new Lärare(rs.getInt("LärareID"), rs.getString("Namn"), rs.getInt("Personnummer"),
+                l = new Lärare(rs.getInt("LärareID"), rs.getString("Namn"),
                         rs.getInt("KurstillfälleID"));
             }
         } catch (SQLException e) {
@@ -46,13 +45,12 @@ public class LärareDAO {
     }
 
     public void insertLärare(Lärare lärare) {
-        String sql = "INSERT INTO Lärare VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Lärare VALUES (?, ?, ?)";
 
         try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
             ps.setInt(1, lärare.getLärarID());
             ps.setString(2, lärare.getNamn());
-            ps.setInt(3, lärare.getPersonnummer());
-            ps.setInt(4, lärare.getKurstillfälleID());
+            ps.setInt(3, lärare.getKurstillfälleID());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -71,12 +69,11 @@ public class LärareDAO {
     }
 
     public void alterLärare(Lärare lärare) {
-        String sql = "UPDATE Lärare SET Namn = ?, LärareID = ?, Personnummer = ?, KurstilfälleID = ?, WHERE LärareID = ?";
+        String sql = "UPDATE Lärare SET Namn = ?, LärareID = ?, KurstilfälleID = ?, WHERE LärareID = ?";
         try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
             ps.setString(1, lärare.getNamn());
             ps.setInt(2, lärare.getLärarID());
-            ps.setInt(3, lärare.getPersonnummer());
-            ps.setInt(4, lärare.getKurstillfälleID());
+            ps.setInt(3, lärare.getKurstillfälleID());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

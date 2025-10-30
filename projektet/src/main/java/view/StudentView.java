@@ -20,6 +20,7 @@ public class StudentView extends JPanel {
         initComponents();
 
         studentlist = new StudentListView(sc);
+        studentlist.setVisible(false);
         add(studentlist);
         add(UpdateListButton);
         add(showLoginButton);
@@ -32,7 +33,7 @@ public class StudentView extends JPanel {
         showLoginButton = new JButton("Visa Login");
 
         addButton.addActionListener(e -> {
-            sc.insertStudent(new Student( 1, "Matias", 2003, 2));
+            sc.insertStudent(new Student( 3, 100, "Matias", 2));
         });
 
         // removeButton.addActionListener(e -> studentlist.deleteStudent(new Student("Matias", 2003, 2)));
