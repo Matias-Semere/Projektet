@@ -6,52 +6,37 @@ import java.awt.*;
 import controller.StudentCon;
 import model.Student;
 
-public class StudentView extends JPanel {
+public class StudentView extends BaseView {
     
     private StudentCon sc;
-    private JButton addButton, removeButton, UpdateListButton, showLoginButton;
+    private JButton anmälButton, hoppavButton, seKurserButton, seBetygButton;
     StudentListView studentlist;
 
     
     public StudentView(StudentCon sc) {
+        super("Student");
         this.sc = sc;
+        setLayout(new BorderLayout());
         setBackground(Color.DARK_GRAY);
-        
         initComponents();
 
+        
+    }
+    
+    public void initComponents() {
         studentlist = new StudentListView(sc);
         studentlist.setVisible(false);
+        
+        anmälButton = new JButton("Anmäl");
+        hoppavButton = new JButton("Hoppa väg");
+        seKurserButton = new JButton("Se kurser");
+        seBetygButton = new JButton("Se betyg");
+        
         add(studentlist);
-        add(UpdateListButton);
-        add(showLoginButton);
-    }
-
-    public void initComponents() {
-        addButton = new JButton("Lägg till Student");
-        removeButton = new JButton("Tabort Student");
-        UpdateListButton = new JButton("Uppdatera Listan");
-        showLoginButton = new JButton("Visa Login");
-
-        addButton.addActionListener(e -> {
-            sc.insertStudent(new Student( 3, 100, "Matias", 2));
-        });
-
-        // removeButton.addActionListener(e -> studentlist.deleteStudent(new Student("Matias", 2003, 2)));
-        removeButton.addActionListener(e -> studentlist.deleteStudentByID());
-
-        UpdateListButton.addActionListener(e -> {
-            studentlist.refreshStudentList();
-        });
-
-
-        showLoginButton.addActionListener(e -> {
-            // new Loggin();
-            studentlist.printStudent();
-        });
-
-        add(addButton);
-        add(removeButton);
-
+        add(anmälButton);
+        add(hoppavButton);
+        add(seKurserButton);
+        add(seBetygButton);
     }
 
 }

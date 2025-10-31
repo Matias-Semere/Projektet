@@ -3,13 +3,13 @@ package model;
 public class User {
 
     int userId;
-    String name;
+    String Username;
     String password;
     String role;
 
     public User(int userId, String name, String password, String role) {
         this.userId = userId;
-        this.name = name;
+        this.Username = name;
         this.password = password;
         this.role = role;
     }
@@ -22,12 +22,12 @@ public class User {
         this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return Username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String name) {
+        this.Username = name;
     }
 
     public String getPassword() {
@@ -49,7 +49,7 @@ public class User {
     @Override
     public String toString() {
         return String.format("UserID: %d, Name: %s, Password: %s, Role: %s",
-                userId, name, password, role);
+                userId, Username, password, role);
     }
     
 }

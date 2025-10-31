@@ -1,50 +1,33 @@
 package view;
 
 import java.awt.*;
-import java.util.stream.IntStream;
-
 import javax.swing.*;
 import controller.*;
 
 public class Loggin extends JDialog {
 
-    private UserCon uc;
-    private LärareCon lc;
-    private AdminCon ac;
-    private StudentCon sc;
-    private JLabel usernameLabel = new JLabel("Användarnamn: ");
-    private JLabel passwordLabel = new JLabel("Lösenord: ");
-    private JTextField username = new JTextField("", 10);
-    private JPasswordField password = new JPasswordField("", 10);
-    private JComboBox<String> role = new JComboBox<String>(new String[] { "Student", "Lärare", "Admin" });
+    private JLabel usernameLabel = new JLabel("Användare: ");
+    private JLabel passwordLabel = new JLabel("Lösenord:  ");
+    private JTextField username = new JTextField("Matias", 10);
+    private JPasswordField password = new JPasswordField("1234", 10);
+    private JComboBox<String> role = new JComboBox<String>(new String[] { "Student", "Teacher", "Admin" });
     private JButton login = new JButton("Logga in");
     private JPanel namndel, passdel, roledel, loginPanel;
 
     public Loggin(UserCon uc, LärareCon lc, AdminCon ac, StudentCon sc) {
-        this.uc = uc;
-        this.lc = lc;
-        this.ac = ac;
-        this.sc = sc;
-        setSize(500, 500);
-        setModal(false);
-        setLayout(new FlowLayout());
+        setSize(400, 200);
         initComponents();
+        
+        login.addActionListener(e -> loginFunction(uc, lc, ac, sc));
 
-        login.addActionListener(e -> loginFunction());
-
+        // pack();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
     }
 
     private void initComponents() {
-        namndel = new JPanel();
-        passdel = new JPanel();
-        roledel = new JPanel();
-
-        loginPanel = new JPanel();
-        loginPanel.setLayout(new BorderLayout());
-        loginPanel.setBackground(Color.DARK_GRAY);
+        styleinit();
 
         namndel.add(usernameLabel, BorderLayout.NORTH);
         namndel.add(username, BorderLayout.SOUTH);
@@ -55,36 +38,46 @@ public class Loggin extends JDialog {
         roledel.add(login, BorderLayout.WEST);
         roledel.add(role, BorderLayout.EAST);
 
-        loginPanel.add(namndel, BorderLayout.WEST);
-        loginPanel.add(passdel, BorderLayout.EAST);
+        loginPanel.add(namndel, BorderLayout.NORTH);
+        loginPanel.add(passdel, BorderLayout.CENTER);
         loginPanel.add(roledel, BorderLayout.SOUTH);
 
         add(loginPanel);
     }
 
-    private void loginFunction() {
+    private void styleinit() {
+        stil(passwordLabel);
+        stil(usernameLabel);
+        stil(username);
+        stil(password);
+        stil(login);
+        stil(role);
 
-        String lösen = "";
-        for (char a : password.getPassword()) {
-            lösen += a;
+        namndel = new JPanel();
+        passdel = new JPanel();
+        roledel = new JPanel();
+        loginPanel = new JPanel();
+
+        loginPanel.setBackground(Color.DARK_GRAY);
+        namndel.setOpaque(false);
+        passdel.setOpaque(false);
+        roledel.setOpaque(false);
+    }
+
+    private void stil(JComponent label) {
+        if (label instanceof JLabel) {
+            label.setForeground(Color.WHITE);
         }
+        label.setFont(new Font("Arial", Font.BOLD, 20));
+    }
 
+    private void loginFunction(UserCon uc, LärareCon lc, AdminCon ac, StudentCon sc) {
         String val = (String) role.getSelectedItem();
-
-        if (val.equals("Student")) {
-            if (username.getText().equals("Matias") && lösen.equals("1234")) {
-                System.out.println("Matias: Loggade in som student");
-            }
-        }
-        else if (val.equals("Lärare")) {
-            if (username.getText().equals("Matias") && lösen.equals("1234")) {
-                System.out.println("Matias är inte lärare");
-            }
-        }
-        else if (val.equals("Admin")) {
-            if (username.getText().equals("Matias") && lösen.equals("1234")) {
-                System.out.println("Matias är inte admin");
-            }
+        if (uc.loggin(username.getText(), password.getPassword(), val)) {
+            dispose();
+            if (val.equals("Student"))new MainFrame(new StudentView(sc), username.getText());
+            else if (val.equals("Teacher")) new MainFrame(new LärareView(lc), username.getText());
+            else if (val.equals("Admin")) new MainFrame(new AdminView(ac), username.getText());
         }
     }
 

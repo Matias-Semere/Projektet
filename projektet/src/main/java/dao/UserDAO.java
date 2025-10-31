@@ -10,7 +10,7 @@ public class UserDAO {
         String sql = "INSERT INTO User (UserID, Username, Password, Role) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, user.getUserId());
-            ps.setString(2, user.getName());
+            ps.setString(2, user.getUsername());
             ps.setString(3, user.getPassword());
             ps.setString(4, user.getRole());
             ps.executeUpdate();
@@ -26,7 +26,6 @@ public class UserDAO {
         }
     }
 
-    
     public void deleteUser(User user) {     
         String sql = "DELETE FROM User WHERE UserID = ?";
         try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
@@ -58,6 +57,4 @@ public class UserDAO {
         }
         return users;
     }
-
-
 }
