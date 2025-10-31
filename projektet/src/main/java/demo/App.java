@@ -16,9 +16,11 @@ public class App {
         LärareCon lc = new LärareCon(new LärareDAO());
         AdminCon ac = new AdminCon(new AdminDAO());
         StudentCon sc = new StudentCon(new StudentDAO());
-        KurstillfälleCon kc = new KurstillfälleCon(new KurstilfälleDAO());
+        KursCon kc = new KursCon(new KursDAO());
+        KurstillfälleCon kfc = new KurstillfälleCon(new KurstilfälleDAO());
 
-        new fillDatabase();
+        new FillStudents(uc);
+        new FillCourses(kc, kfc);
 
         // SwingUtilities.invokeLater(() -> new Loggin(uc, lc, ac, sc).setVisible(true));
     }
