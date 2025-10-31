@@ -1,8 +1,7 @@
 package dao;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import model.Kurs;
 
 public class KursDAO {
@@ -31,6 +30,7 @@ public class KursDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return kursList;
     }
 
@@ -49,26 +49,31 @@ public class KursDAO {
             ps.setDouble(7, k.getHögskolepoäng());
 
             ps.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void deleteKurs(int kursID) {
+    public void deleteKurs(Kurs k) {
         String sql = "DELETE FROM Kurs WHERE KursID = ?";
 
         try (Connection conn = DataBase.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, kursID);
+            ps.setInt(1, k.getKursID());
             ps.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void updateKurs(Kurs k) {
-        String sql = "UPDATE Kurs SET Namn = ?, Studietakt = ?, Ort = ?, Antal_platser = ?, Kurskod = ?, Högskolepoäng = ? WHERE KursID = ?";
+    public void alterKurs(Kurs k) {
+        String sql = """
+            UPDATE Kurs
+            SET Namn = ?, Studietakt = ?, Ort = ?, Antal_platser = ?, Kurskod = ?, Högskolepoäng = ?
+            WHERE KursID = ?""";
 
         try (Connection conn = DataBase.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -82,6 +87,7 @@ public class KursDAO {
             ps.setInt(7, k.getKursID());
 
             ps.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

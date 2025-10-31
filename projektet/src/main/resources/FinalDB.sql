@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS Betyg (
     BetygID INTEGER PRIMARY KEY,
     StudentID INTEGER NOT NULL,
     KurstillfälleID INTEGER NOT NULL,
-    Värde TEXT NOT NULL,
+    Värde TEXT CHECK(Värde IN ('A', 'B', 'C', 'D', 'E', 'F', 'VG', 'G', 'U')) NOT NULL,
     FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
         ON DELETE CASCADE
         ON UPDATE CASCADE,

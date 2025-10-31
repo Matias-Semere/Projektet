@@ -2,47 +2,38 @@ package model;
 
 public class Student {
     private int studentId;
-    private int userId;        // Add this field
-    private String name;
-    private int yearGroup;
+    private int userId;
+    private String namn;
+    private String personnummer;
 
-    public Student(int studentId, int userId, String name, int yearGroup) {
+    public Student(int studentId, int userId, String namn, String personnummer) {
         this.studentId = studentId;
         this.userId = userId;
-        this.name = name;
-        this.yearGroup = yearGroup;
+        this.namn = namn;
+        this.personnummer = personnummer;
+    }
+
+    public Student(int userId, String namn, String personnummer) {
+        this.userId = userId;
+        this.namn = namn;
+        this.personnummer = personnummer;
     }
 
     public int getStudentId() { return studentId; }
-    public int getUserId() { return userId; }      // Add this getter
-    public String getName() { return name; }
-    public int getYearGroup() { return yearGroup; }
+    public void setStudentId(int studentId) { this.studentId = studentId; }
 
-    public void setStudentId(int studentId) {
-        if (studentId >= 0) {
-            this.studentId = studentId;
-        }
-    }
-    
-    public void setUserId(int userId) {           // Add this setter
-        if (userId >= 0) {
-            this.userId = userId;
-        }
-    }
-    
-    public void setName(String name) { 
-        if(name != null && !name.trim().isEmpty()) this.name = name; 
-    }
-    
-    public void setYearGroup(int yearGroup) {
-        if(yearGroup > 0) {
-            this.yearGroup = yearGroup; 
-        }
-    }
+    public int getUserId() { return userId; }
+    public void setUserId(int userId) { this.userId = userId; }
+
+    public String getNamn() { return namn; }
+    public void setNamn(String namn) { this.namn = namn; }
+
+    public String getPersonnummer() { return personnummer; }
+    public void setPersonnummer(String personnummer) { this.personnummer = personnummer; }
 
     @Override
     public String toString() {
-        return String.format("StudentID: %d, UserID: %d, Name: %s, Year: %d",
-                studentId, userId, name, yearGroup);
+        return String.format("StudentID: %d, UserID: %d, Namn: %s, Personnummer: %s",
+                studentId, userId, namn, personnummer);
     }
 }

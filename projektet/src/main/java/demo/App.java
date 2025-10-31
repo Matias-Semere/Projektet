@@ -19,8 +19,10 @@ public class App {
         KursCon kc = new KursCon(new KursDAO());
         KurstillfälleCon kfc = new KurstillfälleCon(new KurstilfälleDAO());
 
-        new FillStudents(uc);
-        new FillCourses(kc, kfc);
+        // new FillStudents(uc);
+        // new FillCourses(kc, kfc);
+
+        sc.getListOfStudents().forEach(System.out::println);
 
         // SwingUtilities.invokeLater(() -> new Loggin(uc, lc, ac, sc).setVisible(true));
     }

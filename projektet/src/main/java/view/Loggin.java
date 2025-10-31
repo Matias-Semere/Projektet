@@ -19,8 +19,8 @@ public class Loggin extends JDialog {
         setSize(500, 300);
         initComponents();
         
-        login.addActionListener(e -> loginFunction(uc, lc, ac, sc));
-        skapakonto.addActionListener(e -> CreatAccount(uc));
+        login.addActionListener(e -> loginFunction(uc, sc, lc, ac));
+        skapakonto.addActionListener(e -> CreatAccount(uc, sc, lc, ac));
 
         // pack();
         setLocationRelativeTo(null);
@@ -75,22 +75,29 @@ public class Loggin extends JDialog {
         label.setFont(new Font("Arial", Font.BOLD, 20));
     }
 
-    private void loginFunction(UserCon uc, LärareCon lc, AdminCon ac, StudentCon sc) {
+    private void loginFunction(UserCon uc, StudentCon sc, LärareCon lc, AdminCon ac) {
         String val = (String) role.getSelectedItem();
-        if (uc.loggin(username.getText(), password.getPassword(), val)) {
+        String userText = username.getText().trim();
+        char[] passChars = password.getPassword();
+
+        if (uc.loggin(userText, passChars, val)) {
             dispose();
-            if (val.equals("Student"))new MainFrame(new StudentView(sc), username.getText());
-            else if (val.equals("Lärare")) new MainFrame(new LärareView(lc), username.getText());
-            else if (val.equals("Admin")) new MainFrame(new AdminView(ac), username.getText());
+            switch (val) {
+                case "Student" -> new MainFrame(new StudentView(sc), userText);
+                case "Lärare"  -> new MainFrame(new LärareView(lc), userText);
+                case "Admin"   -> new MainFrame(new AdminView(ac), userText);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Fel användarnamn eller lösenord!");
         }
     }
 
-    private void CreatAccount(UserCon uc) {
-    String user = username.getText().trim();
-    String pass = new String(password.getPassword());
+    private void CreatAccount(UserCon uc, StudentCon sc, LärareCon lc, AdminCon ac) {
+    String usernameText = username.getText().trim();
+    String passwordText = new String(password.getPassword());
     String roleVal = (String) role.getSelectedItem();
 
-    if (user.isEmpty() || pass.isEmpty()) {
+    if (usernameText.isEmpty() || passwordText.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Ange användarnamn och lösenord!");
         return;
     }
@@ -104,13 +111,14 @@ public class Loggin extends JDialog {
         }
     }
 
-    boolean success = uc.createUser(user, pass, roleVal, user, personnummer);
-
-    if (success) {
-        JOptionPane.showMessageDialog(this, "Konto skapat! Du kan nu logga in.");
-    } else {
-        JOptionPane.showMessageDialog(this, "Fel: användarnamnet finns redan eller databasen kunde inte uppdateras.");
+    try {
+        uc.createUser(usernameText, passwordText, roleVal, usernameText, personnummer, sc, lc, ac);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Fel: " + e.getMessage());
+        return;
     }
+    JOptionPane.showMessageDialog(this, "Användaren har skapats!");
 }
+
 
 }

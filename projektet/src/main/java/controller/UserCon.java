@@ -1,11 +1,10 @@
 package controller;
 
-import model.User;
+import model.*;
 import dao.UserDAO;
 import java.util.List;
 
 public class UserCon {
-
     UserDAO dao;
 
     public UserCon(UserDAO dao) {
@@ -27,7 +26,7 @@ public class UserCon {
         for (char a : password) {
             lösen += a;
         }
-                
+
         if (userExists(username)) {
             for (User user : dao.getAllUsers()) {
                 if (user.getUsername().equals(username)) {
@@ -43,14 +42,34 @@ public class UserCon {
         return false;
     }
 
-    public boolean createUser(String username, String password, String role, String namn, String personnummer) {
-    return dao.addUser(username, password, role, namn, personnummer);
+    public User createUser(String username, String password, String role, String namn, String personnummer, StudentCon sc, LärareCon lc, AdminCon ac) throws Exception {
+    User user = new User(0, username, password, role);
+    user = dao.insertUser(user);
+
+    if (user.getUserId() == 0) {
+        throw new Exception("Failed to create user in User table: " + username);
+    }
+
+    switch (role) {
+        case "Student":
+            Student student = new Student(0, user.getUserId(), namn, personnummer);
+            sc.insertStudent(student);
+            break;
+        case "Lärare":
+            Lärare lärare = new Lärare(0, user.getUserId(), namn);
+            lc.insertLärare(lärare);
+            break;
+        case "Admin":
+            Admin admin = new Admin(0, user.getUserId(), namn);
+            ac.insertAdmin(admin);
+            break;
+        default:
+            throw new Exception("Unknown role: " + role);
+    }
+    return user;
 }
 
-
-    public void insertUser(User user) {
-        dao.insertUser(user);
-    }
+    public void insertUser(User user) { dao.insertUser(user); }
 
     public void deleteUser(User user) {
         dao.deleteUser(user);

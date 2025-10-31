@@ -1,52 +1,28 @@
 package model;
 
 public class Admin {
-    private String Namn;
-    private String Epost;
-    private int AdminID;
-    private String roll;
+    private int adminID;
+    private int userID;
+    private String namn;
 
-    public Admin(String Namn, String Epost, int AdminID, String roll) {
-        this.Namn = Namn;
-        this.Epost = Epost;
-        this.AdminID = AdminID;
-        this.roll = roll;
+    public Admin(int adminID, int userID, String namn) {
+        this.adminID = adminID;
+        this.userID = userID;
+        this.namn = namn;
     }
 
-    public void setNamn(String Namn) {
-        this.Namn = Namn;
-    }
+    public int getAdminID() { return adminID; }
+    public int getUserID() { return userID; }
+    public String getNamn() { return namn; }
+    
+    
+    public void setAdminID(int adminID) { this.adminID = adminID; }
+    public void setUserID(int userID) { this.userID = userID; }
+    public void setNamn(String namn) { this.namn = namn; }
 
-    public String getNamn() {
-        return Namn;
-    }
-
-    public void setEpost(String Epost) {
-        this.Epost = Epost;
-    }
-
-    public String getEpost() {
-        return Epost;
-    }
-
-    public void setAdminID(int AdminID) {
-        this.AdminID = AdminID;
-    }
-
-    public int getAdminID() {
-        return AdminID;
-    }
-
-    public void setRoll(String roll) {
-        this.roll = roll;
-    }
-
-    public String getRoll() {
-        return roll;
-    }
-
+    @Override
     public String toString() {
-        return Namn + " " + Epost + " " + AdminID + " " + roll; 
+        return String.format("AdminID: %d, UserID: %d, Namn: %s",
+                adminID, userID, namn);
     }
-
 }

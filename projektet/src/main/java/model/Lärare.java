@@ -1,43 +1,27 @@
 package model;
 
 public class Lärare {
-    private int LärarID;
-    private String Namn;
-    private int KurstillfälleID;
+    private int lärareID;
+    private int userID;
+    private String namn;
 
-    public Lärare(int LärarID, String Namn, int KurstillfälleID) {
-        this.LärarID = LärarID;
-        this.Namn = Namn;
-        this.KurstillfälleID = KurstillfälleID;
+    public Lärare(int lärareID, int userID, String namn) {
+        this.lärareID = lärareID;
+        this.userID = userID;
+        this.namn = namn;
     }
 
-    public int getLärarID() {
-        return LärarID;
-    }
-
-    public void setLärarID(int LärarID) {
-        this.LärarID = LärarID;
-    }
-
-    public String getNamn() {
-        return Namn;
-    }
-
-    public void setNamn(String Namn) {
-        this.Namn = Namn;
-    }
-
-    public int getKurstillfälleID() {
-        return KurstillfälleID;
-    }
-
-    public void setKurstillfälleID(int KurstillfälleID) {
-        this.KurstillfälleID = KurstillfälleID;
-    }
-
-    public String toString() {
-        return String.format("LärareID: %d, Name: %s, KurstillfälleID: %s",
-                LärarID, Namn, KurstillfälleID);
-    }
+    public int getLärareID() { return lärareID; }
+    public int getUserID() { return userID; }
+    public String getNamn() { return namn; }
     
+    public void setLärareID(int lärareID) { this.lärareID = lärareID; }
+    public void setUserID(int userID) { this.userID = userID; }
+    public void setNamn(String namn) { this.namn = namn; }
+
+    @Override
+    public String toString() {
+        return String.format("LärareID: %d, UserID: %d, Namn: %s",
+                lärareID, userID, namn);
+    }
 }

@@ -15,7 +15,8 @@ public class FillStudents {
             
             while (sc.hasNextLine()) {
                 String[] line = sc.nextLine().split(";");
-                User user = new User(count++, line[0], line[1], "Student");
+                User user = new User(count++, line[0], "1234", "Student");
+                System.out.println(user);
                 uc.insertUser(user);
             }
             sc.close();
