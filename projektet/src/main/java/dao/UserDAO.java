@@ -87,7 +87,7 @@ public class UserDAO {
                             roleStmt.setString(2, namn);
                             roleStmt.setString(3, personnummer);
                             break;
-                        case "Teacher":
+                        case "Lärare":
                             roleStmt = conn.prepareStatement(insertTeacherSQL);
                             roleStmt.setInt(1, userID);
                             roleStmt.setString(2, namn);
