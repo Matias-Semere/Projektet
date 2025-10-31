@@ -16,27 +16,24 @@ public class StudentView extends BaseView {
     public StudentView(StudentCon sc) {
         super("Student");
         this.sc = sc;
-        setLayout(new BorderLayout());
         setBackground(Color.DARK_GRAY);
         initComponents();
-
-        
     }
     
     public void initComponents() {
         studentlist = new StudentListView(sc);
         studentlist.setVisible(false);
         
-        anmälButton = new JButton("Anmäl");
-        hoppavButton = new JButton("Hoppa väg");
+        anmälButton = new JButton("Gör ansökan");
+        hoppavButton = new JButton("Hoppa av");
         seKurserButton = new JButton("Se kurser");
         seBetygButton = new JButton("Se betyg");
         
-        add(studentlist);
-        add(anmälButton);
-        add(hoppavButton);
-        add(seKurserButton);
-        add(seBetygButton);
+        contentPanel.add(studentlist);
+        contentPanel.add(anmälButton);
+        contentPanel.add(hoppavButton);
+        contentPanel.add(seKurserButton);
+        contentPanel.add(seBetygButton);
     }
 
 }

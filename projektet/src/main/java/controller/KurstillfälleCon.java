@@ -14,7 +14,6 @@ public class KurstillfälleCon {
 
     public List<Kurstillfälle> getAllKurstillfällen() {
         return dao.getAllKurstillfälle();
-
     }
 
     public void insertKurstillfälle(Kurstillfälle kurstillfälle) {

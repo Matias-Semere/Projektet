@@ -1,31 +1,23 @@
 PRAGMA foreign_keys = ON;
 
--- =====================================
--- USER (Unified login table)
--- =====================================
 CREATE TABLE IF NOT EXISTS User (
-    UserID INTEGER PRIMARY KEY,              -- auto-generated (no AUTOINCREMENT needed)
+    UserID INTEGER PRIMARY KEY,
     Username TEXT UNIQUE NOT NULL,
     Password TEXT NOT NULL,
-    Role TEXT CHECK(Role IN ('student', 'teacher', 'admin')) NOT NULL
+    Role TEXT CHECK(Role IN ('Student', 'Lärare', 'Admin')) NOT NULL
 );
 
--- =====================================
--- STUDENT
--- =====================================
 CREATE TABLE IF NOT EXISTS Student (
     StudentID INTEGER PRIMARY KEY,
     UserID INTEGER UNIQUE NOT NULL,
     Namn TEXT NOT NULL,
-    Årskull INTEGER NOT NULL,
+    Personnummer TEXT NOT NULL,
     FOREIGN KEY (UserID) REFERENCES User(UserID)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
 
--- =====================================
--- LÄRARE (Teacher)
--- =====================================
+
 CREATE TABLE IF NOT EXISTS Lärare (
     LärareID INTEGER PRIMARY KEY,
     UserID INTEGER UNIQUE NOT NULL,
@@ -35,9 +27,7 @@ CREATE TABLE IF NOT EXISTS Lärare (
         ON UPDATE CASCADE
 );
 
--- =====================================
--- ADMIN
--- =====================================
+
 CREATE TABLE IF NOT EXISTS Admin (
     AdminID INTEGER PRIMARY KEY,
     UserID INTEGER UNIQUE NOT NULL,
@@ -47,9 +37,7 @@ CREATE TABLE IF NOT EXISTS Admin (
         ON UPDATE CASCADE
 );
 
--- =====================================
--- KURS (Course)
--- =====================================
+
 CREATE TABLE IF NOT EXISTS Kurs (
     KursID INTEGER PRIMARY KEY,
     Namn TEXT NOT NULL,
@@ -60,9 +48,7 @@ CREATE TABLE IF NOT EXISTS Kurs (
     Högskolepoäng REAL NOT NULL
 );
 
--- =====================================
--- KURSTILLFÄLLE (Course Instance)
--- =====================================
+
 CREATE TABLE IF NOT EXISTS Kurstillfälle (
     KurstillfälleID INTEGER PRIMARY KEY,
     KursID INTEGER NOT NULL,
@@ -72,9 +58,7 @@ CREATE TABLE IF NOT EXISTS Kurstillfälle (
         ON UPDATE CASCADE
 );
 
--- =====================================
--- REGISTERING (Student ↔ Kurstillfälle)
--- =====================================
+
 CREATE TABLE IF NOT EXISTS Registering (
     StudentID INTEGER NOT NULL,
     KurstillfälleID INTEGER NOT NULL,
@@ -88,9 +72,6 @@ CREATE TABLE IF NOT EXISTS Registering (
         ON UPDATE CASCADE
 );
 
--- =====================================
--- BETYG (Grades)
--- =====================================
 CREATE TABLE IF NOT EXISTS Betyg (
     BetygID INTEGER PRIMARY KEY,
     StudentID INTEGER NOT NULL,
@@ -104,9 +85,6 @@ CREATE TABLE IF NOT EXISTS Betyg (
         ON UPDATE CASCADE
 );
 
--- =====================================
--- RAPPORTERING (Reporting)
--- =====================================
 CREATE TABLE IF NOT EXISTS Rapportering (
     RapporteringID INTEGER PRIMARY KEY,
     StudentID INTEGER NOT NULL,
@@ -139,7 +117,7 @@ CREATE TABLE IF NOT EXISTS KursSchema (
         ON UPDATE CASCADE
 );
 
--- Teacher Assignments
+
 CREATE TABLE IF NOT EXISTS LärarTilldelning (
     TilldelningID INTEGER PRIMARY KEY,
     LärareID INTEGER NOT NULL,

@@ -29,7 +29,7 @@ public class AdminDAO {
         return adminList;
     }
 
-    public void insertLärare(Admin admin) {
+    public void insertAdmin(Admin admin) {
         String sql = "INSERT INTO Admin VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {

@@ -43,6 +43,11 @@ public class UserCon {
         return false;
     }
 
+    public boolean createUser(String username, String password, String role, String namn, String personnummer) {
+    return dao.addUser(username, password, role, namn, personnummer);
+}
+
+
     public void insertUser(User user) {
         dao.insertUser(user);
     }

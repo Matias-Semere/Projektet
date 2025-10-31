@@ -15,8 +15,8 @@ public class AdminCon {
         return dao.getAllAdmins();
     }
 
-    public void insertLärare(Admin admin) {
-        dao.insertLärare(admin);
+    public void insertAdmin(Admin admin) {
+        dao.insertAdmin(admin);
     }
 
     public void deleteAdmin(Admin admin) {
