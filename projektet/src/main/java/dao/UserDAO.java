@@ -35,4 +35,19 @@ public class UserDAO extends BaseDAO<User> {
         user.setID(rs.getInt("UserID"));
         return user;
     }
+
+    public User getByUsername(String username) {
+    String sql = "SELECT " + getSelectColumns() + " FROM " + getTableName() + " WHERE Username = ?";
+    try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, username);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return mapResultSetToEntity(rs);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return null; // User not found
+}
+
 }

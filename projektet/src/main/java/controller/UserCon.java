@@ -12,10 +12,9 @@ public class UserCon {
     }
 
     public boolean userExists(String username) {
-        for (User user : dao.getAll()) {
-            if (user.getUsername().equals(username)) {
-                return true;
-            }
+        User user = dao.getByUsername(username);
+        if (user != null) {
+            return true;
         }
         System.out.println("User does not exist");
         return false;
@@ -23,50 +22,49 @@ public class UserCon {
 
     public boolean loggin(String username, char[] password, String role) {
         String lösen = new String(password);
+        User user = dao.getByUsername(username);
 
-        if (userExists(username)) {
-            for (User user : dao.getAll()) {
-                if (user.getUsername().equals(username)) {
-                    if (user.getPassword().equals(lösen)) {
-                        if (user.getRole().equalsIgnoreCase(role)) {
-                            return true;
-                        }
-                    }
-                }
+        if (user != null) { // Check if user exists
+            if (user.getPassword().equals(lösen) && user.getRole().equalsIgnoreCase(role)) {
+                return true; // Successful login
+            } else {
+                System.out.println("Wrong password or role");
             }
-            System.out.println("Wrong password");
         }
-        return false;
+        return false; // Login failed
     }
 
-    public User createUser(String username, String password, String role, String personnummer, StudentCon sc, LärareCon lc, AdminCon ac) throws Exception {
-    User user = new User(username, password, role);
-    user = dao.insert(user);
+    public User createUser(String username, String password, String role, String personnummer, StudentCon sc,
+            LärareCon lc, AdminCon ac) throws Exception {
+        User user = new User(username, password, role);
+        user = dao.insert(user);
 
-    if (user.getID() == 0) {
-        throw new Exception("Failed to create user in User table: " + username);
+        if (user.getID() == 0) {
+            throw new Exception("Failed to create user in User table: " + username);
+        }
+
+        switch (role) {
+            case "Student":
+                Student student = new Student(user.getID(), username, personnummer);
+                sc.insertStudent(student);
+                break;
+            case "Lärare":
+                Lärare lärare = new Lärare(user.getID(), username);
+                lc.insertLärare(lärare);
+                break;
+            case "Admin":
+                Admin admin = new Admin(user.getID(), username);
+                ac.insertAdmin(admin);
+                break;
+            default:
+                throw new Exception("Unknown role: " + role);
+        }
+        return user;
     }
 
-    switch (role) {
-        case "Student":
-            Student student = new Student(user.getID(), username, personnummer);
-            sc.insertStudent(student);
-            break;
-        case "Lärare":
-            Lärare lärare = new Lärare(user.getID(), username);
-            lc.insertLärare(lärare);
-            break;
-        case "Admin":
-            Admin admin = new Admin(user.getID(), username);
-            ac.insertAdmin(admin);
-            break;
-        default:
-            throw new Exception("Unknown role: " + role);
+    public void insertUser(User user) {
+        dao.insert(user);
     }
-    return user;
-}
-
-    public void insertUser(User user) { dao.insert(user); }
 
     public void deleteUser(User user) {
         dao.delete(user);

@@ -18,7 +18,7 @@ public class Loggin extends JDialog {
     public Loggin(UserCon uc, LärareCon lc, AdminCon ac, StudentCon sc) {
         setSize(500, 300);
         initComponents();
-        
+
         login.addActionListener(e -> loginFunction(uc, sc, lc, ac));
         skapakonto.addActionListener(e -> CreatAccount(uc, sc, lc, ac));
 
@@ -84,39 +84,39 @@ public class Loggin extends JDialog {
             dispose();
             switch (val) {
                 case "Student" -> new StudentView(sc, userText);
-                case "Lärare"  -> new LärareView(lc, userText);
-                case "Admin"   -> new AdminView(ac, userText);
+                case "Lärare" -> new LärareView(lc, userText);
+                case "Admin" -> new AdminView(ac, userText);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Fel användarnamn eller lösenord!");
+            JOptionPane.showMessageDialog(this, "Fel användare eller lösenord!");
         }
     }
 
     private void CreatAccount(UserCon uc, StudentCon sc, LärareCon lc, AdminCon ac) {
-    String usernameText = username.getText().trim();
-    String passwordText = new String(password.getPassword());
-    String roleVal = (String) role.getSelectedItem();
+        String usernameText = username.getText().trim();
+        String passwordText = new String(password.getPassword());
+        String roleVal = (String) role.getSelectedItem();
 
-    if (usernameText.isEmpty() || passwordText.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Ange användarnamn och lösenord!");
-        return;
-    }
-
-    String personnummer = null;
-    if (roleVal.equals("Student")) {
-        personnummer = JOptionPane.showInputDialog(this, "Ange ditt personnummer:");
-        if (personnummer == null || personnummer.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Personnummer krävs för studenter.");
+        if (usernameText.isEmpty() || passwordText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ange användarnamn och lösenord!");
             return;
         }
-    }
 
-    try {
-        uc.createUser(usernameText, passwordText, roleVal, personnummer, sc, lc, ac);
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Fel: " + e.getMessage());
-        return;
+        String personnummer = null;
+        if (roleVal.equals("Student")) {
+            personnummer = JOptionPane.showInputDialog(this, "Ange ditt personnummer:");
+            if (personnummer == null || personnummer.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Personnummer krävs för studenter.");
+                return;
+            }
+        }
+
+        try {
+            uc.createUser(usernameText, passwordText, roleVal, personnummer, sc, lc, ac);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Fel: " + e.getMessage());
+            return;
+        }
+        JOptionPane.showMessageDialog(this, "Användaren har skapats!");
     }
-    JOptionPane.showMessageDialog(this, "Användaren har skapats!");
-}
 }

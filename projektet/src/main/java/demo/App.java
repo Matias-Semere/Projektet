@@ -16,8 +16,8 @@ public class App {
         LärareCon lc = new LärareCon(new LärareDAO());
         AdminCon ac = new AdminCon(new AdminDAO());
         StudentCon sc = new StudentCon(new StudentDAO());
-        KursCon kc = new KursCon(new KursDAO());
-        KurstillfälleCon kfc = new KurstillfälleCon(new KurstillfälleDAO());
+        // KursCon kc = new KursCon(new KursDAO());
+        // KurstillfälleCon kfc = new KurstillfälleCon(new KurstillfälleDAO());
 
         // new FillStudents(uc, sc);
         // new FillCourses(kc, kfc);
