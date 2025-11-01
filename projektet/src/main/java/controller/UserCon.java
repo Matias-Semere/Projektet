@@ -16,7 +16,6 @@ public class UserCon extends BaseController<User> {
         if (user != null) {
             return true;
         }
-        System.out.println("User does not exist");
         return false;
     }
 
@@ -24,8 +23,6 @@ public class UserCon extends BaseController<User> {
         User user = customDao.getByUsername(username);
         if (user.getPassword().equals(lösen) && user.getRole().equalsIgnoreCase(role)) {
             return true;
-        } else {
-            System.out.println("Wrong password or role");
         }
         return false;
     }

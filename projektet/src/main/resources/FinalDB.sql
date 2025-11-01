@@ -41,10 +41,7 @@ CREATE TABLE IF NOT EXISTS Admin (
 CREATE TABLE IF NOT EXISTS Kurs (
     KursID INTEGER PRIMARY KEY,
     Namn TEXT NOT NULL,
-    Studietakt REAL NOT NULL,
-    Ort TEXT NOT NULL,
-    Antal_platser INTEGER NOT NULL,
-    Kurskod TEXT NOT NULL,
+    Kurskod TEXT NOT NULL UNIQUE,
     Högskolepoäng REAL NOT NULL
 );
 
@@ -53,11 +50,12 @@ CREATE TABLE IF NOT EXISTS Kurstillfälle (
     KurstillfälleID INTEGER PRIMARY KEY,
     KursID INTEGER NOT NULL,
     Datum TEXT NOT NULL,
+    Studietakt REAL NOT NULL,
+    Antal_platser INTEGER NOT NULL,
     FOREIGN KEY (KursID) REFERENCES Kurs(KursID)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
-
 
 CREATE TABLE IF NOT EXISTS Registering (
     StudentID INTEGER NOT NULL,

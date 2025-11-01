@@ -11,47 +11,62 @@ public class FillCourses {
         try {
             InputStream in = getClass().getResourceAsStream("/kurser.txt");
             if (in == null) {
-                System.out.println();
                 throw new FileNotFoundException("Could not find resource: kurser.txt");
             }
 
             Scanner sc = new Scanner(new InputStreamReader(in));
             sc.nextLine();
 
+            // Map to keep track of inserted courses by name for linking Kurstillfälle later
+            Map<String, Kurs> kursByName = new HashMap<>();
+
+            // First pass: read and insert Kurs entries
             while (sc.hasNextLine()) {
                 String line = sc.nextLine().trim();
-                if (line.isEmpty()) continue;
-
                 String[] parts = line.split(";");
-                if (parts.length < 8) {
-                    System.err.println("Invalid line: " + line);
-                    continue;
-                }
 
                 String kurskod = parts[0];
                 String kursnamn = parts[1];
                 double högskolepoäng = Double.parseDouble(parts[2]);
-                // String anmalningskod = parts[3];
-                int år = Integer.parseInt(parts[4]);
-                int vecka = Integer.parseInt(parts[5]);
-                int studieplatser = Integer.parseInt(parts[6]);
+
+                if (!kursByName.containsKey(kursnamn)) {
+                    Kurs kurs = new Kurs(kursnamn, kurskod, högskolepoäng);
+                    kc.insert(kurs);
+                    kursByName.put(kursnamn, kurs);
+                }
+            }
+
+            in.close();
+            in = getClass().getResourceAsStream("/kurser.txt");
+            sc = new Scanner(new InputStreamReader(in));
+            sc.nextLine();
+
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine().trim();
+                String[] parts = line.split(";");
+
+                String kursnamn = parts[1];
+                String datum = parts[4] + " Vecka: " + parts[5];
+                int antalPlatser = Integer.parseInt(parts[6]);
                 double studietakt = Double.parseDouble(parts[7]);
 
-                Kurs kurs = new Kurs(
-                        kursnamn,
+                Kurs kurs = kursByName.get(kursnamn);
+                if (kurs == null) {
+                    System.out.println("No kurs found for namn: " + kursnamn);
+                    continue;
+                }
+
+                Kurstillfälle kurstill = new Kurstillfälle(
+                        kurs.getID(),
+                        datum,
                         studietakt,
-                        "Hig",
-                        studieplatser,
-                        kurskod,
-                        högskolepoäng
-                );
-
-                Kurstillfälle tillfälle = new Kurstillfälle(kurs.getID(), år + " Vecka: " + vecka);
-
-                kc.insert(kurs);
-                kfc.insert(tillfälle);
+                        antalPlatser);
+                kfc.insert(kurstill);
             }
+
             sc.close();
+            in.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,6 +1,6 @@
 package dao;
 
-import model.*;
+import model.Kurstillfälle;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +14,12 @@ public class KurstillfälleDAO extends BaseDAO<Kurstillfälle> {
 
     @Override
     protected String getInsertColumns() {
-        return "KursID, Datum";
+        return "KursID, Datum, Studietakt, Antal_platser";
     }
 
     @Override
     protected String getSelectColumns() {
-        return "KurstillfälleID, KursID, Datum";
+        return "KurstillfälleID, KursID, Datum, Studietakt, Antal_platser";
     }
 
     @Override
@@ -31,6 +31,8 @@ public class KurstillfälleDAO extends BaseDAO<Kurstillfälle> {
     protected void setParameters(PreparedStatement ps, Kurstillfälle entity) throws SQLException {
         ps.setInt(1, entity.getKursID());
         ps.setString(2, entity.getDatum());
+        ps.setDouble(3, entity.getStudietakt());
+        ps.setInt(4, entity.getAntalPlatser());
     }
 
     @Override
@@ -40,24 +42,32 @@ public class KurstillfälleDAO extends BaseDAO<Kurstillfälle> {
 
     @Override
     protected Kurstillfälle mapResultSetToEntity(ResultSet rs) throws SQLException {
-        Kurstillfälle kurstillfälle = new Kurstillfälle(
+        Kurstillfälle kt = new Kurstillfälle(
                 rs.getInt("KursID"),
-                rs.getString("Datum"));
-        kurstillfälle.setID(rs.getInt("KurstillfälleID"));
-        return kurstillfälle;
+                rs.getString("Datum"),
+                rs.getDouble("Studietakt"),
+                rs.getInt("Antal_platser"));
+        kt.setID(rs.getInt("KurstillfälleID"));
+        return kt;
     }
 
-    // Custom method: get all Kurstillfällen for a specific Kurs
-    public List<Kurstillfälle> getByKursID(int kursID) throws SQLException {
-        List<Kurstillfälle> list = new ArrayList<>();
-        String sql = "SELECT " + getSelectColumns() + " FROM " + getTableName() + " WHERE KursID = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, kursID);
-            ResultSet rs = ps.executeQuery();
+    public List<String> getAllWithCourseNames() {
+        String sql = "SELECT k.Namn, kt.* FROM Kurstillfälle kt " +
+                "JOIN Kurs k ON kt.KursID = k.KursID";
+        List<String> result = new ArrayList<>();
+
+        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+
             while (rs.next()) {
-                list.add(mapResultSetToEntity(rs));
+                result.add(
+                        rs.getString("Namn") + " (" + rs.getString("Datum") +
+                                ") - " + rs.getInt("Antal_platser") + " platser");
             }
         }
-        return list;
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
+
 }

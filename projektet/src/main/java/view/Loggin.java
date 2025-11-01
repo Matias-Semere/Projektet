@@ -7,29 +7,33 @@ import controller.*;
 public class Loggin extends JFrame {
 
     private JLabel usernameLabel = new JLabel("Användare: ");
-    private JLabel passwordLabel = new JLabel("Lösenord:  ");
+    private JLabel passwordLabel = new JLabel("Lösenord:   ");
     private JTextField username = new JTextField("Matias", 10);
     private JPasswordField password = new JPasswordField("1234", 10);
     private JComboBox<String> role = new JComboBox<String>(new String[] { "Student", "Lärare", "Admin" });
     private JButton login = new JButton("Logga in");
     private JButton skapakonto = new JButton("Skapa konto");
+    private JButton Avsluta = new JButton("Avsluta");
     private JPanel namndel, passdel, roledel, loginPanel;
     private String namn, pass, roleVal, personnummer;
 
-    public Loggin(UserCon uc, LärareCon lc, AdminCon ac, StudentCon sc) {
-        setSize(500, 300);
+    public Loggin(UserCon uc, LärareCon lc, AdminCon ac, StudentCon sc, KursCon kc, KurstillfälleCon kfc, BetygCon bc, RapporteringCon rc) {
+        setSize(450, 500);
         initComponents();
 
-        login.addActionListener(e -> loginFunction(uc, sc, lc, ac));
+        login.addActionListener(e -> loginFunction(uc, sc, lc, ac, kc, kfc, bc, rc));
         skapakonto.addActionListener(e -> CreatAccount(uc, sc, lc, ac));
+        Avsluta.addActionListener(e -> dispose());
 
-        // pack();
+        setUndecorated(true);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
     }
 
     private void initComponents() {
+        System.setProperty("awt.useSystemAAFontSettings", "on");
+        System.setProperty("swing.aatext", "true");
         stil(passwordLabel);
         stil(usernameLabel);
         stil(username);
@@ -37,39 +41,74 @@ public class Loggin extends JFrame {
         stil(login);
         stil(role);
         stil(skapakonto);
+        stil(Avsluta);
 
+        loginPanel = new JPanel();
+        loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.Y_AXIS));
+        loginPanel.setBackground(Color.DARK_GRAY);
         namndel = new JPanel();
         passdel = new JPanel();
         roledel = new JPanel();
-        loginPanel = new JPanel();
 
-        loginPanel.setBackground(Color.DARK_GRAY);
+        ImageIcon icon = new ImageIcon(getClass().getResource("/image.png"));
+        JLabel imageLabel = new JLabel(icon);
+        imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        loginPanel.add(Box.createVerticalStrut(40));
+        loginPanel.add(imageLabel);
+        loginPanel.add(Box.createVerticalStrut(5));
+
+        namndel.add(usernameLabel);
+        namndel.add(username);
         namndel.setOpaque(false);
+
+        passdel.add(passwordLabel);
+        passdel.add(password);
         passdel.setOpaque(false);
+
+        roledel.add(role);
+        roledel.add(login);
+        roledel.add(skapakonto);
         roledel.setOpaque(false);
+        roledel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        Avsluta.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        namndel.add(usernameLabel, BorderLayout.NORTH);
-        namndel.add(username, BorderLayout.SOUTH);
-
-        passdel.add(passwordLabel, BorderLayout.NORTH);
-        passdel.add(password, BorderLayout.SOUTH);
-
-        roledel.add(login, BorderLayout.WEST);
-        roledel.add(role, BorderLayout.EAST);
-        roledel.add(skapakonto, BorderLayout.EAST);
-
-        loginPanel.add(namndel, BorderLayout.NORTH);
-        loginPanel.add(passdel, BorderLayout.CENTER);
-        loginPanel.add(roledel, BorderLayout.SOUTH);
+        loginPanel.add(Box.createVerticalGlue());
+        loginPanel.add(namndel);
+        loginPanel.add(passdel);
+        loginPanel.add(roledel);
+        loginPanel.add(Avsluta);
+        loginPanel.add(Box.createVerticalGlue());
 
         add(loginPanel);
+
     }
 
     private void stil(JComponent label) {
         if (label instanceof JLabel) {
             label.setForeground(Color.WHITE);
+            label.setFont(new Font("Segoe UI", Font.BOLD, 22));
         }
-        label.setFont(new Font("Arial", Font.BOLD, 20));
+
+        if (label instanceof JButton) {
+            label.setBackground(Color.DARK_GRAY);
+            label.setForeground(Color.WHITE);
+            label.setFont(new Font("Segoe UI", Font.BOLD, 20));
+            label.setFocusable(false);
+        }
+
+        if (label instanceof JComboBox) {
+            label.setBackground(Color.DARK_GRAY);
+            label.setForeground(Color.WHITE);
+            label.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+            label.setFocusable(false);
+        }
+
+        if (label instanceof JTextField textField) {
+            label.setBackground(Color.WHITE);
+            label.setForeground(Color.BLACK);
+            label.setFont(new Font("Segoe UI", Font.BOLD, 22));
+            textField.setHorizontalAlignment(JTextField.CENTER);
+        }
     }
 
     private void initFields() {
@@ -78,16 +117,16 @@ public class Loggin extends JFrame {
         roleVal = role.getSelectedItem().toString();
     }
 
-    private void loginFunction(UserCon uc, StudentCon sc, LärareCon lc, AdminCon ac) {
+    private void loginFunction(UserCon uc, StudentCon sc, LärareCon lc, AdminCon ac, KursCon kc, KurstillfälleCon kfc, BetygCon bc, RapporteringCon rc) {
         initFields();
         if (uc.userExists(namn)) {
 
             if (uc.loggin(namn, pass, roleVal)) {
                 dispose();
                 switch (roleVal) {
-                    case "Student" -> new StudentView(sc, namn);
-                    case "Lärare" -> new LärareView(lc, sc, namn);
-                    case "Admin" -> new AdminView(ac, namn);
+                    case "Student" -> new StudentView(namn, sc, kfc);
+                    case "Lärare" -> new LärareView(namn, lc, sc, rc);
+                    case "Admin" -> new AdminView(namn, ac, lc, sc, kc, kfc, bc, rc);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Fel Roll eller lösenord!");

@@ -1,6 +1,6 @@
 package dao;
 
-import model.*;
+import model.Kurs;
 import java.sql.*;
 
 public class KursDAO extends BaseDAO<Kurs> {
@@ -12,12 +12,12 @@ public class KursDAO extends BaseDAO<Kurs> {
 
     @Override
     protected String getInsertColumns() {
-        return "Namn, Studietakt, Ort, Antal_platser, Kurskod, Högskolepoäng";
+        return "Namn, Kurskod, Högskolepoäng";
     }
 
     @Override
     protected String getSelectColumns() {
-        return "KursID, Namn, Studietakt, Ort, Antal_platser, Kurskod, Högskolepoäng";
+        return "KursID, Namn, Kurskod, Högskolepoäng";
     }
 
     @Override
@@ -28,11 +28,8 @@ public class KursDAO extends BaseDAO<Kurs> {
     @Override
     protected void setParameters(PreparedStatement ps, Kurs entity) throws SQLException {
         ps.setString(1, entity.getNamn());
-        ps.setDouble(2, entity.getStudietakt());
-        ps.setString(3, entity.getOrt());
-        ps.setInt(4, entity.getAntalPlatser());
-        ps.setString(5, entity.getKurskod());
-        ps.setDouble(6, entity.getHögskolepoäng());
+        ps.setString(2, entity.getKurskod());
+        ps.setDouble(3, entity.getHögskolepoäng());
     }
 
     @Override
@@ -43,12 +40,10 @@ public class KursDAO extends BaseDAO<Kurs> {
     @Override
     protected Kurs mapResultSetToEntity(ResultSet rs) throws SQLException {
         Kurs kurs = new Kurs(
-                rs.getString("Namn"),
-                rs.getDouble("Studietakt"),
-                rs.getString("Ort"),
-                rs.getInt("Antal_platser"),
-                rs.getString("Kurskod"),
-                rs.getDouble("Högskolepoäng"));
+            rs.getString("Namn"),
+            rs.getString("Kurskod"),
+            rs.getDouble("Högskolepoäng")
+        );
         kurs.setID(rs.getInt("KursID"));
         return kurs;
     }

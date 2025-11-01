@@ -15,18 +15,15 @@ public class LärarLista extends BaseList<Lärare> {
     }
 
     @Override
-    public void updateList(List<Lärare> allLärare) {
-        listModel.clear();
-        for (Lärare lärare : allLärare) {
-            listModel.addElement(formatItem(lärare)); // Format student and add to list
-        }
+    protected void onAddButtonClicked() {
+        updateList(lc.getAll());
     }
 
     @Override
-    protected void onAddButtonClicked() {
-        String name = JOptionPane.showInputDialog(this, "Enter student name:");
-        if (name != null && !name.isEmpty()) {
-            System.out.println("Adding student: " + name);
+    public void updateList(List<Lärare> allLärare) {
+        listModel.clear();
+        for (Lärare lärare : allLärare) {
+            listModel.addElement(formatItem(lärare));
         }
     }
 
@@ -35,4 +32,3 @@ public class LärarLista extends BaseList<Lärare> {
         return style + Lärare.getNamn() + " (ID: " + Lärare.getID() + ")";
     }
 }
-

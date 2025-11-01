@@ -8,67 +8,73 @@ public abstract class BaseView extends JFrame {
 
     protected JPanel headerPanel, contentPanel, footerPanel;
     protected JButton logout, Show;
+    protected JLabel titleLabel;
 
-    public BaseView(String title) {                 
+    public BaseView(String title) {
         setSize(800, 800);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);                     
-        setVisible(true);
-        setLayout(new BorderLayout());
+        titleLabel = new JLabel(title);        
         initComponents();
-
-        headerPanel = new JPanel(new BorderLayout());
-        headerPanel.setBackground(new Color(45, 45, 45));
-        JLabel titleLabel = new JLabel(title);
-        style(titleLabel);
-        titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 10));
-        headerPanel.add(titleLabel, BorderLayout.WEST);
-        headerPanel.add(logout, BorderLayout.EAST);
-        headerPanel.add(Show, BorderLayout.CENTER);
-        add(headerPanel, BorderLayout.NORTH);
-
-        contentPanel = new JPanel();
-        contentPanel.setBackground(new Color(220, 220, 220));
-        // contentPanel.setLayout(new BorderLayout());
-
-        add(contentPanel, BorderLayout.CENTER);
-
-        // Footer
-        footerPanel = new JPanel();
-        footerPanel.setBackground(new Color(45, 45, 45));
-        JLabel footerLabel = new JLabel("Footer");
-        style(footerLabel);
-        footerLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        footerPanel.add(footerLabel);
-        add(footerPanel, BorderLayout.SOUTH);
+        
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
     }
 
     private void initComponents() {
+        headerPanel = new JPanel(new BorderLayout());
+        contentPanel = new JPanel();
+        footerPanel = new JPanel();
+
+        headerPanel.setBackground(new Color(45, 45, 45));
+        contentPanel.setBackground(new Color(30, 30, 30));
+        footerPanel.setBackground(new Color(45, 45, 45));
+
+        
         logout = new JButton("Logga ut");
         Show = new JButton("Visa / Dölj");
+
         style(logout);
         style(Show);
+        style(titleLabel);
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 10));
+
+
         logout.addActionListener(e -> {
             dispose();
             new App();
         });
-
+        
         Show.addActionListener(e -> {
-            if (contentPanel.isVisible()) contentPanel.setVisible(false);
-            else contentPanel.setVisible(true);
+            if (contentPanel.isVisible()) {
+                contentPanel.setVisible(false);
+                footerPanel.setVisible(false);
+            } else {
+                contentPanel.setVisible(true);
+                footerPanel.setVisible(true);
+            }
         });
+
+        headerPanel.add(titleLabel, BorderLayout.WEST);
+        headerPanel.add(logout, BorderLayout.EAST);
+        add(headerPanel, BorderLayout.NORTH);
+        add(contentPanel, BorderLayout.CENTER);
+        add(footerPanel, BorderLayout.SOUTH);
     }
 
     protected void style(JComponent comp) {
         if (comp instanceof JLabel) {
             comp.setForeground(Color.WHITE);
             comp.setFont(new Font("Arial", Font.BOLD, 20));
-        } else if (comp instanceof JButton) {
+        }
+
+        if (comp instanceof JButton) {
             comp.setBackground(new Color(200, 50, 50));
             comp.setForeground(Color.WHITE);
             comp.setFont(new Font("Arial", Font.BOLD, 18));
             ((JButton) comp).setFocusPainted(false);
-        } else if (comp instanceof JTextField) {
+        }
+
+        if (comp instanceof JTextField) {
             comp.setBackground(Color.WHITE);
             comp.setForeground(Color.BLACK);
             comp.setFont(new Font("Arial", Font.PLAIN, 18));

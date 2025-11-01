@@ -15,16 +15,20 @@ public class App {
         LärareCon lc = new LärareCon(new LärareDAO());
         AdminCon ac = new AdminCon(new AdminDAO());
         StudentCon sc = new StudentCon(new StudentDAO());
-        // KursCon kc = new KursCon(new KursDAO());
-        // KurstillfälleCon kfc = new KurstillfälleCon(new KurstillfälleDAO());
+        KursCon kc = new KursCon(new KursDAO());
+        KurstillfälleCon kfc = new KurstillfälleCon(new KurstillfälleDAO());
+        BetygCon bc = new BetygCon(new BetygDAO());
+        RapporteringCon rc = new RapporteringCon(new RapporteringDAO());
 
         // new FillStudents(uc, sc);
         // new FillCourses(kc, kfc);
 
         // sc.getAll().forEach(System.out::println);
         // lc.getListOfLärare().forEach(System.out::println);
-        // kc.getAllKurser().forEach(System.out::println);
+        // kc.getAll().forEach(System.out::println);
+        // kfc.getAll().forEach(System.out::println);
+        // kfc.getAllWithCourseNames().forEach(System.out::println);
 
-        SwingUtilities.invokeLater(() -> new Loggin(uc, lc, ac, sc).setVisible(true));
+        SwingUtilities.invokeLater(() -> new Loggin(uc, lc, ac, sc , kc, kfc, bc, rc).setVisible(true));
     }
 }

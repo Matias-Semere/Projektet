@@ -2,6 +2,7 @@ package view.lists;
 
 import javax.swing.*;
 import java.awt.*;
+
 import model.Student;
 import controller.StudentCon;
 import java.util.List;
@@ -19,16 +20,13 @@ public class StudentLista extends BaseList<Student> {
     public void updateList(List<Student> students) {
         listModel.clear();
         for (Student student : students) {
-            listModel.addElement(formatItem(student)); // Format student and add to list
+            listModel.addElement(formatItem(student));
         }
     }
 
     @Override
     protected void onAddButtonClicked() {
-        String name = JOptionPane.showInputDialog(this, "Enter student name:");
-        if (name != null && !name.isEmpty()) {
-            System.out.println("Adding student: " + name);
-        }
+        updateList(sc.getAll());
     }
 
     @Override
