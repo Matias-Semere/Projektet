@@ -21,10 +21,10 @@ public class App {
         // new FillStudents(uc, sc);
         // new FillCourses(kc, kfc);
 
-        sc.getAll().forEach(System.out::println);
+        // sc.getAll().forEach(System.out::println);
         // lc.getListOfLärare().forEach(System.out::println);
         // kc.getAllKurser().forEach(System.out::println);
 
-        // SwingUtilities.invokeLater(() -> new Loggin(uc, lc, ac, sc).setVisible(true));
+        SwingUtilities.invokeLater(() -> new Loggin(uc, lc, ac, sc).setVisible(true));
     }
 }
