@@ -5,12 +5,13 @@ import java.awt.*;
 
 import controller.StudentCon;
 import model.Student;
+import view.lists.StudentLista;
 
 public class StudentView extends BaseView {
     
     private StudentCon sc;
     private JButton anmälButton, hoppavButton, seKurserButton, seBetygButton;
-    StudentListView studentlist;
+    StudentLista studentlist;
 
     
     public StudentView(StudentCon sc, String user) {
@@ -21,7 +22,7 @@ public class StudentView extends BaseView {
     }
     
     public void initComponents() {
-        studentlist = new StudentListView(sc);
+        studentlist = new StudentLista(sc);
         studentlist.setVisible(false);
         
         anmälButton = new JButton("Gör ansökan");

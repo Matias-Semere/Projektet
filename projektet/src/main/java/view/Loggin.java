@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import controller.*;
 
-public class Loggin extends JDialog {
+public class Loggin extends JFrame {
 
     private JLabel usernameLabel = new JLabel("Användare: ");
     private JLabel passwordLabel = new JLabel("Lösenord:  ");
@@ -14,6 +14,7 @@ public class Loggin extends JDialog {
     private JButton login = new JButton("Logga in");
     private JButton skapakonto = new JButton("Skapa konto");
     private JPanel namndel, passdel, roledel, loginPanel;
+    private String namn, pass, roleVal, personnummer;
 
     public Loggin(UserCon uc, LärareCon lc, AdminCon ac, StudentCon sc) {
         setSize(500, 300);
@@ -29,7 +30,23 @@ public class Loggin extends JDialog {
     }
 
     private void initComponents() {
-        styleinit();
+        stil(passwordLabel);
+        stil(usernameLabel);
+        stil(username);
+        stil(password);
+        stil(login);
+        stil(role);
+        stil(skapakonto);
+
+        namndel = new JPanel();
+        passdel = new JPanel();
+        roledel = new JPanel();
+        loginPanel = new JPanel();
+
+        loginPanel.setBackground(Color.DARK_GRAY);
+        namndel.setOpaque(false);
+        passdel.setOpaque(false);
+        roledel.setOpaque(false);
 
         namndel.add(usernameLabel, BorderLayout.NORTH);
         namndel.add(username, BorderLayout.SOUTH);
@@ -48,26 +65,6 @@ public class Loggin extends JDialog {
         add(loginPanel);
     }
 
-    private void styleinit() {
-        stil(passwordLabel);
-        stil(usernameLabel);
-        stil(username);
-        stil(password);
-        stil(login);
-        stil(role);
-        stil(skapakonto);
-
-        namndel = new JPanel();
-        passdel = new JPanel();
-        roledel = new JPanel();
-        loginPanel = new JPanel();
-
-        loginPanel.setBackground(Color.DARK_GRAY);
-        namndel.setOpaque(false);
-        passdel.setOpaque(false);
-        roledel.setOpaque(false);
-    }
-
     private void stil(JComponent label) {
         if (label instanceof JLabel) {
             label.setForeground(Color.WHITE);
@@ -75,34 +72,38 @@ public class Loggin extends JDialog {
         label.setFont(new Font("Arial", Font.BOLD, 20));
     }
 
-    private void loginFunction(UserCon uc, StudentCon sc, LärareCon lc, AdminCon ac) {
-        String val = (String) role.getSelectedItem();
-        String userText = username.getText().trim();
-        char[] passChars = password.getPassword();
+    private void initFields() {
+        namn = username.getText();
+        pass = new String(password.getPassword());
+        roleVal = role.getSelectedItem().toString();
+    }
 
-        if (uc.loggin(userText, passChars, val)) {
-            dispose();
-            switch (val) {
-                case "Student" -> new StudentView(sc, userText);
-                case "Lärare" -> new LärareView(lc, userText);
-                case "Admin" -> new AdminView(ac, userText);
+    private void loginFunction(UserCon uc, StudentCon sc, LärareCon lc, AdminCon ac) {
+        initFields();
+        if (uc.userExists(namn)) {
+
+            if (uc.loggin(namn, pass, roleVal)) {
+                dispose();
+                switch (roleVal) {
+                    case "Student" -> new StudentView(sc, namn);
+                    case "Lärare" -> new LärareView(lc, sc, namn);
+                    case "Admin" -> new AdminView(ac, namn);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Fel Roll eller lösenord!");
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Fel användare eller lösenord!");
+            JOptionPane.showMessageDialog(this, "Användaren finns inte!");
         }
     }
 
     private void CreatAccount(UserCon uc, StudentCon sc, LärareCon lc, AdminCon ac) {
-        String usernameText = username.getText().trim();
-        String passwordText = new String(password.getPassword());
-        String roleVal = (String) role.getSelectedItem();
-
-        if (usernameText.isEmpty() || passwordText.isEmpty()) {
+        initFields();
+        if (namn.isEmpty() || pass.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Ange användarnamn och lösenord!");
             return;
         }
 
-        String personnummer = null;
         if (roleVal.equals("Student")) {
             personnummer = JOptionPane.showInputDialog(this, "Ange ditt personnummer:");
             if (personnummer == null || personnummer.isEmpty()) {
@@ -111,8 +112,13 @@ public class Loggin extends JDialog {
             }
         }
 
+        if (uc.userExists(namn)) {
+            JOptionPane.showMessageDialog(this, "Användaren finns redan!");
+            return;
+        }
+
         try {
-            uc.createUser(usernameText, passwordText, roleVal, personnummer, sc, lc, ac);
+            uc.createUser(namn, pass, roleVal, personnummer, sc, lc, ac);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Fel: " + e.getMessage());
             return;

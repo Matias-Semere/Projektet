@@ -2,17 +2,17 @@ package controller;
 
 import model.*;
 import dao.UserDAO;
-import java.util.List;
 
-public class UserCon {
-    UserDAO dao;
+public class UserCon extends BaseController<User> {
+    UserDAO customDao;
 
     public UserCon(UserDAO dao) {
-        this.dao = dao;
+        super(dao);
+        customDao = dao;
     }
 
     public boolean userExists(String username) {
-        User user = dao.getByUsername(username);
+        User user = customDao.getByUsername(username);
         if (user != null) {
             return true;
         }
@@ -20,22 +20,17 @@ public class UserCon {
         return false;
     }
 
-    public boolean loggin(String username, char[] password, String role) {
-        String lösen = new String(password);
-        User user = dao.getByUsername(username);
-
-        if (user != null) { // Check if user exists
-            if (user.getPassword().equals(lösen) && user.getRole().equalsIgnoreCase(role)) {
-                return true; // Successful login
-            } else {
-                System.out.println("Wrong password or role");
-            }
+    public boolean loggin(String username, String lösen, String role) {
+        User user = customDao.getByUsername(username);
+        if (user.getPassword().equals(lösen) && user.getRole().equalsIgnoreCase(role)) {
+            return true;
+        } else {
+            System.out.println("Wrong password or role");
         }
-        return false; // Login failed
+        return false;
     }
 
-    public User createUser(String username, String password, String role, String personnummer, StudentCon sc,
-            LärareCon lc, AdminCon ac) throws Exception {
+    public User createUser(String username, String password, String role, String personnummer, StudentCon sc, LärareCon lc, AdminCon ac) throws Exception {
         User user = new User(username, password, role);
         user = dao.insert(user);
 
@@ -46,32 +41,20 @@ public class UserCon {
         switch (role) {
             case "Student":
                 Student student = new Student(user.getID(), username, personnummer);
-                sc.insertStudent(student);
+                sc.insert(student);
                 break;
             case "Lärare":
                 Lärare lärare = new Lärare(user.getID(), username);
-                lc.insertLärare(lärare);
+                lc.insert(lärare);
                 break;
             case "Admin":
                 Admin admin = new Admin(user.getID(), username);
-                ac.insertAdmin(admin);
+                ac.insert(admin);
                 break;
             default:
                 throw new Exception("Unknown role: " + role);
         }
         return user;
-    }
-
-    public void insertUser(User user) {
-        dao.insert(user);
-    }
-
-    public void deleteUser(User user) {
-        dao.delete(user);
-    }
-
-    public List<User> getAllUsers() {
-        return dao.getAll();
     }
 
 }

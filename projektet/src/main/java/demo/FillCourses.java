@@ -48,8 +48,8 @@ public class FillCourses {
 
                 Kurstillfälle tillfälle = new Kurstillfälle(kurs.getID(), år + " Vecka: " + vecka);
 
-                kc.insertKurs(kurs);
-                kfc.insertKurstillfälle(tillfälle);
+                kc.insert(kurs);
+                kfc.insert(tillfälle);
             }
             sc.close();
         } catch (Exception e) {
