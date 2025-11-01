@@ -28,7 +28,7 @@ public class KursLista extends BaseList<Kurs> {
     public void updateList(List<Kurs> kurser) {
         listModel.clear();
         for (Kurs kursen : kurser) {
-            listModel.addElement(formatItem(kursen));
+            listModel.addElement(kursen);
         }
     }
 

@@ -70,4 +70,17 @@ public class KurstillfälleDAO extends BaseDAO<Kurstillfälle> {
         return result;
     }
 
+    public List<Kurstillfälle> getByKursID(int kursID) throws SQLException {
+        List<Kurstillfälle> list = new ArrayList<>();
+        String sql = "SELECT " + getSelectColumns() + " FROM " + getTableName() + " WHERE KursID = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, kursID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(mapResultSetToEntity(rs));
+            }
+        }
+        return list;
+    }
+
 }

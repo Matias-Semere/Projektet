@@ -1,6 +1,8 @@
 package dao;
 
 import model.Kurs;
+import java.util.*;
+
 import java.sql.*;
 
 public class KursDAO extends BaseDAO<Kurs> {
@@ -46,5 +48,18 @@ public class KursDAO extends BaseDAO<Kurs> {
         );
         kurs.setID(rs.getInt("KursID"));
         return kurs;
+    }
+
+    public List<Kurs> getByKursID(int kursID) throws SQLException {
+        List<Kurs> list = new ArrayList<>();
+        String sql = "SELECT " + getSelectColumns() + " FROM " + getTableName() + " WHERE KursID = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, kursID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(mapResultSetToEntity(rs));
+            }
+        }
+        return list;
     }
 }

@@ -8,16 +8,24 @@ import java.util.List;
 public class LärarTilldelningDAO extends BaseDAO<LärarTilldelning> {
 
     @Override
-    protected String getTableName() { return "LärarTilldelning"; }
+    protected String getTableName() {
+        return "LärarTilldelning";
+    }
 
     @Override
-    protected String getInsertColumns() { return "LärareID, KurstillfälleID"; }
+    protected String getInsertColumns() {
+        return "LärareID, KurstillfälleID";
+    }
 
     @Override
-    protected String getSelectColumns() { return "TilldelningID, LärareID, KurstillfälleID"; }
+    protected String getSelectColumns() {
+        return "TilldelningID, LärareID, KurstillfälleID";
+    }
 
     @Override
-    protected String getPrimaryKey() { return "TilldelningID"; }
+    protected String getPrimaryKey() {
+        return "TilldelningID";
+    }
 
     @Override
     protected void setParameters(PreparedStatement ps, LärarTilldelning entity) throws SQLException {
@@ -51,5 +59,16 @@ public class LärarTilldelningDAO extends BaseDAO<LärarTilldelning> {
             }
         }
         return list;
+    }
+
+    public void deleteByLärareAndKurstillfälle(int lärareID, int kurstillfälleID) {
+        String sql = "DELETE FROM " + getTableName() + " WHERE LärareID = ? AND KurstillfälleID = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, lärareID);
+            ps.setInt(2, kurstillfälleID);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

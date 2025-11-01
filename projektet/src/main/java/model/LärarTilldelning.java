@@ -17,7 +17,6 @@ public class LärarTilldelning extends BaseModel {
 
     @Override
     public String toString() {
-        return String.format("TilldelningID: %d, LärareID: %d, KurstillfälleID: %d",
-            id, lärareId, kurstillfälleId);
+        return String.format("TilldelningID: %d, LärareID: %d, KurstillfälleID: %d", id, lärareId, kurstillfälleId);
     }
 }

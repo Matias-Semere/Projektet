@@ -3,6 +3,7 @@ package view;
 import java.awt.*;
 import javax.swing.*;
 import controller.*;
+import model.User;
 
 public class Loggin extends JFrame {
 
@@ -17,11 +18,11 @@ public class Loggin extends JFrame {
     private JPanel namndel, passdel, roledel, loginPanel;
     private String namn, pass, roleVal, personnummer;
 
-    public Loggin(UserCon uc, LärareCon lc, AdminCon ac, StudentCon sc, KursCon kc, KurstillfälleCon kfc, BetygCon bc, RapporteringCon rc) {
+    public Loggin(UserCon uc, LärareCon lc, AdminCon ac, StudentCon sc, KursCon kc, KurstillfälleCon kfc, BetygCon bc, RapporteringCon rc, LärarTilldelningCon ltc, RegistreringCon rpc) {
         setSize(450, 500);
         initComponents();
 
-        login.addActionListener(e -> loginFunction(uc, sc, lc, ac, kc, kfc, bc, rc));
+        login.addActionListener(e -> loginFunction(uc, sc, lc, ac, kc, kfc, bc, rc, ltc, rpc));
         skapakonto.addActionListener(e -> CreatAccount(uc, sc, lc, ac));
         Avsluta.addActionListener(e -> dispose());
 
@@ -117,7 +118,7 @@ public class Loggin extends JFrame {
         roleVal = role.getSelectedItem().toString();
     }
 
-    private void loginFunction(UserCon uc, StudentCon sc, LärareCon lc, AdminCon ac, KursCon kc, KurstillfälleCon kfc, BetygCon bc, RapporteringCon rc) {
+    private void loginFunction(UserCon uc, StudentCon sc, LärareCon lc, AdminCon ac, KursCon kc, KurstillfälleCon kfc, BetygCon bc, RapporteringCon rc, LärarTilldelningCon ltc, RegistreringCon rpc) {
         initFields();
         if (uc.userExists(namn)) {
 
@@ -125,8 +126,8 @@ public class Loggin extends JFrame {
                 dispose();
                 switch (roleVal) {
                     case "Student" -> new StudentView(namn, sc, kfc);
-                    case "Lärare" -> new LärareView(namn, lc, sc, rc);
-                    case "Admin" -> new AdminView(namn, ac, lc, sc, kc, kfc, bc, rc);
+                    case "Lärare" -> new LärareView(namn, lc, rc, rpc);
+                    case "Admin" -> new AdminView(namn, ac, lc, sc, kc, kfc, bc, rc, ltc);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Fel Roll eller lösenord!");

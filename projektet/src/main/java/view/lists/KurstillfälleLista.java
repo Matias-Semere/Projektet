@@ -6,34 +6,29 @@ import java.awt.*;
 import java.util.List;
 import controller.KurstillfälleCon;
 // import model.Kurstillfälle;
+import model.Kurstillfälle;
 
 
-public class KurstillfälleLista extends BaseList<String> {
+public class KurstillfälleLista extends BaseList<Kurstillfälle> {
 
     private KurstillfälleCon k;
 
     public KurstillfälleLista(KurstillfälleCon k) {
         this.k = k;
         scrollPane.setPreferredSize(new Dimension(700, 800));
-        updateList(k.getAllWithCourseNames());
+        updateList(k.getAll());
     }
 
     @Override
     protected void onAddButtonClicked() {
-        updateList(k.getAllWithCourseNames());
+        updateList(k.getAll());
     }
 
     @Override
-    public void updateList(List<String> items) {
+    public void updateList(List<Kurstillfälle> items) {
         listModel.clear();
-        int i = 1;
-        for (String item : items) {
-            if (item.length() > 60) {
-                listModel.addElement(style + item.substring(0, 60) + "..." + " (ID:" + i + ")");
-            } else {
-                listModel.addElement(style + item + " (ID:" + i + ")");
-            }
-            i++;
+        for (Kurstillfälle item : items) {
+            listModel.addElement(item);
         }
     }
 

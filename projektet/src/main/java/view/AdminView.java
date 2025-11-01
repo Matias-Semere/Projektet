@@ -10,18 +10,18 @@ public class AdminView extends BaseView {
 
     private BaseController ac, lc, sc;
     private JButton addKurstillfälle,  removeKurstillfälle, connectTeacher, disconnectTeacher, svararRapport, showkurser;
-    private LärarLista lärarLista;
+    private LärareLista lärarLista;
     private KurstillfälleLista KurstillfälleLista;
     private KursLista KursLista;
 
-    public AdminView(String user, AdminCon adminCon, LärareCon lärareCon, StudentCon studentCon, KursCon KursCon, KurstillfälleCon KurstillfälleCon, BetygCon BetygCon, RapporteringCon RapporteringCon) {
+    public AdminView(String user, AdminCon ac, LärareCon lc , StudentCon sc, KursCon kc, KurstillfälleCon kfc, BetygCon bc, RapporteringCon rc, LärarTilldelningCon ltc) {
         super("Välkommen Admin: " + user);
-        this.ac = adminCon;
+        this.ac = ac;
         setBackground(Color.DARK_GRAY);
         
-        lärarLista = new LärarLista(lärareCon);
-        KursLista = new KursLista(KursCon);
-        KurstillfälleLista = new KurstillfälleLista(KurstillfälleCon);
+        lärarLista = new LärareLista(lc);
+        KursLista = new KursLista(kc);
+        KurstillfälleLista = new KurstillfälleLista(kfc);
         
         initComponents();
     }

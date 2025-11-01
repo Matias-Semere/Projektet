@@ -20,7 +20,7 @@ public class StudentLista extends BaseList<Student> {
     public void updateList(List<Student> students) {
         listModel.clear();
         for (Student student : students) {
-            listModel.addElement(formatItem(student));
+            listModel.addElement(student);
         }
     }
 
