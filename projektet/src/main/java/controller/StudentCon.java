@@ -2,13 +2,13 @@ package controller;
 
 import java.util.List;
 
-import dao.StudentDAO;
+import dao.StudentDAO2;
 import model.Student;
 
 public class StudentCon {
-    StudentDAO dao;
+    StudentDAO2 dao;
 
-    public StudentCon(StudentDAO dao) {
+    public StudentCon(StudentDAO2 dao) {
         this.dao = dao;
     }
 

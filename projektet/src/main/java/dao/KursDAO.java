@@ -5,13 +5,13 @@ import java.util.*;
 import model.Kurs;
 
 public class KursDAO {
+    Connection conn = DataBase.getConnection();
 
     public List<Kurs> getAllKurs() {
         List<Kurs> kursList = new ArrayList<>();
         String sql = "SELECT * FROM Kurs";
 
-        try (Connection conn = DataBase.getConnection();
-             Statement stmt = conn.createStatement();
+        try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
@@ -37,8 +37,7 @@ public class KursDAO {
     public void insertKurs(Kurs k) {
         String sql = "INSERT INTO Kurs (KursID, Namn, Studietakt, Ort, Antal_platser, Kurskod, Högskolepoäng) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DataBase.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, k.getKursID());
             ps.setString(2, k.getNamn());
@@ -58,8 +57,7 @@ public class KursDAO {
     public void deleteKurs(Kurs k) {
         String sql = "DELETE FROM Kurs WHERE KursID = ?";
 
-        try (Connection conn = DataBase.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, k.getKursID());
             ps.executeUpdate();
@@ -75,8 +73,7 @@ public class KursDAO {
             SET Namn = ?, Studietakt = ?, Ort = ?, Antal_platser = ?, Kurskod = ?, Högskolepoäng = ?
             WHERE KursID = ?""";
 
-        try (Connection conn = DataBase.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, k.getNamn());
             ps.setDouble(2, k.getStudietakt());

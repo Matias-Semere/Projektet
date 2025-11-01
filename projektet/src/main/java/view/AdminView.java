@@ -10,8 +10,8 @@ public class AdminView extends BaseView {
     private AdminCon ac;
     private JButton addKurstillfälle,  removeKurstillfälle, connectTeacher, disconnectTeacher, svararRapport;
 
-    public AdminView(AdminCon adminCon) {
-        super("Admin");
+    public AdminView(AdminCon adminCon, String user) {
+        super("Admin: " + user);
         this.ac = adminCon;
         setSize(500, 500);
         setBackground(Color.DARK_GRAY);

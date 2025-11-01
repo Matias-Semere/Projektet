@@ -13,8 +13,8 @@ public class StudentView extends BaseView {
     StudentListView studentlist;
 
     
-    public StudentView(StudentCon sc) {
-        super("Student");
+    public StudentView(StudentCon sc, String user) {
+        super("Student: " + user);
         this.sc = sc;
         setBackground(Color.DARK_GRAY);
         initComponents();

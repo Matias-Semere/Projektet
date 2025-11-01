@@ -15,15 +15,17 @@ public class App {
         UserCon uc = new UserCon(new UserDAO());
         LärareCon lc = new LärareCon(new LärareDAO());
         AdminCon ac = new AdminCon(new AdminDAO());
-        StudentCon sc = new StudentCon(new StudentDAO());
+        StudentCon sc = new StudentCon(new StudentDAO2());
         KursCon kc = new KursCon(new KursDAO());
         KurstillfälleCon kfc = new KurstillfälleCon(new KurstilfälleDAO());
 
-        // new FillStudents(uc);
+        // new FillStudents(uc, sc);
         // new FillCourses(kc, kfc);
 
-        sc.getListOfStudents().forEach(System.out::println);
+        // sc.getListOfStudents().forEach(System.out::println);
+        // lc.getListOfLärare().forEach(System.out::println);
+        // kc.getAllKurser().forEach(System.out::println);
 
-        // SwingUtilities.invokeLater(() -> new Loggin(uc, lc, ac, sc).setVisible(true));
+        SwingUtilities.invokeLater(() -> new Loggin(uc, lc, ac, sc).setVisible(true));
     }
 }

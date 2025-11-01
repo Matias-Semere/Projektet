@@ -83,9 +83,9 @@ public class Loggin extends JDialog {
         if (uc.loggin(userText, passChars, val)) {
             dispose();
             switch (val) {
-                case "Student" -> new MainFrame(new StudentView(sc), userText);
-                case "Lärare"  -> new MainFrame(new LärareView(lc), userText);
-                case "Admin"   -> new MainFrame(new AdminView(ac), userText);
+                case "Student" -> new StudentView(sc, userText);
+                case "Lärare"  -> new LärareView(lc, userText);
+                case "Admin"   -> new AdminView(ac, userText);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Fel användarnamn eller lösenord!");
@@ -112,13 +112,11 @@ public class Loggin extends JDialog {
     }
 
     try {
-        uc.createUser(usernameText, passwordText, roleVal, usernameText, personnummer, sc, lc, ac);
+        uc.createUser(usernameText, passwordText, roleVal, personnummer, sc, lc, ac);
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, "Fel: " + e.getMessage());
         return;
     }
     JOptionPane.showMessageDialog(this, "Användaren har skapats!");
 }
-
-
 }

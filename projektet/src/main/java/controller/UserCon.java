@@ -3,6 +3,7 @@ package controller;
 import model.*;
 import dao.UserDAO;
 import java.util.List;
+import java.util.Scanner;
 
 public class UserCon {
     UserDAO dao;
@@ -22,10 +23,7 @@ public class UserCon {
     }
 
     public boolean loggin(String username, char[] password, String role) {
-        String lösen = "";
-        for (char a : password) {
-            lösen += a;
-        }
+        String lösen = new String(password);
 
         if (userExists(username)) {
             for (User user : dao.getAllUsers()) {
@@ -42,7 +40,7 @@ public class UserCon {
         return false;
     }
 
-    public User createUser(String username, String password, String role, String namn, String personnummer, StudentCon sc, LärareCon lc, AdminCon ac) throws Exception {
+    public User createUser(String username, String password, String role, String personnummer, StudentCon sc, LärareCon lc, AdminCon ac) throws Exception {
     User user = new User(0, username, password, role);
     user = dao.insertUser(user);
 
@@ -52,15 +50,15 @@ public class UserCon {
 
     switch (role) {
         case "Student":
-            Student student = new Student(0, user.getUserId(), namn, personnummer);
+            Student student = new Student(0, user.getUserId(), username, personnummer);
             sc.insertStudent(student);
             break;
         case "Lärare":
-            Lärare lärare = new Lärare(0, user.getUserId(), namn);
+            Lärare lärare = new Lärare(0, user.getUserId(), username);
             lc.insertLärare(lärare);
             break;
         case "Admin":
-            Admin admin = new Admin(0, user.getUserId(), namn);
+            Admin admin = new Admin(0, user.getUserId(), username);
             ac.insertAdmin(admin);
             break;
         default:

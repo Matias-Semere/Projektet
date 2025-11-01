@@ -4,12 +4,16 @@ import javax.swing.*;
 import java.awt.*;
 import demo.*;
 
-public abstract class BaseView extends JPanel {
+public abstract class BaseView extends JFrame {
 
     protected JPanel headerPanel, contentPanel, footerPanel;
     protected JButton logout, Show;
 
-    public BaseView(String title) {
+    public BaseView(String title) {                 
+        setSize(800, 800);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);                     
+        setVisible(true);
         setLayout(new BorderLayout());
         initComponents();
 
@@ -37,7 +41,6 @@ public abstract class BaseView extends JPanel {
         footerLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         footerPanel.add(footerLabel);
         add(footerPanel, BorderLayout.SOUTH);
-
     }
 
     private void initComponents() {
@@ -46,8 +49,8 @@ public abstract class BaseView extends JPanel {
         style(logout);
         style(Show);
         logout.addActionListener(e -> {
-            SwingUtilities.getWindowAncestor(this).dispose(); // Close current frame
-            new App(); // Go back to login or main app
+            dispose();
+            new App();
         });
 
         Show.addActionListener(e -> {

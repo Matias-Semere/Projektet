@@ -9,18 +9,20 @@ public class FillCourses {
 
     public FillCourses(KursCon kc, KurstillfälleCon kfc) {
         try {
-            InputStream in = getClass().getResourceAsStream("/kurstillfällen.txt");
+            InputStream in = getClass().getResourceAsStream("/kurser.txt");
             if (in == null) {
-                throw new FileNotFoundException("Could not find resource: kurstillfällen.txt");
+                System.out.println();
+                throw new FileNotFoundException("Could not find resource: kurser.txt");
             }
 
             Scanner sc = new Scanner(new InputStreamReader(in));
             int kursID = 1;
             int tillfälleID = 1;
+            sc.nextLine();
 
             while (sc.hasNextLine()) {
                 String line = sc.nextLine().trim();
-                if (line.isEmpty()) continue; // skip blank lines
+                if (line.isEmpty()) continue;
 
                 String[] parts = line.split(";");
                 if (parts.length < 8) {
@@ -50,15 +52,13 @@ public class FillCourses {
                 Kurstillfälle tillfälle = new Kurstillfälle(
                         tillfälleID++,
                         kurs.getKursID(),
-                        år + "-v" + vecka // example date label
+                        år + " Vecka: " + vecka
                 );
 
                 kc.insertKurs(kurs);
                 kfc.insertKurstillfälle(tillfälle);
             }
             sc.close();
-            System.out.println("Courses successfully loaded from file.");
-
         } catch (Exception e) {
             e.printStackTrace();
         }

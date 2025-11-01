@@ -2,24 +2,27 @@ package dao;
 
 import java.io.*;
 import java.util.Scanner;
-
-import controller.UserCon;
-import model.User;
+import controller.*;
 
 public class FillStudents {
-    int count = 2;
-    public FillStudents(UserCon uc) {
+    public FillStudents(UserCon uc, StudentCon sc) {
         try {
             InputStream in = getClass().getResourceAsStream("/celebrities.txt");
-            Scanner sc = new Scanner(new InputStreamReader(in));
-            
-            while (sc.hasNextLine()) {
-                String[] line = sc.nextLine().split(";");
-                User user = new User(count++, line[0], "1234", "Student");
-                System.out.println(user);
-                uc.insertUser(user);
+            if (in == null) {
+                throw new FileNotFoundException("Could not find resource: celebrities.txt");
             }
-            sc.close();
+            Scanner s = new Scanner(new InputStreamReader(in));
+            
+            while (s.hasNextLine()) {
+                String[] line = s.nextLine().split(";");
+                // if (line.length < 2) {
+                //     System.err.println("Invalid line: " + line);
+                //     continue;
+                // }
+                // System.out.println(line[0] + "1234" + "Student" + line[1]); 
+                uc.createUser(line[0], "1234", "Student", line[1], sc, null, null);
+            }
+            s.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

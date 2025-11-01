@@ -14,8 +14,8 @@ public class LärareView extends BaseView {
     private JScrollPane läraretScroll = new JScrollPane(lärareJList);
     private String htmlstyle = "<html><style> h3 {color: White; border: 10px solid black; padding: 10px;}</style> <h3>";
 
-    public LärareView(LärareCon lc) {
-        super("Lärare");
+    public LärareView(LärareCon lc, String user) {
+        super("Lärare: " + user);
         this.lc = lc;
         setBackground(Color.DARK_GRAY);
         initComponents();

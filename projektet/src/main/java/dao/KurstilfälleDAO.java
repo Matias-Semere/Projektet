@@ -1,19 +1,15 @@
 package dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.sql.*;
+import java.util.*;
 import model.Kurstillfälle;
 
 public class KurstilfälleDAO {
+    Connection conn = DataBase.getConnection();
 
     public Kurstillfälle getKurstillfälle(String kurstillfälleID) {
         Kurstillfälle k = null;
-        try (Statement stmt = DataBase.getConnection().createStatement()) {
+        try (Statement stmt = conn.createStatement()) {
             String sql = "SELECT * FROM Kurstillfälle WHERE KurstillfälleID = ?";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -28,7 +24,7 @@ public class KurstilfälleDAO {
     
     public List<Kurstillfälle> getAllKurstillfälle() {
         List<Kurstillfälle> kurstillfälle = new ArrayList<>();
-        try (Statement stmt = DataBase.getConnection().createStatement()) {
+        try (Statement stmt = conn.createStatement()) {
             String sql = "SELECT * FROM Kurstillfälle";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -47,7 +43,7 @@ public class KurstilfälleDAO {
     public void insertKurstillfälle(Kurstillfälle k) {
         String sql = "INSERT INTO Kurstillfälle VALUES (?, ?, ?)";
 
-        try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, k.getKurstillfälleID());
             ps.setInt(2, k.getKursID());
             ps.setString(3, k.getDatum());
@@ -60,7 +56,7 @@ public class KurstilfälleDAO {
     public void deleteKurstillfälle(Kurstillfälle k) {
         String sql = "DELETE FROM Kurstillfälle WHERE KurstillfälleID = ?";
 
-        try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, k.getKurstillfälleID());
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -71,7 +67,7 @@ public class KurstilfälleDAO {
     public void alterKurstillfälle(Kurstillfälle k) {
         String sql = "UPDATE Kurstillfälle SET KursID = ?, Datum = ? WHERE KurstillfälleID = ?";
 
-        try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, k.getKursID());
             ps.setString(2, k.getDatum());
             ps.setInt(3, k.getKurstillfälleID());
