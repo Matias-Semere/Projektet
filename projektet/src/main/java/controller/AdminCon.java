@@ -11,19 +11,19 @@ public class AdminCon {
         this.dao = amdmindao;
     }
 
-    public List<Admin> getAllAdmins() {
-        return dao.getAllAdmins();
+    public List<Admin> getListOfAdmins() {
+        return dao.getAll();
     }
 
     public void insertAdmin(Admin admin) {
-        dao.insertAdmin(admin);
+        dao.insert(admin);
     }
 
     public void deleteAdmin(Admin admin) {
-        dao.deleteAdmin(admin);
+        dao.delete(admin);
     }
 
-    public void alterAdmin(Admin admin) {
-        dao.alterAdmin(admin);
+    public void updateAdmin(Admin admin) {
+        dao.update(admin);
     }
 }

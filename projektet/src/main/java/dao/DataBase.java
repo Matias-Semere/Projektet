@@ -12,7 +12,7 @@ public class DataBase {
         try {
             File dbFile = new File(DB_PATH);
             if (!dbFile.exists()) {
-                InputStream in = StudentDAO2.class.getResourceAsStream("/database.db");
+                InputStream in = DataBase.class.getResourceAsStream("/database.db");
                 Files.copy(in, dbFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 System.out.println("Databasen skapades!");
             }

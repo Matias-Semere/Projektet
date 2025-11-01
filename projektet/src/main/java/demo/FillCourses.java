@@ -1,4 +1,4 @@
-package dao;
+package demo;
 
 import java.io.*;
 import java.util.*;
@@ -16,8 +16,6 @@ public class FillCourses {
             }
 
             Scanner sc = new Scanner(new InputStreamReader(in));
-            int kursID = 1;
-            int tillfälleID = 1;
             sc.nextLine();
 
             while (sc.hasNextLine()) {
@@ -40,7 +38,6 @@ public class FillCourses {
                 double studietakt = Double.parseDouble(parts[7]);
 
                 Kurs kurs = new Kurs(
-                        kursID++,
                         kursnamn,
                         studietakt,
                         "Hig",
@@ -49,11 +46,7 @@ public class FillCourses {
                         högskolepoäng
                 );
 
-                Kurstillfälle tillfälle = new Kurstillfälle(
-                        tillfälleID++,
-                        kurs.getKursID(),
-                        år + " Vecka: " + vecka
-                );
+                Kurstillfälle tillfälle = new Kurstillfälle(kurs.getID(), år + " Vecka: " + vecka);
 
                 kc.insertKurs(kurs);
                 kfc.insertKurstillfälle(tillfälle);

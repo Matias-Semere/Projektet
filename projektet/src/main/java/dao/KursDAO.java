@@ -1,92 +1,55 @@
 package dao;
 
+import model.*;
 import java.sql.*;
-import java.util.*;
-import model.Kurs;
 
-public class KursDAO {
-    Connection conn = DataBase.getConnection();
+public class KursDAO extends BaseDAO<Kurs> {
 
-    public List<Kurs> getAllKurs() {
-        List<Kurs> kursList = new ArrayList<>();
-        String sql = "SELECT * FROM Kurs";
-
-        try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-
-            while (rs.next()) {
-                Kurs kurs = new Kurs(
-                        rs.getInt("KursID"),
-                        rs.getString("Namn"),
-                        rs.getDouble("Studietakt"),
-                        rs.getString("Ort"),
-                        rs.getInt("Antal_platser"),
-                        rs.getString("Kurskod"),
-                        rs.getDouble("Högskolepoäng")
-                );
-                kursList.add(kurs);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return kursList;
+    @Override
+    protected String getTableName() {
+        return "Kurs";
     }
 
-    public void insertKurs(Kurs k) {
-        String sql = "INSERT INTO Kurs (KursID, Namn, Studietakt, Ort, Antal_platser, Kurskod, Högskolepoäng) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, k.getKursID());
-            ps.setString(2, k.getNamn());
-            ps.setDouble(3, k.getStudietakt());
-            ps.setString(4, k.getOrt());
-            ps.setInt(5, k.getAntalPlatser());
-            ps.setString(6, k.getKurskod());
-            ps.setDouble(7, k.getHögskolepoäng());
-
-            ps.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected String getInsertColumns() {
+        return "Namn, Studietakt, Ort, Antal_platser, Kurskod, Högskolepoäng";
     }
 
-    public void deleteKurs(Kurs k) {
-        String sql = "DELETE FROM Kurs WHERE KursID = ?";
-
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, k.getKursID());
-            ps.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected String getSelectColumns() {
+        return "KursID, Namn, Studietakt, Ort, Antal_platser, Kurskod, Högskolepoäng";
     }
 
-    public void alterKurs(Kurs k) {
-        String sql = """
-            UPDATE Kurs
-            SET Namn = ?, Studietakt = ?, Ort = ?, Antal_platser = ?, Kurskod = ?, Högskolepoäng = ?
-            WHERE KursID = ?""";
+    @Override
+    protected String getPrimaryKey() {
+        return "KursID";
+    }
 
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+    @Override
+    protected void setParameters(PreparedStatement ps, Kurs entity) throws SQLException {
+        ps.setString(1, entity.getNamn());
+        ps.setDouble(2, entity.getStudietakt());
+        ps.setString(3, entity.getOrt());
+        ps.setInt(4, entity.getAntalPlatser());
+        ps.setString(5, entity.getKurskod());
+        ps.setDouble(6, entity.getHögskolepoäng());
+    }
 
-            ps.setString(1, k.getNamn());
-            ps.setDouble(2, k.getStudietakt());
-            ps.setString(3, k.getOrt());
-            ps.setInt(4, k.getAntalPlatser());
-            ps.setString(5, k.getKurskod());
-            ps.setDouble(6, k.getHögskolepoäng());
-            ps.setInt(7, k.getKursID());
+    @Override
+    protected void setGeneratedId(Kurs entity, int id) {
+        entity.setID(id);
+    }
 
-            ps.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected Kurs mapResultSetToEntity(ResultSet rs) throws SQLException {
+        Kurs kurs = new Kurs(
+                rs.getString("Namn"),
+                rs.getDouble("Studietakt"),
+                rs.getString("Ort"),
+                rs.getInt("Antal_platser"),
+                rs.getString("Kurskod"),
+                rs.getDouble("Högskolepoäng"));
+        kurs.setID(rs.getInt("KursID"));
+        return kurs;
     }
 }

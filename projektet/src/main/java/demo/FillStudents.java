@@ -1,4 +1,4 @@
-package dao;
+package demo;
 
 import java.io.*;
 import java.util.Scanner;
@@ -15,11 +15,6 @@ public class FillStudents {
             
             while (s.hasNextLine()) {
                 String[] line = s.nextLine().split(";");
-                // if (line.length < 2) {
-                //     System.err.println("Invalid line: " + line);
-                //     continue;
-                // }
-                // System.out.println(line[0] + "1234" + "Student" + line[1]); 
                 uc.createUser(line[0], "1234", "Student", line[1], sc, null, null);
             }
             s.close();

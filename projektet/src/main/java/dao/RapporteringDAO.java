@@ -5,53 +5,55 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BetygDAO extends BaseDAO<Betyg> {
+public class RapporteringDAO extends BaseDAO<Rapportering> {
 
     @Override
     protected String getTableName() {
-        return "Betyg";
+        return "Rapportering";
     }
 
     @Override
     protected String getInsertColumns() {
-        return "StudentID, KurstillfälleID, Värde";
+        return "StudentID, KurstillfälleID, LärareID, AdminID";
     }
 
     @Override
     protected String getSelectColumns() {
-        return "BetygID, StudentID, KurstillfälleID, Värde";
+        return "RapporteringID, StudentID, KurstillfälleID, LärareID, AdminID";
     }
 
     @Override
     protected String getPrimaryKey() {
-        return "BetygID";
+        return "RapporteringID";
     }
 
     @Override
-    protected void setParameters(PreparedStatement ps, Betyg entity) throws SQLException {
+    protected void setParameters(PreparedStatement ps, Rapportering entity) throws SQLException {
         ps.setInt(1, entity.getStudentID());
         ps.setInt(2, entity.getKurstillfälleID());
-        ps.setString(3, entity.getVärde());
+        ps.setInt(3, entity.getLärareID());
+        ps.setInt(4, entity.getAdminID());
     }
 
     @Override
-    protected void setGeneratedId(Betyg entity, int id) {
+    protected void setGeneratedId(Rapportering entity, int id) {
         entity.setID(id);
     }
 
     @Override
-    protected Betyg mapResultSetToEntity(ResultSet rs) throws SQLException {
-        Betyg betyg = new Betyg(
+    protected Rapportering mapResultSetToEntity(ResultSet rs) throws SQLException {
+        Rapportering r = new Rapportering(
                 rs.getInt("StudentID"),
                 rs.getInt("KurstillfälleID"),
-                rs.getString("Värde"));
-        betyg.setID(rs.getInt("BetygID"));
-        return betyg;
+                rs.getInt("LärareID"),
+                rs.getInt("AdminID"));
+        r.setID(rs.getInt("RapporteringID"));
+        return r;
     }
 
     // Custom methods
-    public List<Betyg> getByStudentID(int studentID) throws SQLException {
-        List<Betyg> list = new ArrayList<>();
+    public List<Rapportering> getByStudentID(int studentID) throws SQLException {
+        List<Rapportering> list = new ArrayList<>();
         String sql = "SELECT " + getSelectColumns() + " FROM " + getTableName() + " WHERE StudentID = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, studentID);

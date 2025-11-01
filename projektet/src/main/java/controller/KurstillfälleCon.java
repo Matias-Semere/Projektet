@@ -1,31 +1,32 @@
+
 package controller;
 
 import java.util.List;
 
-import dao.KurstilfälleDAO;
+import dao.KurstillfälleDAO;
 import model.Kurstillfälle;
 
 public class KurstillfälleCon {
-    KurstilfälleDAO dao;
+    KurstillfälleDAO dao;
 
-    public KurstillfälleCon(KurstilfälleDAO k) {
+    public KurstillfälleCon(KurstillfälleDAO k) {
         this.dao = k;
     }
 
     public List<Kurstillfälle> getAllKurstillfällen() {
-        return dao.getAllKurstillfälle();
+        return dao.getAll();
     }
 
     public void insertKurstillfälle(Kurstillfälle kurstillfälle) {
-        dao.insertKurstillfälle(kurstillfälle);
+        dao.insert(kurstillfälle);
     }
 
     public void deleteKurstillfälle(Kurstillfälle kurstillfälle) {
-        dao.deleteKurstillfälle(kurstillfälle);
+        dao.delete(kurstillfälle);
     }
 
     public void alterKurstillfälle(Kurstillfälle kurstillfälle) {
-        dao.alterKurstillfälle(kurstillfälle);
+        dao.update(kurstillfälle);
     }
 
 }

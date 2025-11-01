@@ -2,29 +2,29 @@ package controller;
 
 import java.util.List;
 
-import dao.StudentDAO2;
+import dao.StudentDAO;
 import model.Student;
 
 public class StudentCon {
-    StudentDAO2 dao;
+    StudentDAO dao;
 
-    public StudentCon(StudentDAO2 dao) {
+    public StudentCon(StudentDAO dao) {
         this.dao = dao;
     }
 
     public void insertStudent(Student student) {
-        dao.insertStudent(student);
+        dao.insert(student);
     }
 
     public void deleteStudent(Student student) {
-        dao.deleteStudent(student);
+        dao.delete(student);
     }
     
-    public void alterStudent(Student student) {
-        dao.alterStudent(student);
+    public void updateStudent(Student student) {
+        dao.update(student);
     }
     
     public List<Student> getListOfStudents() {
-        return dao.getAllStudents();
+        return dao.getAll();
     }
 }

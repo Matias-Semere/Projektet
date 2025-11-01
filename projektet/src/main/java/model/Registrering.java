@@ -1,34 +1,22 @@
 package model;
 
-public class Registrering {
-    private int StudentID;
-    private String KurstillfälleID;
+public class Registrering extends BaseModel {
+    private int studentID;
+    private int kurstillfälleID;
 
-    public Registrering(int StudentID, String KurstillfälleID) {
-        this.StudentID = StudentID;
-        this.KurstillfälleID = KurstillfälleID;
-
+    public Registrering(int studentID, int kurstillfälleID) {
+        this.studentID = studentID;
+        this.kurstillfälleID = kurstillfälleID;
     }
 
-    public void setStudentID(int StudentID) {
-        this.StudentID = StudentID;
-    }
+    public int getStudentID() { return studentID; }
+    public void setStudentID(int studentID) { this.studentID = studentID; }
 
-    public int getStudentID() {
-        return StudentID;
-    }
-
-    public void setKurstillfälleID(String KurstillfälleID) {
-        this.KurstillfälleID = KurstillfälleID;
-    }
-
-    public String getKurstillfälleID() {
-        return KurstillfälleID;
-    }
+    public int getKurstillfälleID() { return kurstillfälleID; }
+    public void setKurstillfälleID(int kurstillfälleID) { this.kurstillfälleID = kurstillfälleID; }
 
     @Override
     public String toString() {
-        return String.format("StudentID: %d, KurstillfälleID: %s",
-                StudentID, KurstillfälleID);
+        return String.format("StudentID: %d, KurstillfälleID: %d", studentID, kurstillfälleID);
     }
 }

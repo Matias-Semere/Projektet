@@ -1,51 +1,27 @@
 package model;
 
-public class Betyg {
-    private int StudentID;
-    private int BetygID;
-    private int KurstillfälleID;
-    private Grades värde;
+public class Betyg extends BaseModel {
+    private int studentID;
+    private int kurstillfälleID;
+    private String värde;
 
-    public enum Grades {
-        A, B, C, D, E, F, MVG, VG, G, U;
+    public Betyg(int studentID, int kurstillfälleID, String värde) {
+        this.studentID = studentID;
+        this.kurstillfälleID = kurstillfälleID;
+        this.värde = värde;
     }
 
-    public Betyg(int StudentID, int KurstillfälleID, Grades värde) {
-        setStudentID(StudentID);
-        setKurstillfälleID(KurstillfälleID);
-        setGrade(värde);
-    }
+    public int getStudentID() { return studentID; }
+    public void setStudentID(int studentID) { this.studentID = studentID; }
 
-    public void setStudentID(int StudentID) {
-        this.StudentID = StudentID;
-    }
+    public int getKurstillfälleID() { return kurstillfälleID; }
+    public void setKurstillfälleID(int kurstillfälleID) { this.kurstillfälleID = kurstillfälleID; }
 
-    public int getStudentID() {
-        return StudentID;
-    }
+    public String getVärde() { return värde; }
+    public void setVärde(String värde) { this.värde = värde; }
 
-    public void setKurstillfälleID(int kurstillfälleID) {
-        this.KurstillfälleID = kurstillfälleID;
+    @Override
+    public String toString() {
+        return String.format("BetygID: %d, StudentID: %d, KurstillfälleID: %d, Värde: %s", id, studentID, kurstillfälleID, värde);
     }
-
-    public int getKurstillfälleID() {
-        return KurstillfälleID;
-    }
-
-    public void setGrade(Grades grade) {
-        this.värde = grade;
-    }
-
-    public Grades getGrade() {
-        return värde;
-    }
-
-    public void setBetygID(int BetygID) {
-        this.BetygID = BetygID;
-    }
-
-    public int getBetygID() {
-        return BetygID;
-    }
-
 }

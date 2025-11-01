@@ -12,22 +12,20 @@ public class LärareCon {
         this.dao = lärareDao;
     }
 
-    public List<Lärare> getListOfLärare() {
-        return dao.getAllLärare();
+    public void insertLärare(Lärare lärare) {
+        dao.insert(lärare);
     }
 
     public void deleteLärare(Lärare lärare) {
-        dao.deleteLärare(lärare);
+        dao.delete(lärare);
     }
 
-    public void insertLärare(Lärare lärare) {
-        dao.insertLärare(lärare);
-    } 
-
-    public void alterLärare(Lärare lärare){
-        dao.alterLärare(lärare);
-
+    public void updateLärare(Lärare lärare) {
+        dao.update(lärare);
     }
 
+    public List<Lärare> getListOfLärare() {
+        return dao.getAll();
+    }
 
 }

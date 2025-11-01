@@ -1,64 +1,33 @@
 package model;
 
-public class Rapportering {
-    private int RapporteringsID;
-    private int StudentID;
-    private String MomentID;
-    private int LärarID;
-    private int AdminID;
+public class Rapportering extends BaseModel {
+    private int studentID;
+    private int kurstillfälleID;
+    private int lärareID;
+    private int adminID;
 
-    public Rapportering(int StudentID, String MomentID, int LärarID, int AdminID) {
-        // this.RapporteringsID = RapporteringsID;
-        this.StudentID = StudentID;
-        this.MomentID = MomentID;
-        this.LärarID = LärarID;
-        this.AdminID = AdminID;
+    public Rapportering(int studentID, int kurstillfälleID, int lärareID, int adminID) {
+        this.studentID = studentID;
+        this.kurstillfälleID = kurstillfälleID;
+        this.lärareID = lärareID;
+        this.adminID = adminID;
     }
 
-    public void setRapporteringsID(int RapporteringsID) {
-        this.RapporteringsID = RapporteringsID;
-    }
+    public int getStudentID() { return studentID; }
+    public void setStudentID(int studentID) { this.studentID = studentID; }
 
-    public int getRapporteringsID() {
-        return RapporteringsID;
-    }
+    public int getKurstillfälleID() { return kurstillfälleID; }
+    public void setKurstillfälleID(int kurstillfälleID) { this.kurstillfälleID = kurstillfälleID; }
 
-    public void setStudentID(int StudentID) {
-        this.StudentID = StudentID;
-    }
+    public int getLärareID() { return lärareID; }
+    public void setLärareID(int lärareID) { this.lärareID = lärareID; }
 
-    public int getStudentID() {
-        return StudentID;
-    }
-
-    public String getMomentID() {
-        return MomentID;
-    }
-
-    public void setLärarID(int LärarID) {
-        this.LärarID = LärarID;
-
-    }
-
-    public void setMomentID(String MomentID) {
-        this.MomentID = MomentID;
-    }
-
-    public int getLärarID() {
-        return LärarID;
-    }
-
-    public void setAdminID(int AdminID) {
-        this.AdminID = AdminID;
-    }
-
-    public int getAdminID() {
-        return AdminID;
-    }
+    public int getAdminID() { return adminID; }
+    public void setAdminID(int adminID) { this.adminID = adminID; }
 
     @Override
     public String toString() {
-        return String.format("RapporteringsID: %d, StudentID: %d, MomentID: %s, LärarID: %d, AdminID: %d",
-                RapporteringsID, StudentID, MomentID, LärarID, AdminID);
+        return String.format("RapporteringID: %d, StudentID: %d, KurstillfälleID: %d, LärareID: %d, AdminID: %d",
+                id, studentID, kurstillfälleID, lärareID, adminID);
     }
 }

@@ -1,94 +1,45 @@
 package dao;
 
-import model.Lärare;
+import model.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
-public class LärareDAO {
+public class LärareDAO extends BaseDAO<Lärare> {
 
-    public List<Lärare> getAllLärare() {
-        List<Lärare> list = new ArrayList<>();
-        String sql = "SELECT * FROM Lärare";
-
-        try (Statement stmt = DataBase.getConnection().createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-
-            while (rs.next()) {
-                list.add(new Lärare(
-                        rs.getInt("LärareID"),
-                        rs.getInt("UserID"),
-                        rs.getString("Namn")
-                ));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
+    @Override
+    protected String getTableName() {
+        return "Lärare";
     }
 
-    public Lärare getLärare(int lärareID) {
-        String sql = "SELECT * FROM Lärare WHERE LärareID = ?";
-        Lärare l = null;
-
-        try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
-            ps.setInt(1, lärareID);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    l = new Lärare(
-                            rs.getInt("LärareID"),
-                            rs.getInt("UserID"),
-                            rs.getString("Namn")
-                    );
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return l;
+    @Override
+    protected String getInsertColumns() {
+        return "UserID, Namn";
     }
 
-    public void insertLärare(Lärare lärare) {
-        String sql = "INSERT INTO Lärare (UserID, Namn) VALUES (?, ?)";
-
-        try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setInt(1, lärare.getUserID());
-            ps.setString(2, lärare.getNamn());
-            ps.executeUpdate();
-
-            try (ResultSet rs = ps.getGeneratedKeys()) {
-                if (rs.next()) {
-                    lärare.setLärareID(rs.getInt(1));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected String getSelectColumns() {
+        return "LärareID, UserID, Namn";
     }
 
-    public void alterLärare(Lärare lärare) {
-        String sql = "UPDATE Lärare SET Namn = ?, UserID = ? WHERE LärareID = ?";
-
-        try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
-            ps.setString(1, lärare.getNamn());
-            ps.setInt(2, lärare.getUserID());
-            ps.setInt(3, lärare.getLärareID());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected String getPrimaryKey() {
+        return "LärareID";
     }
 
-    public void deleteLärare(Lärare lärare) {
-        String sql = "DELETE FROM Lärare WHERE LärareID = ?";
+    @Override
+    protected void setParameters(PreparedStatement ps, Lärare entity) throws SQLException {
+        ps.setInt(1, entity.getUserId());
+        ps.setString(2, entity.getNamn());
+    }
 
-        try (PreparedStatement ps = DataBase.getConnection().prepareStatement(sql)) {
-            ps.setInt(1, lärare.getLärareID());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected void setGeneratedId(Lärare entity, int id) {
+        entity.setID(id);
+    }
+
+    @Override
+    protected Lärare mapResultSetToEntity(ResultSet rs) throws SQLException {
+        Lärare lärare = new Lärare(rs.getInt("UserID"), rs.getString("Namn"));
+        lärare.setID(rs.getInt("LärareID"));
+        return lärare;
     }
 }

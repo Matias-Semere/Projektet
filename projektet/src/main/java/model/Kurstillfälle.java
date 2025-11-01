@@ -1,43 +1,22 @@
 package model;
 
-public class Kurstillfälle {
-    private int KurstillfälleID;
-    private int KursID;
-    private String Datum;
+public class Kurstillfälle extends BaseModel {
+    private int kursID;
+    private String datum;
 
-    public Kurstillfälle(int KurstillfälleID, int KursID, String Datum) {
-        this.KurstillfälleID = KurstillfälleID;
-        this.KursID = KursID;
-        this.Datum = Datum;
+    public Kurstillfälle(int kursID, String datum) {
+        this.kursID = kursID;
+        this.datum = datum;
     }
 
-    public int getKurstillfälleID() {
-        return KurstillfälleID;
-    }
+    public int getKursID() { return kursID; }
+    public void setKursID(int kursID) { this.kursID = kursID; }
 
-    public void setKurstillfälleID(int KurstillfälleID) {
-        this.KurstillfälleID = KurstillfälleID;
-    }
-
-    public int getKursID() {
-        return KursID;
-    }
-
-    public void setKursID(int KursID) {
-        this.KursID = KursID;
-    }
-
-    public String getDatum() {
-        return Datum;
-    }
-
-    public void setDatum(String Datum) {
-        this.Datum = Datum;
-    }
+    public String getDatum() { return datum; }
+    public void setDatum(String datum) { this.datum = datum; }
 
     @Override
     public String toString() {
-        return String.format("KurstillfälleID: %s, KursID: %d, Datum: %s",
-                KurstillfälleID, KursID, Datum);
+        return String.format("KurstillfälleID: %d, KursID: %d, Datum: %s", id, kursID, datum);
     }
 }

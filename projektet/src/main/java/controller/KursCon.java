@@ -12,19 +12,19 @@ public class KursCon {
         this.dao = k;
     }
 
+    public List<Kurs> getAllKurser() {
+        return dao.getAll();
+    }
+
     public void insertKurs(Kurs kurs) {
-        dao.insertKurs(kurs);
+        dao.insert(kurs);
     }
 
     public void deleteKurs(Kurs kurs) {
-        dao.deleteKurs(kurs);
-    }
-
-    public List<Kurs> getAllKurser() {
-        return dao.getAllKurs();
+        dao.delete(kurs);
     }
 
     public void alterKurs(Kurs kurs) {
-        dao.alterKurs(kurs);
+        dao.update(kurs);
     }
 }
