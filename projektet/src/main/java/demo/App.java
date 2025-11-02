@@ -12,8 +12,8 @@ public class App {
     }
     public static void main(String a[]) {
         UserCon uc = new UserCon(new UserDAO());
-        LärareCon lc = new LärareCon(new LärareDAO());
         StudentCon sc = new StudentCon(new StudentDAO());
+        LärareCon lc = new LärareCon(new LärareDAO(), sc);
         KursCon kc = new KursCon(new KursDAO());
 
         
@@ -22,7 +22,7 @@ public class App {
         BetygCon bc = new BetygCon(new BetygDAO());
         RapporteringCon rc = new RapporteringCon(new RapporteringDAO());
         LärarTilldelningCon ltc = new LärarTilldelningCon(new LärarTilldelningDAO());
-        AdminCon ac = new AdminCon(new AdminDAO(), ltc);
+        AdminCon ac = new AdminCon(new AdminDAO(), ltc, kc);
 
         // new FillStudents(uc, sc);
         // new FillCourses(kc, kfc);

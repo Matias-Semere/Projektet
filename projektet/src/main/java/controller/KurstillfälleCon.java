@@ -4,6 +4,7 @@ import java.util.List;
 
 import dao.KurstillfälleDAO;
 import model.Kurstillfälle;
+import model.Lärare;
 
 public class KurstillfälleCon extends BaseController<Kurstillfälle> {
 

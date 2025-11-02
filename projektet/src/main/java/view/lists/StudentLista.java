@@ -13,6 +13,7 @@ public class StudentLista extends BaseList<Student> {
 
     public StudentLista(StudentCon sc) {
         this.sc = sc;
+        updateButton.addActionListener(e -> getAll());
         updateList(sc.getAll());
     }
 
@@ -24,13 +25,7 @@ public class StudentLista extends BaseList<Student> {
         }
     }
 
-    @Override
-    protected void onAddButtonClicked() {
+    public void getAll() {
         updateList(sc.getAll());
-    }
-
-    @Override
-    protected String formatItem(Student student) {
-        return style + student.getNamn() + " (ID: " + student.getID() + ")";
     }
 }

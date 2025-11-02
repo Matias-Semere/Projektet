@@ -1,6 +1,8 @@
 package dao;
 
 import model.Kurstillfälle;
+import model.Lärare;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +77,19 @@ public class KurstillfälleDAO extends BaseDAO<Kurstillfälle> {
         String sql = "SELECT " + getSelectColumns() + " FROM " + getTableName() + " WHERE KursID = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, kursID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(mapResultSetToEntity(rs));
+            }
+        }
+        return list;
+    }
+
+    public List<Kurstillfälle> getForLärare(Lärare lärare) throws SQLException {
+        List<Kurstillfälle> list = new ArrayList<>();
+        String sql = "SELECT " + getSelectColumns() + " FROM " + getTableName() + " WHERE UserID = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, lärare.getID());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(mapResultSetToEntity(rs));

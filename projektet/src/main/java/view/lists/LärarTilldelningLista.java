@@ -10,6 +10,7 @@ public class LärarTilldelningLista extends BaseList<LärarTilldelning> {
 
     public LärarTilldelningLista(LärarTilldelningCon lc) {
         this.lc = lc;
+        updateButton.addActionListener(e -> getAll());
         updateList(lc.getAll());
     }
 
@@ -21,14 +22,7 @@ public class LärarTilldelningLista extends BaseList<LärarTilldelning> {
         }
     }
 
-    @Override
-    protected void onAddButtonClicked() {
+    protected void getAll() {
         updateList(lc.getAll());
-    }
-
-    @Override
-    protected String formatItem(LärarTilldelning t) {
-        return style + "LärareID: " + t.getLärareId() +
-               " → KurstillfälleID: " + t.getKurstillfälleId();
     }
 }

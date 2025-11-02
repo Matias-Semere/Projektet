@@ -17,6 +17,10 @@ public class LärarTilldelningCon extends BaseController<LärarTilldelning> {
         this.dao = dao;
     }
 
+    public void deleteByLärareAndKurstillfälle(int lärareID, int kurstillfälleID) {
+       dao.deleteByLärareAndKurstillfälle(lärareID, kurstillfälleID);
+   }
+
     public List<LärarTilldelning> getForLärare(Lärare lärare) {
         List<LärarTilldelning> result = new ArrayList<>();
         for (LärarTilldelning lt : dao.getAll()) {
@@ -25,10 +29,6 @@ public class LärarTilldelningCon extends BaseController<LärarTilldelning> {
             }
         }
         return result;
-    }
-
-     public void deleteByLärareAndKurstillfälle(int lärareID, int kurstillfälleID) {
-        dao.deleteByLärareAndKurstillfälle(lärareID, kurstillfälleID);
     }
 
     public List<LärarTilldelning> getForKurstillfälle(Kurstillfälle kf) {
@@ -40,4 +40,5 @@ public class LärarTilldelningCon extends BaseController<LärarTilldelning> {
         }
         return result;
     }
+
 }

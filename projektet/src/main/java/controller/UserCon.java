@@ -11,6 +11,10 @@ public class UserCon extends BaseController<User> {
         customDao = dao;
     }
 
+    public User getByUsername(String username) {
+        return customDao.getByUsername(username);
+    }
+
     public boolean userExists(String username) {
         User user = customDao.getByUsername(username);
         if (user != null) {

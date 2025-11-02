@@ -15,12 +15,38 @@ public class KursLista extends BaseList<Kurs> {
 
     public KursLista(KursCon kc) {
         this.kc = kc;
-        scrollPane.setPreferredSize(new Dimension(600, 800));
+        scrollPane.setPreferredSize(new Dimension(600, 700));
+        JButton addButton = new JButton("Skapa");
+        JButton removeButton = new JButton("Ta bort");
+        styleButton(addButton);
+        styleButton(removeButton);
+        addButton.addActionListener(e -> onAddKurs());
+        removeButton.addActionListener(e -> onDelKurs());
+        updateButton.addActionListener(e -> getAll());
+        actionPanel.add(addButton);
+        actionPanel.add(removeButton);
         updateList(kc.getAll());
     }
 
-    @Override
-    protected void onAddButtonClicked() {
+    protected void getAll() {
+        updateList(kc.getAll());
+    }
+
+    public void onAddKurs() {
+        String namn = JOptionPane.showInputDialog(null, "Skriv in namn:");
+        String kurskod = JOptionPane.showInputDialog(null, "Skriv in kurskod:");
+        double högskolepoäng = Double.parseDouble(JOptionPane.showInputDialog(null, "Skriv in högskolepoäng:"));
+
+        Kurs kurs = new Kurs(namn, kurskod, högskolepoäng);
+        kc.insert(kurs);
+        updateList(kc.getAll());
+    }
+
+    public void onDelKurs() {
+        Kurs k = this.getSelectedEntity();
+        if (k != null) {
+            kc.delete(k);
+        }
         updateList(kc.getAll());
     }
 
@@ -30,14 +56,6 @@ public class KursLista extends BaseList<Kurs> {
         for (Kurs kursen : kurser) {
             listModel.addElement(kursen);
         }
-    }
-
-    @Override
-    protected String formatItem(Kurs kursen) {
-        if (kursen.getNamn().length() > 60) {
-            return style + kursen.getNamn().substring(0, 60) + "..." + " (ID: " + kursen.getID() + ")";
-        }
-        return style + kursen.getNamn() + " (ID: " + kursen.getID() + ")";
     }
 
 }

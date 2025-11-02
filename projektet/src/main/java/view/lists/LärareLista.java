@@ -2,8 +2,8 @@ package view.lists;
 
 import controller.LärareCon;
 import model.Lärare;
-
 import java.util.List;
+
 
 public class LärareLista extends BaseList<Lärare> {
     private List<Lärare> entityList;
@@ -11,6 +11,7 @@ public class LärareLista extends BaseList<Lärare> {
 
     public LärareLista(LärareCon lc) {
         this.lc = lc;
+        updateButton.addActionListener(e -> getAll());
         updateList(lc.getAll());
     }
 
@@ -23,8 +24,7 @@ public class LärareLista extends BaseList<Lärare> {
         }
     }
 
-    @Override
-    protected void onAddButtonClicked() {
+    protected void getAll() {
         updateList(entityList);
     }
 
@@ -36,8 +36,4 @@ public class LärareLista extends BaseList<Lärare> {
         return null;
     }
 
-    @Override
-    protected String formatItem(Lärare lärare) {
-        return lärare.getNamn() + " (ID: " + lärare.getID() + ")";
-    }
 }

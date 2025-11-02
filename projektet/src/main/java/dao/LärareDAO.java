@@ -42,4 +42,18 @@ public class LärareDAO extends BaseDAO<Lärare> {
         lärare.setID(rs.getInt("LärareID"));
         return lärare;
     }
+
+    public Lärare getByName(String namn) {
+        String sql = "SELECT " + getSelectColumns() + " FROM " + getTableName() + " WHERE Namn = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, namn);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return mapResultSetToEntity(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

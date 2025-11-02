@@ -10,8 +10,9 @@ public abstract class BaseList<T> extends JPanel {
     protected JList<T> listView = new JList<>(listModel);
     protected JScrollPane scrollPane = new JScrollPane(listView);
     protected String style = "<html><style> h2 {color: White; border: 4px solid black; padding: 7px;}</style> <h2>";
+    protected JButton updateButton = new JButton("Updatera");
+    JPanel actionPanel = new JPanel();
 
-    protected abstract void onAddButtonClicked();
     public abstract void updateList(List<T> items);
 
     public BaseList() {
@@ -25,32 +26,23 @@ public abstract class BaseList<T> extends JPanel {
         listView.setForeground(Color.WHITE);
         listView.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         listView.setVisibleRowCount(10);
+        listView.setFont(new Font("Segoe UI", Font.BOLD, 18));
 
-        DefaultListCellRenderer renderer = new DefaultListCellRenderer() {
-            @Override
-            public Component getListCellRendererComponent(JList<?> list, Object value, int index,
-                                                          boolean isSelected, boolean cellHasFocus) {
-                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                label.setHorizontalAlignment(SwingConstants.CENTER);
-                label.setBackground(Color.DARK_GRAY);
-                label.setForeground(Color.WHITE);
-                return label;
-            }
-        };
+        DefaultListCellRenderer renderer = new DefaultListCellRenderer();
+        renderer.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        renderer.setForeground(Color.WHITE);
+        renderer.setBackground(Color.DARK_GRAY);
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
         listView.setCellRenderer(renderer);
-        listView.setFont(new Font("Segoe UI", Font.BOLD, 20));
-
-        scrollPane.setPreferredSize(new Dimension(400, 800));
+        
+        scrollPane.setPreferredSize(new Dimension(400, 750));
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         add(scrollPane, BorderLayout.CENTER);
 
-        JPanel actionPanel = new JPanel();
         actionPanel.setBackground(Color.DARK_GRAY);
-        JButton addButton = new JButton("Update");
-        styleButton(addButton);
-        addButton.addActionListener(e -> onAddButtonClicked());
-        actionPanel.add(addButton);
+        styleButton(updateButton);
+        actionPanel.add(updateButton);
         add(actionPanel, BorderLayout.SOUTH);
     }
 
@@ -58,7 +50,7 @@ public abstract class BaseList<T> extends JPanel {
         return item.toString();
     }
 
-    private void styleButton(JButton button) {
+    protected void styleButton(JButton button) {
         button.setBackground(Color.DARK_GRAY);
         button.setForeground(Color.WHITE);
         button.setFont(new Font("Segoe UI", Font.BOLD, 16));

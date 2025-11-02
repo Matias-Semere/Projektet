@@ -30,7 +30,6 @@ public class RegistreringDAO extends BaseDAO<Registrering> {
 
     @Override
     protected void setGeneratedId(Registrering entity, int id) {
-        // Composite primary key, nothing to set
     }
 
     @Override
@@ -38,7 +37,7 @@ public class RegistreringDAO extends BaseDAO<Registrering> {
         return new Registrering(rs.getInt("StudentID"), rs.getInt("KurstillfälleID"));
     }
 
-    public List<Registrering> getByStudentID(int studentID) throws SQLException {
+    public List<Registrering> getByStudentID(int studentID)  {
         List<Registrering> list = new ArrayList<>();
         String sql = "SELECT " + getSelectColumns() + " FROM " + getTableName() + " WHERE StudentID = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -48,6 +47,10 @@ public class RegistreringDAO extends BaseDAO<Registrering> {
                 list.add(mapResultSetToEntity(rs));
             }
         }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
         return list;
     }
+
 }

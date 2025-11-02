@@ -27,6 +27,7 @@ public class Loggin extends JFrame {
         Avsluta.addActionListener(e -> dispose());
 
         setUndecorated(true);
+        setOpacity(0.985f);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
@@ -43,10 +44,12 @@ public class Loggin extends JFrame {
         stil(role);
         stil(skapakonto);
         stil(Avsluta);
+        Avsluta.setBackground(new Color(200, 50, 50));
 
         loginPanel = new JPanel();
         loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.Y_AXIS));
-        loginPanel.setBackground(Color.DARK_GRAY);
+        // loginPanel.setBackground(Color.DARK_GRAY);
+        loginPanel.setBackground(new Color(0, 10, 20,230));
         namndel = new JPanel();
         passdel = new JPanel();
         roledel = new JPanel();
@@ -100,7 +103,7 @@ public class Loggin extends JFrame {
         if (label instanceof JComboBox) {
             label.setBackground(Color.DARK_GRAY);
             label.setForeground(Color.WHITE);
-            label.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+            label.setFont(new Font("Segoe UI", Font.BOLD, 20));
             label.setFocusable(false);
         }
 
@@ -125,8 +128,8 @@ public class Loggin extends JFrame {
             if (uc.loggin(namn, pass, roleVal)) {
                 dispose();
                 switch (roleVal) {
-                    case "Student" -> new StudentView(namn, sc, kfc);
-                    case "Lärare" -> new LärareView(namn, lc, rc, rpc);
+                    case "Student" -> new StudentView(namn, sc, kfc, rpc);
+                    case "Lärare" -> new LärareView(namn, lc, rc, rpc, kfc, ltc);
                     case "Admin" -> new AdminView(namn, ac, lc, sc, kc, kfc, bc, rc, ltc);
                 }
             } else {
